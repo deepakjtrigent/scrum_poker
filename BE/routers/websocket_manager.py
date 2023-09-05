@@ -46,8 +46,7 @@ async def send_message(room_id: str, websocket, user_id, actionType: str):
     rooms = db.table('rooms')
     Room = Query()
     Users = Query()
-    users = rooms.search(Room.users.any(Users.userId == user_id) & (Room.roomId == room_id))[
-        0]['users']
+    users = rooms.search(Room.users.any(Users.userId == user_id) & (Room.roomId == room_id))[0]['users']
     user_index = next((index for (index, user) in enumerate(
         users) if user['userId'] == user_id), None)
     for web in room_websockets.get(room_id, []):
