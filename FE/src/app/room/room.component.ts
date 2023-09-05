@@ -69,11 +69,12 @@ export class RoomComponent implements OnInit, OnDestroy {
           switch (userData.actionType) {
             case 'ACTIVE_USERS_LIST': {
               (userData.userData as UserData[]).forEach((user: UserData) => {
-                if (user.userId == this.user.userId)
-                  this.user = user;
+                if (user.userId == this.user.userId) this.user = user;
 
                 this.usersArray.push({
-                  actionType: 'STORY_POINT_PENDING',
+                  actionType: user.data?.storyPoints
+                    ? 'STORY_POINT_SELECTION'
+                    : 'STORY_POINT_PENDING',
                   userData: user,
                 });
               });
@@ -150,12 +151,13 @@ export class RoomComponent implements OnInit, OnDestroy {
 
               this.usersArray.forEach((usersDetails: UserAction) => {
                 if (
-                  (usersDetails.userData as UserData).userId ==
-                  (userData.userData as UserData[])[0].userId
+                  (userData.userData as UserData[])[0].userId ==
+                  (usersDetails.userData as UserData).userId
                 ) {
                   (usersDetails.userData as UserData).isAdmin = (
                     userData.userData as UserData[]
                   )[0].isAdmin;
+                  return;
                 } else if (
                   (usersDetails.userData as UserData).userId ==
                   (userData.userData as UserData[])[1].userId
@@ -176,7 +178,7 @@ export class RoomComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this.websocketService.disconnect();
     this.messageSubsscription.unsubscribe();
-    this.heartBeat.destroyHeartbeat()
+    this.heartBeat.destroyHeartbeat();
   }
 
   public updateStoryPoints(storyPoints: number, index: number): void {
@@ -215,9 +217,9 @@ export class RoomComponent implements OnInit, OnDestroy {
 
   public joinRoom(userDetails: User): void {
     userDetails.jobRole = this.userJobRole;
-    console.log(userDetails);
     this.roomService.joinRoom(this.roomId, userDetails).subscribe(
       (response) => {
+        console.log(response);
         this.websocketService.connect(this.roomId);
         this.heartBeat.startwithHeartBeat(this.roomId);
       },
@@ -239,8 +241,8 @@ export class RoomComponent implements OnInit, OnDestroy {
     this.userJobRole = jobRole;
 
     if (userInCookies) {
-       this.isDataStored=true
-       this.user = JSON.parse(userInCookies);
+      this.isDataStored = true;
+      this.user = JSON.parse(userInCookies);
     }
 
     if (!jobRole || !userInCookies) {
@@ -254,22 +256,24 @@ export class RoomComponent implements OnInit, OnDestroy {
               ? JSON.parse(userInCookies).displayName
               : '',
           },
-          width: '400px',
+          width: '300px',
+          height:'410px',
         });
 
       userDialogRef.afterClosed().subscribe((response: any): void => {
         if (response) {
-          if(!userInCookies){
-          this.user.userId = uuidv4();
-          this.user.displayName = response.displayName;
-          this.userJobRole = response.selectedJobRole;
-          this.storageService.storeUserInCookies(this.user);
+          if (!userInCookies) {
+            this.user.userId = uuidv4();
+            this.user.displayName = response.displayName;
+            this.userJobRole = response.selectedJobRole;
+            this.storageService.storeUserInCookies(this.user);
           }
           this.userJobRole = response.selectedJobRole;
           this.storageService.storeJobRole(response.selectedJobRole);
           this.storageService.userDetails = this.user;
           this.joinRoom(this.user);
         }
+        else this.router.navigate(['/'])
       });
     } else {
       this.user = JSON.parse(userInCookies);
@@ -407,8 +411,6 @@ export class RoomComponent implements OnInit, OnDestroy {
     }
     this.averageStoryPointsValue = storyPointsSum / this.selectedPoints.length;
   }
-
-
 
   private reset(): void {
     this.selectedPoints.length = 0;

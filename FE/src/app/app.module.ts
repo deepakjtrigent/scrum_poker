@@ -46,7 +46,8 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     MatMenuModule,
     MatIconModule,
     ReactiveFormsModule,
-    MatSelectModule 
+    MatSelectModule,
+    MatIconModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
