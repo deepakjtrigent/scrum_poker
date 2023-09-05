@@ -40,7 +40,7 @@ async def update_timers(userAction: User_action, websocket: None, room_id: str):
     for last_hit in user_last_hit.values():
         current_time = int(time.time())
         elapsed_time = current_time - last_hit
-        if elapsed_time > 15:
+        if elapsed_time > 30:
             message = ({"actionType": "USER_INACTIVE",
                        "userId": userAction.userData.userId})
             for web in room_websockets.get(room_id, []):
