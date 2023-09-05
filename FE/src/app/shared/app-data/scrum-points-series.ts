@@ -4,7 +4,7 @@ export enum Tshirts {
   M,
   L,
   XL,
-  XXL,
+  XXL,  
 }
 
 export enum seriesNameList {
@@ -15,7 +15,7 @@ export enum seriesNameList {
 }
 
 export enum seriesCount {
-  FIBONACCI_I = "0,1,2,3,5,8,13,21,34",
-  FIBONACCI_II = "0,0.5,1,2,3,5,8,13,21",
+  FIBONACCI_I = "0,1,2,3,5,8,13,21",
+  FIBONACCI_II = "0,0.5,1,2,3,5,8,13",
   POWER_OF_2 = "0,1,2,4,8,16,32,64"
 }
