@@ -441,8 +441,8 @@ export class RoomComponent implements OnInit, OnDestroy {
         }
       }
     }
-    this.averageStoryPointsValue = storyPointsSum / this.selectedPoints.length;
-    console.log(storyPointsSum, this.averageStoryPointsValue);
+
+    this.averageStoryPointsValue = (storyPointsSum / this.selectedPoints.length);
   }
 
   private reset(): void {

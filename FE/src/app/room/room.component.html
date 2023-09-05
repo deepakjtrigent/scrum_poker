@@ -223,9 +223,9 @@
           <button
             *ngFor="let points of series; let index = index"
             (click)="updateStoryPoints(points, index)"
-            id="card_button"
+           
             [class.active-button]="activeIndex === index"
-            class="card hover:bg-card-light active:bg-primary-shade-color w-[56px] h-[84px] rounded-md bg-white text-scrum-button-inner-text mt-3 font-semibold py-2 px-4 transition"
+            class="card card_button hover:bg-card-light active:bg-primary-shade-color w-[56px] h-[84px] rounded-md bg-white text-scrum-button-inner-text mt-3 font-semibold py-2 px-4 transition"
           >
             {{ points }}
           </button>
@@ -238,7 +238,7 @@
             class="flex flex-row justify-center items-center gap-2 xxs:hidden xs:hidden"
           >
             <button
-              class="w-[56px] h-[84px] rounded-md bg-white text-scrum-button-inner-text font-semibold py-2 px-4 box shadow-md transition"
+              class="card card_button w-[56px] h-[84px] rounded-md bg-white text-scrum-button-inner-text font-semibold py-2 px-4 box shadow-md transition"
             >
               {{ data.points }}
             </button>
@@ -256,9 +256,9 @@
             alt="Approximate Symbol"
           />
           <div
-            class="py-3 px-6 outline-none bg-scrum-button-inner-background text-lg leading-6 rounded-[28px] shadow text-scrum-button-inner-text"
+            class="card_button py-3 px-6 outline-none bg-scrum-button-inner-background text-lg leading-6 rounded-[28px] shadow text-scrum-button-inner-text"
           >
-            {{ averageStoryPointsValue | number : "1.1-2" }}
+            {{ averageStoryPointsValue   }}
           </div>
         </div>
       </ng-template>
