@@ -5,21 +5,21 @@ from pydantic import BaseModel
 class User(BaseModel):
     userId: str
     displayName: str
-    jobRole :Optional[str]
+    jobRole: Optional[str] = None
 
 
 class seriesData(BaseModel):
-    seriesName:str
+    seriesName: str
 
-    
+
 class User_data(BaseModel):
-    storyPoints: float | str
+    storyPoints: Optional[float | str] = None
 
 
 class User_details (User):
-    isAdmin: Optional[bool]
-    isActive: Optional[bool]
-    data: Optional[User_data]
+    isAdmin: Optional[bool] = None
+    isActive: Optional[bool] = None
+    data: Optional[User_data] = None
 
 
 class User_action(BaseModel):
