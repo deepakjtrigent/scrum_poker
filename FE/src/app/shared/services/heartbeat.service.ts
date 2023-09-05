@@ -55,7 +55,7 @@ export class HeartbeatService {
    this.roomService.heartBeat(roomId, sendUserAction).subscribe((response) => {
         if (response && response.actionType == 'USER_INACTIVE') {
           this.currentTime = Date.now() - this.lastActive;
-          if (this.currentTime > 15000) {
+          if (this.currentTime > 400000) {
             clearInterval(this.heartbeatInterval);
             this.openConfirmDialog(roomId);
           }
@@ -66,7 +66,7 @@ export class HeartbeatService {
   public startwithHeartBeat(roomId: string): void {
     this.heartbeatInterval = setInterval(() => {
       this.startHeartbeat(roomId);
-    }, 5000);
+    }, 10000);
   }
 
   public resetHeartbeatTime(roomId: string): void {
@@ -83,10 +83,10 @@ export class HeartbeatService {
 
       timer=setInterval(()=>{
         closeDialog()
-      },40000)
+      },400000)
 
-    userDialogRef.afterClosed().subscribe((result) => {
-      clearInterval(timer);
+    userDialogRef.afterClosed().subscribe(() => {
+     clearInterval(timer)
     });
 
     var closeDialog = (): void => {

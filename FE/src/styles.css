@@ -2,11 +2,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-html,
-body {
-  height: 100%;
-}
-
 :root {
   --primary: #0064fe;
   --primary-shade: #374388;
@@ -15,7 +10,6 @@ body {
   --text-pale: #e5effe;
   --background-color: #ffffff;
   --text-color: #848b99;
-  
 }
 
 html,
@@ -24,18 +18,30 @@ body {
   scroll-behavior: smooth;
   scroll-snap-type: y mandatory;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  background-image: radial-gradient(rgba(215, 214, 214, 0.5) 0.8px, transparent 0);
+  background-image: radial-gradient(
+    rgba(215, 214, 214, 0.5) 0.8px,
+    transparent 0
+  );
   background-size: 15px 15px;
-  z-index: -1;
 }
 
 .mat-mdc-snack-bar-container.success {
-  --mdc-snackbar-container-color: rgb(7, 176, 7);
+  --mdc-snackbar-container-color: rgb(6, 158, 6);
   --mdc-snackbar-supporting-text-color: #fff;
 }
 .mat-mdc-snack-bar-container.danger {
   --mdc-snackbar-container-color: rgb(220, 39, 7);
   --mdc-snackbar-supporting-text-color: #fff;
+}
+
+.mat-mdc-snack-bar-container .mdc-snackbar__label {
+  padding: 14px;
+  font-family: sans-serif;
+  font-weight: 450 !important;
+}
+.mat-mdc-snack-bar-container {
+  font-size: small;
+  --mdc-snackbar-container-shape: 9px !important;
 }
 
 ::-webkit-scrollbar {

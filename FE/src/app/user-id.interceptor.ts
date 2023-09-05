@@ -25,8 +25,6 @@ export class UserIdInterceptor implements HttpInterceptor {
       ? this.storageService.user.userId
       : JSON.parse(atob(this.cookieService.get('userDetails'))).userId;
 
-    console.log(userId)
-
     const modifiedRequest = request.clone({
       setHeaders: {
         'SP-U': userId,
