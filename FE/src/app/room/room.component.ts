@@ -175,7 +175,6 @@ export class RoomComponent implements OnInit, OnDestroy {
     );
   }
 
-
   public getSampleValue(key: string | any): string | undefined {
     return (jobRole as { [key: string]: string })[key];
   }
@@ -183,7 +182,6 @@ export class RoomComponent implements OnInit, OnDestroy {
   public getKeyName(value: any): string {
     return Tshirts[value];
   }
-
 
   public updateStoryPoints(storyPoints: number | string, index: number): void {
     this.toggleActive(index);
@@ -234,7 +232,8 @@ export class RoomComponent implements OnInit, OnDestroy {
       (response) => {
         for (let series of this.cardCounts) {
           if (series == response.seriesName) {
-            this.series = this.accessSeriesNumber(response.seriesName).split(','
+            this.series = this.accessSeriesNumber(response.seriesName).split(
+              ','
             );
           }
         }
@@ -281,10 +280,8 @@ export class RoomComponent implements OnInit, OnDestroy {
             hideSeries: true,
           },
           width: '340px',
-          height:'450px',
-          },
-         
-        );
+          height: '450px',
+        });
 
       userDialogRef.afterClosed().subscribe((response: any): void => {
         if (response) {
@@ -438,12 +435,14 @@ export class RoomComponent implements OnInit, OnDestroy {
         }
         if (typeof this.selectedPoints[i] != 'string') {
           storyPointsSum += this.selectedPoints[i];
+          
         } else {
           storyPointsSum += this.getKeyName(this.selectedPoints[i]);
         }
       }
     }
     this.averageStoryPointsValue = storyPointsSum / this.selectedPoints.length;
+    console.log(storyPointsSum, this.averageStoryPointsValue);
   }
 
   private reset(): void {

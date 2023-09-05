@@ -73,14 +73,8 @@ async def delete_user(websocket, room_id, user_id):
 
 @router.websocket("/room/{room_id}")
 async def websocket_endpoint(room_id: str, websocket: WebSocket):
-    db = TinyDB('rooms_data_db.json')
     await websocket.accept()
-    user_id = '',
-    # if rooms.contains(where('roomId') == room_id):
-    # rooms = db.table('rooms')
-    # Room = Query()
-    # room_data_users = rooms.search(Room.roomId == room_id)[0]['users']
-    # user_id = room_data_users[-1]['userId']
+    user_id = ''
     if room_id not in room_websockets:
         room_websockets[room_id] = []
     room_websockets[room_id].append(
