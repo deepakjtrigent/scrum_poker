@@ -180,12 +180,6 @@ export class RoomComponent implements OnInit, OnDestroy {
     return (jobRole as { [key: string]: string })[key];
   }
 
-  public ngOnDestroy(): void {
-    this.websocketService.disconnect();
-    this.messageSubsscription.unsubscribe();
-    this.heartBeat.destroyHeartbeat();
-  }
-
   public getKeyName(value: any): string {
     return Tshirts[value];
   }

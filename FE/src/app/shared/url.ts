@@ -1,4 +1,4 @@
 export const scrumPokerUrls = {
-  createRoomUrl: 'https://scrum-poker-r05e.onrender.com/create_room',
-  roomUrls: `https://scrum-poker-r05e.onrender.com/room`
+  createRoomUrl: 'http://localhost:8000/create_room',
+  roomUrls: `http://localhost:8000/room`
 };

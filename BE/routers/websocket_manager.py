@@ -92,7 +92,7 @@ async def websocket_endpoint(room_id: str, websocket: WebSocket):
             if 'userId' in user_id_dict:
                 for websocket_data in room_websockets[room_id]:
                     if websocket_data['websocket'] == websocket:
-                        websocket_data['userId'] = user_id
+                        websocket_data['user_id'] = user_id
                         await send_message(room_id, websocket, user_id, "NEW_USER_JOINED")
     except Exception as e:
         await send_message(room_id, websocket, user_id, "USER_LEFT")
