@@ -1,5 +1,4 @@
 import json
-from aiohttp import request
 from fastapi import APIRouter
 from tinydb import Query, TinyDB, where
 from routers.websocket_manager import room_websockets
