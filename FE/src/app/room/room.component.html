@@ -65,7 +65,7 @@
   >
     <ng-container *ngIf="!isStoryPointsRevealed; else storyPointsAverage">
       <button
-        *ngFor="let points of cardCounts; let index = index"
+        *ngFor="let points of series; let index = index"
         (click)="updateStoryPoints(points, index)"
         id="card_button"
         [class.active-button]="activeIndex === index"
@@ -73,7 +73,7 @@
       >
         {{ points }}
       </button>
-    </ng-container>
+    </ng-container >
   </div>
 
   <ng-template #storyPointsAverage>

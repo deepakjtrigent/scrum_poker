@@ -19,7 +19,7 @@ export class StorageService {
   }
 
 
-  public storeJobRole(userJobRole: string ):void{
+  public storeJobRole(userJobRole: string,  ):void{
     var expireTime = new Date();
     expireTime.setTime(expireTime.getTime() + 1 * 3600 * 1000);
     const encodeJobRole:string =btoa(userJobRole);

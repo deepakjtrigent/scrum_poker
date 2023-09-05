@@ -20,6 +20,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { UserIdInterceptor } from './user-id.interceptor';
 import { UserFormComponent } from './user-form/user-form.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { ReplacePipe } from './shared/replace.pipe';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     PageNotFoundComponent,
     UserFormComponent,
     ConfirmDialogComponent,
+    ReplacePipe,
   ],
   imports: [
     BrowserModule,

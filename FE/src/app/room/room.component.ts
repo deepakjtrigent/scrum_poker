@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { cardCount } from '../shared/app-data/scrum-points-series';
+import { seriesCount, Tshirts } from '../shared/app-data/scrum-points-series';
 import { HeartbeatService } from '../shared/services/heartbeat.service';
 import { WebsocketService } from '../shared/services/websocket.service';
 import { ActivatedRoute } from '@angular/router';
@@ -22,7 +22,7 @@ import { Subscription } from 'rxjs';
   providers: [WebsocketService],
 })
 export class RoomComponent implements OnInit, OnDestroy {
-  public cardCounts: number[] = cardCount;
+  public cardCounts: any = Object.keys(seriesCount);
   public activeIndex: number = -1;
   public roomId!: any;
   public userJobRole: string = '';
@@ -38,7 +38,9 @@ export class RoomComponent implements OnInit, OnDestroy {
   public averageStoryPointsValue: number = 0;
   private messageSubsscription!: Subscription;
   public isRevealBtnDisabled: boolean = true;
-  public isDataStored!:boolean;
+  public isDataStored!: boolean;
+  public series: any[] = [];
+  public Tshirts = Tshirts;
 
   constructor(
     private websocketService: WebsocketService,
@@ -62,7 +64,6 @@ export class RoomComponent implements OnInit, OnDestroy {
       (message: string): void => {
         if (message) {
           const userData: UserAction = JSON.parse(message);
-
           switch (userData.actionType) {
             case 'ACTIVE_USERS_LIST': {
               (userData.userData as UserData[]).forEach((user: UserData) => {
@@ -81,6 +82,7 @@ export class RoomComponent implements OnInit, OnDestroy {
               });
               break;
             }
+
             case 'USER_LEFT': {
               this.usersArray = this.usersArray.filter(
                 (user: UserAction) =>
@@ -141,10 +143,14 @@ export class RoomComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this.websocketService.disconnect();
     this.messageSubsscription.unsubscribe();
-    this.heartBeat.destroyHeartbeat()
+    this.heartBeat.destroyHeartbeat();
   }
 
-  public updateStoryPoints(storyPoints: number, index: number): void {
+  public getKeyName(value: any): string {
+    return Tshirts[value];
+  }
+
+  public updateStoryPoints(storyPoints: number | string, index: number): void {
     this.toggleActive(index);
     this.userAction = {
       actionType: 'STORY_POINT_SELECTION',
@@ -156,6 +162,7 @@ export class RoomComponent implements OnInit, OnDestroy {
         },
       },
     };
+
     this.roomService.updateStoryPoint(this.roomId, this.userAction).subscribe(
       (response: UserAction) => {
         this.usersArray.forEach((usersData: UserAction, index: number) => {
@@ -177,12 +184,30 @@ export class RoomComponent implements OnInit, OnDestroy {
       }
     );
   }
-  
+
+  public accessSeriesNumber(seriesName: string): any {
+    for (let key of Object.keys(seriesCount)) {
+      if (key == seriesName) {
+        return seriesCount[key as unknown as keyof typeof seriesCount];
+      }
+    }
+  }
+
   public joinRoom(userDetails: User): void {
     userDetails.jobRole = this.userJobRole;
-    console.log(userDetails);
     this.roomService.joinRoom(this.roomId, userDetails).subscribe(
       (response) => {
+        for (let series of this.cardCounts) {
+          if (series == response.seriesName) {
+            this.series = this.accessSeriesNumber(response.seriesName).split(','
+            );
+          }
+        }
+        if (response.seriesName == 'TSHIRTS') {
+          this.series = Object.keys(Tshirts).filter((item) => {
+            return isNaN(Number(item));
+          });
+        }
         this.websocketService.connect(this.roomId);
         this.heartBeat.startwithHeartBeat(this.roomId);
       },
@@ -200,37 +225,43 @@ export class RoomComponent implements OnInit, OnDestroy {
 
   public openUserDialog(): void {
     const userInCookies: string = atob(this.cookieService.get('userDetails'));
-    const jobRole=atob(this.cookieService.get('JobRole'));
-    this.userJobRole=jobRole
+    const jobRole = atob(this.cookieService.get('JobRole'));
+    this.userJobRole = jobRole;
 
     if (userInCookies) {
-       this.isDataStored=true
-       this.user = JSON.parse(userInCookies);
+      this.isDataStored = true;
+      this.user = JSON.parse(userInCookies);
     }
 
-    if(!jobRole || !userInCookies){
+    if (!jobRole || !userInCookies) {
       const userDialogRef: MatDialogRef<UserFormComponent> =
         this.userDialog.open(UserFormComponent, {
-          data: { role: 'Job Role', img: '🙂', disable: false,displayName:this.isDataStored ? JSON.parse(userInCookies).displayName: ""},
+          data: {
+            role: 'Job Role',
+            img: '🙂',
+            disable: false,
+            displayName: this.isDataStored
+              ? JSON.parse(userInCookies).displayName
+              : '',
+            hideSeries: true,
+          },
           width: '400px',
         });
 
       userDialogRef.afterClosed().subscribe((response: any): void => {
         if (response) {
-          if(!userInCookies){
-          this.user.userId = uuidv4();
-          this.user.displayName = response.displayName;
-          this.userJobRole = response.selectedJobRole;
-          this.storageService.storeUserInCookies(this.user);
+          if (!userInCookies) {
+            this.user.userId = uuidv4();
+            this.user.displayName = response.displayName;
+            this.storageService.storeUserInCookies(this.user);
           }
           this.userJobRole = response.selectedJobRole;
-          this.storageService.storeJobRole(response.selectedJobRole)
+          this.storageService.storeJobRole(response.selectedJobRole);
           this.storageService.userDetails = this.user;
           this.joinRoom(this.user);
         }
       });
-    }
-  else {
+    } else {
       this.user = JSON.parse(userInCookies);
       this.joinRoom(this.user);
     }
@@ -286,10 +317,15 @@ export class RoomComponent implements OnInit, OnDestroy {
         }
       });
   }
-
   private calculateAverage(): void {
+    let storyPointsSum: any;
     this.selectedPoints.sort((a, b) => a - b);
-    let storyPointsSum = this.selectedPoints[0];
+
+    if (typeof this.selectedPoints[0] == 'string') {
+      storyPointsSum = this.getKeyName(this.selectedPoints[0]);
+    } else {
+      storyPointsSum = this.selectedPoints[0];
+    }
     let repeat = 1;
     if (this.selectedPoints.length == 1) {
       this.storyPointsData.push({
@@ -313,7 +349,11 @@ export class RoomComponent implements OnInit, OnDestroy {
             repetition: repeat,
           });
         }
-        storyPointsSum += this.selectedPoints[i];
+        if (typeof this.selectedPoints[i] != 'string') {
+          storyPointsSum += this.selectedPoints[i];
+        } else {
+          storyPointsSum += this.getKeyName(this.selectedPoints[i]);
+        }
       }
     }
     this.averageStoryPointsValue = storyPointsSum / this.selectedPoints.length;

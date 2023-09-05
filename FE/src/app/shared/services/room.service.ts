@@ -12,8 +12,8 @@ import { UserAction } from '../model/userAction';
 export class RoomService {
   constructor(private http: HttpClient) {}
 
-  public createRoom(): Observable<CreateRoomResponse> {
-    return this.http.post<any>(scrumPokerUrls.createRoomUrl, {});
+  public createRoom(seriesName:any): Observable<CreateRoomResponse> {
+    return this.http.post<any>(scrumPokerUrls.createRoomUrl, {seriesName});
   }
 
   public joinRoom(roomId: string, user_details: User): Observable<User> {

@@ -1,13 +1,12 @@
-import asyncio
 import json
-from fastapi import APIRouter, HTTPException, Header, Request
+from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import JSONResponse
 from typing import Dict
 import uuid
 from routers.data_manager import save_data_in_db, update_data_in_db
 from routers.websocket_manager import room_websockets
 from tinydb import TinyDB, Query, where
-from routers.models import User, User_data, User_action, User_details
+from routers.models import User_action, User_details,seriesData
 from fastapi.encoders import jsonable_encoder
 
 
@@ -17,12 +16,16 @@ admin_user_id: str = ""
 selected_storypoint: list = []
 
 
+
 @router.post("/create_room", response_model=Dict[str, str])
-async def create_room(request: Request):
+async def create_room(request: Request, requestBody: seriesData):
+    print(requestBody)
     room_id = str(uuid.uuid4())
-    room_data = {"roomId": room_id, "users": []}
+    room_data = {"roomId": room_id,
+                 'seriesName': requestBody.seriesName, "users": []}
     global admin_user_id
     admin_user_id = request.headers.get('SP-U')
+    print(request.headers.get('SP-U'))
     save_data_in_db(room_data)
     return {"room_id": room_id}
 
@@ -33,27 +36,28 @@ async def join_room(room_id: str, user_details: User_details):
     rooms = db.table('rooms')
     Room = Query()
     Users = Query()
+    seriesName=rooms.search(where('roomId')==room_id)[0]['seriesName']
+
     if rooms.contains(Room.roomId == room_id):
         if not rooms.contains((Room.users.any(Users.userId == user_details.userId)) & (Room.roomId == room_id)):
             global admin_user_id
             user_to_be_stored = {
-                "userId": user_details.userId,
-                "displayName": user_details.displayName,
+                "userId": (user_details.userId),
+                "displayName": (user_details.displayName),
                 "isAdmin": True if (user_details.userId == admin_user_id) else False,
                 "isActive": True,
-                "jobRole":user_details.jobRole,
+                "jobRole": user_details.jobRole,
                 "data": {
                     "storyPoints": None
                 }
             }
             update_data_in_db(user_to_be_stored, room_id)
-            return user_to_be_stored
+            return {"usersData":user_to_be_stored,"seriesName":seriesName}
         else:
             return JSONResponse(status_code=403, content={"error": "User is already in the room"})
     else:
         return JSONResponse(status_code=404, content={"error": "Room not found"})
 
-# "Scrum Master" if(user_details.userId == admin_user_id) else user_details.jobRole,
 
 @router.put("/room/{room_id}/update")
 async def update_room_data(room_id: str, user_action: User_action):

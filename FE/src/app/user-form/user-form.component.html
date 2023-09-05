@@ -12,9 +12,7 @@
         formControlName="displayName"
         placeholder="Display Name"
         type="text"
-        required
-       
-      />
+        required/>
       <mat-error *ngIf="displayName.invalid && displayName.touched">
         {{ getErrorMessage() }}
       </mat-error>
@@ -29,17 +27,39 @@
         required
       >
         <mat-option value="Select Here" disabled>Choose a Role</mat-option>
+        
         <mat-option
-          [value]="role.role"
+          [value]="role"
           *ngFor="let role of emojiData; let index = index"
         >
-          {{ role.role }}
+          {{ role  | replace : '_' : ' ' | titlecase }}
         </mat-option>
       </mat-select>
       <mat-error *ngIf="selectedJobRole.invalid && selectedJobRole.touched">
         {{ getSelectedJobRoleErrorMessage() }}
       </mat-error>
     </mat-form-field>
+
+    <mat-form-field *ngIf="!data.hideSeries">
+      <mat-label >Card Series</mat-label>
+      <mat-select
+        formControlName="seriesFormControl"
+        placeholder="Choose a series"
+        required
+      >
+        <mat-option value="Select Here" disabled>Choose a series</mat-option>
+        <mat-option
+          [value]="role "
+          *ngFor="let role of seriesCount; let index = index"
+        >
+          {{ role }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="seriesFormControl.invalid && seriesFormControl.touched">
+        {{ getSelectedSeriesError() }}
+      </mat-error>
+    </mat-form-field>
+
   </form>
 </mat-dialog-content>
 
@@ -49,7 +69,8 @@
     color="primary"
     [mat-dialog-close]="{
       displayName: displayName.value,
-      selectedJobRole: selectedJobRole.value
+      selectedJobRole: selectedJobRole.value,
+      seriesFormControl:seriesFormControl.value
     }"
     [disabled]="userFormGroup.invalid"
   >
