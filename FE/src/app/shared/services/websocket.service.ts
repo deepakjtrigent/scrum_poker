@@ -21,7 +21,7 @@ export class WebsocketService {
     this.socket.onmessage = (event: MessageEvent<string>): void => {
       const message: string = event.data;
       this.recievedMessage.next(message);
-      this.toast.showToast(message, toastState.success);
+      // this.toast.showToast(message, toastState.success);
     };
 
     this.socket.onclose = (event: Event): void => {

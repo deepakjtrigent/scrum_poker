@@ -9,12 +9,13 @@ body {
 
 :root {
   --primary: #0064fe;
-  --primary-shade: #00388f;
+  --primary-shade: #374388;
   --primary-pale: #e5effe;
   --primary-highlight: #5c9bff;
   --text-pale: #e5effe;
   --background-color: #ffffff;
   --text-color: #848b99;
+  
 }
 
 html,
@@ -23,6 +24,9 @@ body {
   scroll-behavior: smooth;
   scroll-snap-type: y mandatory;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-image: radial-gradient(rgba(215, 214, 214, 0.5) 0.8px, transparent 0);
+  background-size: 15px 15px;
+  z-index: -1;
 }
 
 .mat-mdc-snack-bar-container.success {

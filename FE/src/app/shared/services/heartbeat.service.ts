@@ -44,7 +44,7 @@ export class HeartbeatService {
         userId: userInCookies.userId,
         displayName: userInCookies.displayName,
       },
-    };
+    };  
     if (this.isTabActive) {
       sendUserAction.actionType = 'SENT_HEARTBEAT';
     }
@@ -52,15 +52,14 @@ export class HeartbeatService {
   }
 
   public sendHeartbeat = (roomId: string, sendUserAction: UserAction) => {
-    this.roomService.heartBeat(roomId, sendUserAction).subscribe((response) => {
-      if (response && response.actionType == 'USER_INACTIVE') {
-        this.currentTime = Date.now() - this.lastActive;
-        if (this.currentTime > 30000) {
-          clearInterval(this.heartbeatInterval);
-          this.openConfirmDialog(roomId);
-        }
-      }
-      // console.log(response);
+   this.roomService.heartBeat(roomId, sendUserAction).subscribe((response) => {
+        if (response && response.actionType == 'USER_INACTIVE') {
+          this.currentTime = Date.now() - this.lastActive;
+          if (this.currentTime > 15000) {
+            clearInterval(this.heartbeatInterval);
+            this.openConfirmDialog(roomId);
+          }
+          }
     });
   };
 
@@ -79,12 +78,12 @@ export class HeartbeatService {
     var timer: any;
     const userDialogRef: MatDialogRef<ConfirmDialogComponent> =
       this.userDialog.open(ConfirmDialogComponent, {
-        data: { roomId: roomId },
+        data: { type: 'roomId', value: roomId },
       });
 
-    timer = setInterval(() => {
-      closeDialog();
-    }, 60000);
+      timer=setInterval(()=>{
+        closeDialog()
+      },40000)
 
     userDialogRef.afterClosed().subscribe((result) => {
       clearInterval(timer);
@@ -99,5 +98,6 @@ export class HeartbeatService {
 
   public destroyHeartbeat(): void {
     clearInterval(this.heartbeatInterval);
-  }
+   }
+   
 }

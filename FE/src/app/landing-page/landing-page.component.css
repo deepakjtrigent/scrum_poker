@@ -1,9 +1,16 @@
-section{
-    scroll-snap-align: start;
-     
+.mat-form-field-should-float .mat-form-field-label-wrapper {
+    display: none!important;
 }
+.mat-focused .al-subscribe-form-placeholder,
+.mat-form-field-invalid .al-subscribe-form-placeholder {
+    display: none!important;
+}
+.section{
+    overflow: hidden;
+    height: 100%;
+}
+.description_section{
+    overflow:scroll;
+  }
 
-#initial-section{
-    scroll-margin-top: 5rem;
-}
 

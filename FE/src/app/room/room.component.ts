@@ -14,6 +14,8 @@ import { StorageService } from '../shared/services/storage.service';
 import { v4 as uuidv4 } from 'uuid';
 import { ToastService, toastState } from '../shared/services/toast.service';
 import { Subscription } from 'rxjs';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { emojiData } from '../shared/app-data/emoji-data';
 
 @Component({
   selector: 'app-room',
@@ -41,6 +43,7 @@ export class RoomComponent implements OnInit, OnDestroy {
   public isDataStored!: boolean;
   public series: any[] = [];
   public Tshirts = Tshirts;
+  public emojiData = emojiData;
 
   constructor(
     private websocketService: WebsocketService,
@@ -68,8 +71,11 @@ export class RoomComponent implements OnInit, OnDestroy {
             case 'ACTIVE_USERS_LIST': {
               (userData.userData as UserData[]).forEach((user: UserData) => {
                 if (user.userId == this.user.userId) this.user = user;
+
                 this.usersArray.push({
-                  actionType: 'STORY_POINT_PENDING',
+                  actionType: user.data?.storyPoints
+                    ? 'STORY_POINT_SELECTION'
+                    : 'STORY_POINT_PENDING',
                   userData: user,
                 });
               });
@@ -130,6 +136,37 @@ export class RoomComponent implements OnInit, OnDestroy {
                     storyPoints: null,
                   };
                   this.reset();
+                }
+              });
+              break;
+            }
+            case 'CHANGE_ADMIN': {
+              (userData.userData as UserData[]).forEach((userData) => {
+                if (this.user.userId == userData.userId) {
+                  this.user.isAdmin = true;
+                  this.toast.showToast(
+                    `Congrats ${this.user.displayName.toUpperCase()}! You are now Admin`,
+                    toastState.success
+                  );
+                }
+              });
+
+              this.usersArray.forEach((usersDetails: UserAction) => {
+                if (
+                  (userData.userData as UserData[])[0].userId ==
+                  (usersDetails.userData as UserData).userId
+                ) {
+                  (usersDetails.userData as UserData).isAdmin = (
+                    userData.userData as UserData[]
+                  )[0].isAdmin;
+                  return;
+                } else if (
+                  (usersDetails.userData as UserData).userId ==
+                  (userData.userData as UserData[])[1].userId
+                ) {
+                  (usersDetails.userData as UserData).isAdmin = (
+                    userData.userData as UserData[]
+                  )[1].isAdmin;
                 }
               });
               break;
@@ -245,14 +282,18 @@ export class RoomComponent implements OnInit, OnDestroy {
               : '',
             hideSeries: true,
           },
-          width: '400px',
-        });
+          width: '310px',
+          height:'450px',
+          },
+         
+        );
 
       userDialogRef.afterClosed().subscribe((response: any): void => {
         if (response) {
           if (!userInCookies) {
             this.user.userId = uuidv4();
             this.user.displayName = response.displayName;
+            // this.userJobRole = response.selectedJobRole;
             this.storageService.storeUserInCookies(this.user);
           }
           this.userJobRole = response.selectedJobRole;
@@ -260,11 +301,60 @@ export class RoomComponent implements OnInit, OnDestroy {
           this.storageService.userDetails = this.user;
           this.joinRoom(this.user);
         }
+        else this.router.navigate(['/'])
       });
     } else {
       this.user = JSON.parse(userInCookies);
       this.joinRoom(this.user);
     }
+  }
+
+  public changeAdminUser(newAdminUser: UserData): void {
+    const confrimationDailog = this.userDialog.open(ConfirmDialogComponent, {
+      data: { type: 'displayName', value: newAdminUser.displayName },
+    });
+
+    confrimationDailog.afterClosed().subscribe((data: string) => {
+      if (data == 'displayName') {
+        this.roomService
+          .changeAdminUser(
+            {
+              actionType: 'CHANGE_ADMIN',
+              userData: {
+                userId: newAdminUser.userId,
+                displayName: newAdminUser.displayName,
+                isAdmin: true,
+              },
+            },
+            this.roomId
+          )
+          .subscribe(
+            (response: UserAction) => {
+              this.user.isAdmin = false;
+              this.usersArray.forEach((usersDetails: UserAction) => {
+                if (
+                  (usersDetails.userData as UserData).userId ==
+                  (response.userData as UserData[])[0].userId
+                ) {
+                  (usersDetails.userData as UserData).isAdmin = (
+                    response.userData as UserData[]
+                  )[0].isAdmin;
+                } else if (
+                  (usersDetails.userData as UserData).userId ==
+                  (response.userData as UserData[])[1].userId
+                ) {
+                  (usersDetails.userData as UserData).isAdmin = (
+                    response.userData as UserData[]
+                  )[1].isAdmin;
+                }
+              });
+            },
+            (error) => {
+              this.toast.showToast(error.error.error, toastState.danger);
+            }
+          );
+      }
+    });
   }
 
   public revealStoryPoints(): void {

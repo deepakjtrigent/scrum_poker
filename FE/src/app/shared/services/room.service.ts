@@ -59,4 +59,14 @@ export class RoomService {
       userAction
     );
   }
+
+  public changeAdminUser(
+    newAdminUserAction: UserAction,
+    roomId: string
+  ): Observable<UserAction> {
+    return this.http.put<UserAction>(
+      `${scrumPokerUrls.roomUrls}/${roomId}/admin/change`,
+      newAdminUserAction
+    );
+  }
 }

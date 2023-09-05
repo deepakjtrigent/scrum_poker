@@ -1,14 +1,39 @@
-.active-button{
-    background-color: var(--primary-shade) ;
-    transform: translateY(-10px) scale(1.1);
-    color: white;
-    transition: transform 0.4s cubic-bezier(0.86, 0, 0.07, 1), background-color 0.4s ease; 
-  }
-  
-.card-hover:hover{
-    transform: translateY(-10px) scale(1.1);
-    transition: transform 0.4s cubic-bezier(0.86, 0, 0.07, 1), background-color 0.4s ease;
+.active-button {
+  background-color: var(--primary-shade);
+  transform: translateY(-10px) scale(1.1);
+  color: white;
+  transition: transform 0.4s cubic-bezier(0.86, 0, 0.07, 1),
+    background-color 0.4s ease;
 }
-#card_button{
-font-family: 'Space Mono' !important;
+
+.card:hover {
+  transform: translateY(-10px) scale(1.1);
+  color: white;
+  transition: transform 0.4s cubic-bezier(0.86, 0, 0.07, 1),
+    background-color 0.4s ease;
+}
+.card {
+  box-shadow: 0 1px 2px 1px rgba(167, 183, 194, 0.6);
+}
+#card_button {
+  font-family: "Space Mono" !important;
+}
+
+.scrollable-menu {
+  padding: 6px 20px;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 200px;
+  overflow-y: scroll;
+}
+
+::ng-deep div#mat-menu-panel-0 {
+  box-shadow: 0 1px 2px 1px rgba(168, 182, 191, 0.6);
+  border-radius: 10px;
+}
+
+::ng-deep div#cdk-overlay-0 {
+  box-shadow: 0 1px 2px 1px rgba(168, 182, 191, 0.6);
+  border-radius: 10px;
 }
