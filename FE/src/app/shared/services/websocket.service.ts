@@ -7,21 +7,22 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class WebsocketService {
   private socket!: WebSocket;
-  private readonly socketUrl: string = 'ws://localhost:8000/room';
+  private readonly socketUrl: string =
+  'ws://localhost:8000/room';
   public connected: boolean = false;
   public recievedMessage: BehaviorSubject<any> = new BehaviorSubject('');
   constructor(private toast: ToastService) {}
 
-  public connect(roomId: string): void {
+  public connect(roomId: string, userId: string): void {
     this.socket = new WebSocket(`${this.socketUrl}/${roomId}`);
-    this.socket.onopen = (event: Event): void => {
+    this.socket.onopen = (): void => {
       this.connected = true;
+      this.socket.send(JSON.stringify({ userId: userId }));
     };
 
     this.socket.onmessage = (event: MessageEvent<string>): void => {
       const message: string = event.data;
       this.recievedMessage.next(message);
-      // this.toast.showToast(message, toastState.success);
     };
 
     this.socket.onclose = (event: Event): void => {
@@ -30,7 +31,7 @@ export class WebsocketService {
     };
 
     this.socket.onerror = (): void => {
-      this.toast.showToast('Something went Bad', toastState.danger );
+      this.toast.showToast('Something went Bad', toastState.danger);
       this.connected = false;
     };
   }

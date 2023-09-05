@@ -1,4 +1,4 @@
-import { Component, Inject} from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { HeartbeatService } from '../shared/services/heartbeat.service';
@@ -22,7 +22,6 @@ export class ConfirmDialogComponent {
     }
   ) {}
 
-
   public confirm(): void {
     if (this.data.type == 'roomId') {
       this.router.navigate(['/room', this.data.value]);
@@ -32,7 +31,10 @@ export class ConfirmDialogComponent {
   }
 
   public cancel(): void {
-    this.router.navigate(['/']);
+    if (this.data.type == 'roomId') {
+      this.router.navigate(['/']);
+    }
     this.dialogRef.close();
+
   }
 }

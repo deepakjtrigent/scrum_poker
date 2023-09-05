@@ -120,7 +120,7 @@ export class RoomComponent implements OnInit, OnDestroy {
                   this.selectedPoints.push(
                     (usersData.userData as UserData).data?.storyPoints as number
                   );
-                }
+                } else usersData.actionType = 'STORY_POINT_NOT_SELECTED';
               });
               this.calculateAverage();
               this.isStoryPointsRevealed = true;
@@ -128,13 +128,11 @@ export class RoomComponent implements OnInit, OnDestroy {
             }
             case 'STORY_POINT_RESET': {
               this.usersArray.forEach((usersData: UserAction) => {
-                if ((usersData.userData as UserData).data?.storyPoints) {
-                  usersData.actionType = 'STORY_POINTS_PENDING';
-                  (userData.userData as UserData)['data'] = {
-                    storyPoints: null,
-                  };
-                  this.reset();
-                }
+                usersData.actionType = 'STORY_POINTS_PENDING';
+                (usersData.userData as UserData)['data'] = {
+                  storyPoints: null,
+                };
+                this.reset();
               });
               break;
             }
@@ -175,11 +173,7 @@ export class RoomComponent implements OnInit, OnDestroy {
     );
   }
 
-  public ngOnDestroy(): void {
-    this.websocketService.disconnect();
-    this.messageSubsscription.unsubscribe();
-    this.heartBeat.destroyHeartbeat();
-  }
+
 
   public updateStoryPoints(storyPoints: number, index: number): void {
     this.toggleActive(index);
@@ -219,8 +213,7 @@ export class RoomComponent implements OnInit, OnDestroy {
     userDetails.jobRole = this.userJobRole;
     this.roomService.joinRoom(this.roomId, userDetails).subscribe(
       (response) => {
-        console.log(response);
-        this.websocketService.connect(this.roomId);
+        this.websocketService.connect(this.roomId, userDetails.userId);
         this.heartBeat.startwithHeartBeat(this.roomId);
       },
       (error) => {
@@ -257,7 +250,7 @@ export class RoomComponent implements OnInit, OnDestroy {
               : '',
           },
           width: '310px',
-          height:'450px',
+          height: '450px',
         });
 
       userDialogRef.afterClosed().subscribe((response: any): void => {
@@ -272,8 +265,7 @@ export class RoomComponent implements OnInit, OnDestroy {
           this.storageService.storeJobRole(response.selectedJobRole);
           this.storageService.userDetails = this.user;
           this.joinRoom(this.user);
-        }
-        else this.router.navigate(['/'])
+        } else this.router.navigate(['/']);
       });
     } else {
       this.user = JSON.parse(userInCookies);
@@ -349,7 +341,7 @@ export class RoomComponent implements OnInit, OnDestroy {
                   (userData.userData as UserData).data?.storyPoints as number
                 );
               }
-            }
+            } else userData.actionType = 'STORY_POINT_NOT_SELECTED';
           });
           this.isStoryPointsRevealed = true;
           this.calculateAverage();
@@ -418,5 +410,10 @@ export class RoomComponent implements OnInit, OnDestroy {
     this.toggleActive(-1);
     this.storyPointsData.length = 0;
     this.isRevealBtnDisabled = true;
+  }
+  public ngOnDestroy(): void {
+    this.websocketService.disconnect();
+    this.messageSubsscription.unsubscribe();
+    this.heartBeat.destroyHeartbeat();
   }
 }

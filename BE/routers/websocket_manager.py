@@ -74,21 +74,26 @@ async def delete_user(websocket, room_id, user_id):
 @router.websocket("/room/{room_id}")
 async def websocket_endpoint(room_id: str, websocket: WebSocket):
     db = TinyDB('rooms_data_db.json')
-    rooms = db.table('rooms')
     await websocket.accept()
-    if rooms.contains(where('roomId') == room_id):
-        rooms = db.table('rooms')
-        Room = Query()
-        room_data_users = rooms.search(Room.roomId == room_id)[0]['users']
-        user_id = room_data_users[-1]['userId']
+    user_id = '',
+    # if rooms.contains(where('roomId') == room_id):
+    # rooms = db.table('rooms')
+    # Room = Query()
+    # room_data_users = rooms.search(Room.roomId == room_id)[0]['users']
+    # user_id = room_data_users[-1]['userId']
     if room_id not in room_websockets:
         room_websockets[room_id] = []
     room_websockets[room_id].append(
-        {"websocket": websocket, "user_id": user_id})
-    await send_message(room_id, websocket, user_id, "NEW_USER_JOINED")
+        {"websocket": websocket, "user_id": ""})
     try:
         while True:
-            await websocket.receive_text()
+            user_id_dict = json.loads(await websocket.receive_text())
+            user_id = user_id_dict['userId']
+            if 'userId' in user_id_dict:
+                for websocket_data in room_websockets[room_id]:
+                    if websocket_data['websocket'] == websocket:
+                        websocket_data['userId'] = user_id
+                        await send_message(room_id, websocket, user_id, "NEW_USER_JOINED")
     except Exception as e:
         await send_message(room_id, websocket, user_id, "USER_LEFT")
         await change_admin(room_id, user_id)

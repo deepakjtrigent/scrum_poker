@@ -19,9 +19,7 @@
               *ngFor="let activeUser of usersArray"
               (click)="$event.stopPropagation()"
             >
-              <ng-container
-                [ngSwitch]="activeUser.userData.jobRole"
-              >
+              <ng-container [ngSwitch]="activeUser.userData.jobRole">
                 <span *ngSwitchCase="emojiData[0].role">{{
                   emojiData[0].img
                 }}</span>
@@ -110,10 +108,15 @@
               />
               <p
                 *ngSwitchCase="'STORY_POINT_REVEAL'"
-                class="text-scrum-button-inner-text"
+                class="text-scrum-landing-page-text text-xl"
               >
                 {{ user.userData.data?.storyPoints }}
               </p>
+              <img
+                *ngSwitchCase="'STORY_POINT_NOT_SELECTED'"
+                src="../../assets/points_not_selected_state.svg"
+                alt="Story Point not Selected State"
+              />
               <img
                 *ngSwitchDefault
                 src="../../assets/pending-state.svg"
