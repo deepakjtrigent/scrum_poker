@@ -15,7 +15,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { ToastService, toastState } from '../shared/services/toast.service';
 import { Subscription } from 'rxjs';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
-import { emojiData } from '../shared/app-data/emoji-data';
+import { jobRole } from '../shared/app-data/emoji-data';
 
 @Component({
   selector: 'app-room',
@@ -43,7 +43,7 @@ export class RoomComponent implements OnInit, OnDestroy {
   public isDataStored!: boolean;
   public series: any[] = [];
   public Tshirts = Tshirts;
-  public emojiData = emojiData;
+  public jobRole = Object.keys(jobRole);
 
   constructor(
     private websocketService: WebsocketService,
@@ -177,6 +177,11 @@ export class RoomComponent implements OnInit, OnDestroy {
     );
   }
 
+
+  public getSampleValue(key: string | any): string | undefined {
+    return (jobRole as { [key: string]: string })[key];
+  }
+
   public ngOnDestroy(): void {
     this.websocketService.disconnect();
     this.messageSubsscription.unsubscribe();
@@ -186,6 +191,7 @@ export class RoomComponent implements OnInit, OnDestroy {
   public getKeyName(value: any): string {
     return Tshirts[value];
   }
+
 
   public updateStoryPoints(storyPoints: number | string, index: number): void {
     this.toggleActive(index);
@@ -282,7 +288,7 @@ export class RoomComponent implements OnInit, OnDestroy {
               : '',
             hideSeries: true,
           },
-          width: '310px',
+          width: '340px',
           height:'450px',
           },
          

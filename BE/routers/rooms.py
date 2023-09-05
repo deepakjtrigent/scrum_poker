@@ -12,19 +12,7 @@ from fastapi.encoders import jsonable_encoder
 
 router = APIRouter()
 
-
-
-# @router.post("/create_room", response_model=Dict[str, str])
-# async def create_room(request: Request, requestBody: seriesData):
-#     print(requestBody)
-#     room_id = str(uuid.uuid4())
-#     room_data = {"roomId": room_id,
-#                  'seriesName': requestBody.seriesName, "users": []}
-#     global admin_user_id
-#     admin_user_id = request.headers.get('SP-U')
-#     print(request.headers.get('SP-U'))
-#     save_data_in_db(room_data)
-
+@router.post("/create_room", response_model=Dict[str, str])
 async def create_room(requestBody: seriesData):
     room_id = str(uuid.uuid4())
     room_data = {"roomId": room_id,'seriesName': requestBody.seriesName, "users": []}

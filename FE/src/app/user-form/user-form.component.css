@@ -24,7 +24,7 @@
   height: 100px;
   width: 120px;
   border-radius: 20px;
-  margin-left: 95px;
+  margin-left: 120px;
 }
 .user-form-container {
   background-color: #fdfdfd;
@@ -109,3 +109,5 @@ input:focus {
   border: 2px solid rgb(207, 205, 205);
   outline: none;
 }
+
+

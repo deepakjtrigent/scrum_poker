@@ -1,92 +1,10 @@
-<!-- <h1 class="block p-4 text-2xl font-bold font-sans">Enter Details</h1>
-<div id="job-role-icon">
-  <span id="icon">{{ data.img }}</span>
-  <p class="job-role" id="selectedjobRole">{{ data.role }}</p>
-</div>
-<mat-dialog-content>
-  <form [formGroup]="userFormGroup">
-    <mat-form-field>
-      <mat-label>Display</mat-label>
-      <input
-        matInput
-        formControlName="displayName"
-        placeholder="Display Name"
-        type="text"
-        required/>
-      <mat-error *ngIf="displayName.invalid && displayName.touched">
-        {{ getErrorMessage() }}
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field>
-      <mat-label>Job Role</mat-label>
-      <mat-select
-        formControlName="selectedJobRole"
-        (selectionChange)="onRoleSelected()"
-        placeholder="Choose a Role"
-        required
-      >
-        <mat-option value="Select Here" disabled>Choose a Role</mat-option>
-        
-        <mat-option
-          [value]="role"
-          *ngFor="let role of emojiData; let index = index"
-        >
-          {{ role  | replace : '_' : ' ' | titlecase }}
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="selectedJobRole.invalid && selectedJobRole.touched">
-        {{ getSelectedJobRoleErrorMessage() }}
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field *ngIf="!data.hideSeries">
-      <mat-label >Card Series</mat-label>
-      <mat-select
-        formControlName="seriesFormControl"
-        placeholder="Choose a series"
-        required
-      >
-        <mat-option value="Select Here" disabled>Choose a series</mat-option>
-        <mat-option
-          [value]="role "
-          *ngFor="let role of seriesCount; let index = index"
-        >
-          {{ role }}
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="seriesFormControl.invalid && seriesFormControl.touched">
-        {{ getSelectedSeriesError() }}
-      </mat-error>
-    </mat-form-field>
-
-  </form>
-</mat-dialog-content>
-
-<mat-dialog-actions align="end">
-  <button
-    mat-raised-button
-    color="primary"
-    [mat-dialog-close]="{
-      displayName: displayName.value,
-      selectedJobRole: selectedJobRole.value,
-      seriesFormControl:seriesFormControl.value
-    }"
-    [disabled]="userFormGroup.invalid"
-  >
-    Enter Room
-  </button>
-</mat-dialog-actions> -->
-
-
-
 <div class="user-form-container">
   <h1 class="block p-4 text-lg font-medium font-inner-text ml-3">
     Enter Details
   </h1>
   <div id="job-role-icon">
     <span id="icon">{{ data.img }}</span>
-    <p class="job-role" id="selectedjobRole">{{ data.role }}</p>
+    <p class="job-role" id="selectedjobRole">{{ data.role |  replace : '_' : ' ' | titlecase }}</p>
   </div>
   <mat-dialog-content>
     <form [formGroup]="userFormGroup" class="w-full" >
@@ -114,7 +32,7 @@
           required
         >
           <mat-option value="Select Here" disabled>Choose a Role</mat-option>
-          <mat-option
+          <mat-option id="seriesName"
           [value]="role"
           *ngFor="let role of emojiData; let index = index"
         >

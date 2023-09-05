@@ -19,35 +19,36 @@
               *ngFor="let activeUser of usersArray"
               (click)="$event.stopPropagation()"
             >
+            
               <ng-container
                 [ngSwitch]="activeUser.userData.jobRole"
               >
-                <span *ngSwitchCase="emojiData[0].role">{{
-                  emojiData[0].img
+                <span *ngSwitchCase="jobRole[0]">{{
+                 getSampleValue(activeUser.userData.jobRole)
                 }}</span>
-                <span *ngSwitchCase="emojiData[1].role">{{
-                  emojiData[1].img
+                <span *ngSwitchCase="jobRole[1]">{{
+                  getSampleValue(activeUser.userData.jobRole)
                 }}</span>
-                <span *ngSwitchCase="emojiData[2].role">{{
-                  emojiData[2].img
+                <span *ngSwitchCase="jobRole[2]">{{
+                  getSampleValue(activeUser.userData.jobRole)
                 }}</span>
-                <span *ngSwitchCase="emojiData[3].role">{{
-                  emojiData[3].img
+                <span *ngSwitchCase="jobRole[3]">{{
+                  getSampleValue(activeUser.userData.jobRole)
                 }}</span>
-                <span *ngSwitchCase="emojiData[4].role">{{
-                  emojiData[4].img
+                <span *ngSwitchCase="jobRole[4]">{{
+                  getSampleValue(activeUser.userData.jobRole)
                 }}</span>
-                <span *ngSwitchCase="emojiData[5].role">{{
-                  emojiData[5].img
+                <span *ngSwitchCase="jobRole[5]">{{
+                  getSampleValue(activeUser.userData.jobRole)
                 }}</span>
-                <span *ngSwitchCase="emojiData[6].role">{{
-                  emojiData[6].img
+                <span *ngSwitchCase="jobRole[6]">{{
+                  getSampleValue(activeUser.userData.jobRole)
                 }}</span>
-                <span *ngSwitchCase="emojiData[7].role">{{
-                  emojiData[7].img
+                <span *ngSwitchCase="jobRole[7]">{{
+                  getSampleValue(activeUser.userData.jobRole)
                 }}</span>
-                <span *ngSwitchCase="emojiData[8].role">{{
-                  emojiData[8].img
+                <span *ngSwitchCase="jobRole[8]">{{
+                  getSampleValue(activeUser.userData.jobRole)
                 }}</span>
               </ng-container>
 
@@ -156,7 +157,7 @@
       >
         <ng-container *ngIf="!isStoryPointsRevealed; else storyPointsAverage">
           <button
-            *ngFor="let points of cardCounts; let index = index"
+            *ngFor="let points of series; let index = index"
             (click)="updateStoryPoints(points, index)"
             id="card_button"
             [class.active-button]="activeIndex === index"
