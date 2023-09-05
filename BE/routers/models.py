@@ -8,8 +8,12 @@ class User(BaseModel):
     jobRole :Optional[str]
 
 
+class seriesData(BaseModel):
+    seriesName:str
+
+    
 class User_data(BaseModel):
-    storyPoints: float
+    storyPoints: float | str
 
 
 class User_details (User):

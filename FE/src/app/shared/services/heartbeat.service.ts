@@ -10,19 +10,18 @@ import { WebsocketService } from './websocket.service';
 @Injectable({
   providedIn: 'root',
 })
-
 export class HeartbeatService {
   public isTabActive: boolean = true;
   public lastActive!: number;
   public heartbeatInterval: any;
   public currentTime!: number;
-  
+
   constructor(
     private cookieService: CookieService,
     private roomService: RoomService,
     private userDialog: MatDialog,
-    private router : Router,
-    private websocketService:WebsocketService
+    private router: Router,
+    private websocketService: WebsocketService
   ) {}
 
   public setUpVisibilityChange(): void {
@@ -31,7 +30,7 @@ export class HeartbeatService {
         this.isTabActive = false;
         this.lastActive = Date.now();
       } else {
-        this.isTabActive = true;    
+        this.isTabActive = true;
       }
     });
   }
@@ -45,7 +44,7 @@ export class HeartbeatService {
         userId: userInCookies.userId,
         displayName: userInCookies.displayName,
       },
-    };
+    };  
     if (this.isTabActive) {
       sendUserAction.actionType = 'SENT_HEARTBEAT';
     }
@@ -76,7 +75,7 @@ export class HeartbeatService {
   }
 
   public openConfirmDialog(roomId: string): void {
-    var timer:any;
+    var timer: any;
     const userDialogRef: MatDialogRef<ConfirmDialogComponent> =
       this.userDialog.open(ConfirmDialogComponent, {
         data: { type: 'roomId', value: roomId },
@@ -90,11 +89,11 @@ export class HeartbeatService {
      clearInterval(timer)
     });
 
-   var closeDialog=():void=>{
-    userDialogRef.close()
-    this.router.navigate(["/"])
-    this.websocketService.disconnect()
-   }
+    var closeDialog = (): void => {
+      userDialogRef.close();
+      this.router.navigate(['/']);
+      this.websocketService.disconnect();
+    };
   }
 
   public destroyHeartbeat(): void {
