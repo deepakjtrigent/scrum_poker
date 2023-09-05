@@ -7,7 +7,8 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class WebsocketService {
   private socket!: WebSocket;
-  private readonly socketUrl: string = 'ws://localhost:8000/room';
+  private readonly socketUrl: string =
+    'wss://scrum-poker-r05e.onrender.com/room';
   public connected: boolean = false;
   public recievedMessage: BehaviorSubject<any> = new BehaviorSubject('');
   constructor(private toast: ToastService) {}
@@ -17,7 +18,6 @@ export class WebsocketService {
     this.socket.onopen = (event: Event): void => {
       this.connected = true;
     };
-
     this.socket.onmessage = (event: MessageEvent<string>): void => {
       const message: string = event.data;
       this.recievedMessage.next(message);
@@ -30,7 +30,7 @@ export class WebsocketService {
     };
 
     this.socket.onerror = (): void => {
-      this.toast.showToast('Something went Bad', toastState.danger );
+      this.toast.showToast('Something went Bad', toastState.danger);
       this.connected = false;
     };
   }
