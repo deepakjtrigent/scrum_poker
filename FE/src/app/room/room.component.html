@@ -1,148 +1,278 @@
-<div
-  class="w-screen flex justify-around h-screen flex-col items-center xxs:h-auto overflow-hidden"
->
-  <div class="w-full flex justify-end items-center p-2">
-    <button mat-icon-button [matMenuTriggerFor]="menu">
-      <mat-icon>groups</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      <button
-        mat-menu-item
-        *ngFor="let activeUser of usersArray"
-        (click)="$event.stopPropagation()"
-      >
-        <ng-container [ngSwitch]="activeUser.userData.jobRole">
-          <span *ngSwitchCase="emojiData[0].role">{{ emojiData[0].img }}</span>
-          <span *ngSwitchCase="emojiData[1].role">{{ emojiData[1].img }}</span>
-          <span *ngSwitchCase="emojiData[2].role">{{ emojiData[2].img }}</span>
-          <span *ngSwitchCase="emojiData[3].role">{{ emojiData[3].img }}</span>
-          <span *ngSwitchCase="emojiData[4].role">{{ emojiData[4].img }}</span>
-          <span *ngSwitchCase="emojiData[5].role">{{ emojiData[5].img }}</span>
-          <span *ngSwitchCase="emojiData[6].role">{{ emojiData[6].img }}</span>
-          <span *ngSwitchCase="emojiData[7].role">{{ emojiData[7].img }}</span>
-          <span *ngSwitchCase="emojiData[8].role">{{ emojiData[8].img }}</span>
-        </ng-container>
-
-        <span>{{ activeUser.userData.displayName | titlecase }} <span *ngIf="activeUser.userData.isAdmin">(Admin)</span></span>
-        <button
-          *ngIf="user.isAdmin && !activeUser.userData.isAdmin"
-          mat-icon-button
-          [matMenuTriggerFor]="menu"
-        >
-          <mat-icon>more_horiz</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="changeAdminUser(activeUser.userData)">
-            <span>Set As Admin</span>
-          </button>
-        </mat-menu>
-      </button>
-    </mat-menu>
-    <p class="mx-6 font-mono flex flex-col items-center">
-      <span class="font-semibold  text-xl">{{ user.displayName | titlecase }}</span>
-      <span class="text-sm font-medium">{{user.jobRole | titlecase}}</span>
-    </p>
-  </div>
+<div class="main">
   <div
-    class="w-full h-3/4 xxs:h-[550px] xs:h-[700px] overflow-hidden flex flex-col justify-center items-center gap-7 xxs:gap-3 xs:gap-4"
+    class="w-screen flex justify-around h-screen flex-col items-center xxs:h-auto overflow-hidden"
   >
     <div
-      class="w-1/2 h-3/5 xxs:w-[250px] xxs:p-0 xxs:h-[330px] xs:w-[380px] xs:h-[450px] sm:w-[600px] md:w-9/12 lg:w-8/12 xxs:grid-cols-3 xs:grid-cols-3 xxs:gap-4 xs:gap-6 grid grid-cols-5 gap-14 justify-items-center overflow-y-auto overflow-x-hidden p-5 xs:p-1"
+      class="w-full flex justify-between items-center align-middle mt-6 ml-24"
     >
-      <div
-        *ngFor="let user of usersArray"
-        class="text-primary-color font-bold w-[120px] h-[120px] xxs:w-[70px] xs:w-[90px] font-sans text-sm flex flex-col justify-center items-center gap-2 animate-popin-animation"
-      >
-        <ng-container [ngSwitch]="user.actionType">
-          <img
-            *ngSwitchCase="'STORY_POINT_SELECTION'"
-            src="../../assets/selected-state.svg"
-            alt="Selected State"
-          />
-          <img
-            *ngSwitchCase="'STORY_POINT_HIDDEN'"
-            src="../../assets/hidden-state.svg"
-            alt="Hidden State"
-          />
-          <p *ngSwitchCase="'STORY_POINT_REVEAL'">
-            {{ user.userData.data?.storyPoints }}
-          </p>
-          <img
-            *ngSwitchDefault
-            src="../../assets/pending-state.svg"
-            alt="Pending State"
-          />
-        </ng-container>
-        <p>
-          {{
-            user.userData.displayName.length < 14
-              ? user.userData.displayName
-              : user.userData.displayName.slice(0, 12)
-          }}<span *ngIf="user.userData.displayName.length > 14">...</span>
-        </p>
-      </div>
-    </div>
-
-    <button
-      *ngIf="!isStoryPointsRevealed && this.user.isAdmin"
-      [disabled]="isRevealBtnDisabled"
-      mat-raised-button
-      class="mt-12 xxs:mt-10 sm:mt-14 md:mt-10"
-      (click)="revealStoryPoints()"
-    >
-      REVEAL
-    </button>
-    <button
-      *ngIf="isStoryPointsRevealed && this.user.isAdmin"
-      class="mt-12 xxs:mt-10 sm:mt-14 md:mt-10"
-      mat-raised-button
-      (click)="resetStoryPoints()"
-    >
-      RESET
-    </button>
-  </div>
-
-  <div
-    class="flex flex-row flex-wrap justify-center items-center md:h-28 gap-3 mx-3 my-2 text-justify xxs:w-[260px] sm: w-[334px] md:w-auto animate-popin-animation"
-  >
-    <ng-container *ngIf="!isStoryPointsRevealed; else storyPointsAverage">
-      <button
-        *ngFor="let points of cardCounts; let index = index"
-        (click)="updateStoryPoints(points, index)"
-        id="card_button"
-        [class.active-button]="activeIndex === index"
-        class="card-hover hover:bg-primary-color active:bg-primary-shade-color w-[56px] h-[84px] rounded-md bg-white text-gray-800 mt-3 font-semibold py-2 px-4 border border-gray-800 shadow-md transition"
-      >
-        {{ points }}
-      </button>
-    </ng-container>
-  </div>
-
-  <ng-template #storyPointsAverage>
-    <ng-container *ngFor="let data of storyPointsData">
-      <div
-        class="flex flex-row justify-center items-center gap-2 xxs:hidden xs:hidden"
-      >
-        <button
-          class="w-[56px] h-[84px] rounded-md bg-white text-gray-800 font-semibold py-2 px-4 border border-gray-800 shadow-md transition"
-        >
-          {{ data.points }}
+      <img
+        src="../../assets/scrum_poker.svg"
+        class="h-12 mr-3"
+        alt="Scrum Poker Logo"
+      />
+      <div class="flex mr-24 items-center justify-center">
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon class="group_icon flex justify-center items-center">groups</mat-icon>
         </button>
-        <p
-          class="flex justify-center text-base text-scrum-text-color text-center font-card-points"
-        >
-          &#215;{{ data.repetition }}
-        </p>
-      </div>
-    </ng-container>
+        <mat-menu #menu="matMenu" xPosition="after">
+          <div
+            id="spacer"
+            class="scrollable-menu flex flex-col items-center justify-between"
+          >
+            <div
+              mat-menu-item 
+              *ngFor="let activeUser of usersArray"
+              (click)="$event.stopPropagation()"
+            >
+              <div class="flex flex-row items-center namefield">
+                <ng-container [ngSwitch]="activeUser.userData.jobRole">
+                  <span *ngSwitchCase="emojiData[0].role">{{
+                    emojiData[0].img
+                  }}</span>
+                  <span *ngSwitchCase="emojiData[1].role">{{
+                    emojiData[1].img
+                  }}</span>
+                  <span *ngSwitchCase="emojiData[2].role">{{
+                    emojiData[2].img
+                  }}</span>
+                  <span *ngSwitchCase="emojiData[3].role">{{
+                    emojiData[3].img
+                  }}</span>
+                  <span *ngSwitchCase="emojiData[4].role">{{
+                    emojiData[4].img
+                  }}</span>
+                  <span *ngSwitchCase="emojiData[5].role">{{
+                    emojiData[5].img
+                  }}</span>
+                  <span *ngSwitchCase="emojiData[6].role">{{
+                    emojiData[6].img
+                  }}</span>
+                  <span *ngSwitchCase="emojiData[7].role">{{
+                    emojiData[7].img
+                  }}</span>
+                  <span *ngSwitchCase="emojiData[8].role">{{
+                    emojiData[8].img
+                  }}</span>
+                </ng-container>
 
-    <div class="flex items-center gap-2">
-      <img src="../../assets/approximate-symbol.svg" alt="Approximate Symbol" />
-      <div
-        class="py-3 px-6 outline-none bg-primary-color text-xl leading-6 rounded-[28px] shadow shadow-slate-500/50"
-      >
-        {{ averageStoryPointsValue | number : "1.1-2" }}
+                <div
+                  id="test"
+                  class="text-main-text flex flex-row items-center justify-start ml-2"
+                >
+                  {{
+                    activeUser.userData.displayName.length < 8
+                      ? activeUser.userData.displayName
+                      : (activeUser.userData.displayName.slice(0, 8)
+                        | titlecase)
+                  }}
+                  <div
+                    class="text-main-text"
+                    *ngIf="activeUser.userData.displayName.length > 14"
+                  >
+                    ...
+                  </div>
+                  <div class="text-main-text admin_button">
+                    <div *ngIf="activeUser.userData.isAdmin"><span class="material-symbols-outlined">
+                      admin_panel_settings
+                      </span></div>
+                  </div>
+                </div>
+                <div class="change_admin_icon">
+                  <button
+                    *ngIf="user.isAdmin && !activeUser.userData.isAdmin"
+                    mat-icon-button
+                    [matMenuTriggerFor]="menu"
+                  >
+                    <mat-icon>more_horiz</mat-icon>
+                  </button>
+                </div>
+              </div>
+
+              <mat-menu #menu="matMenu" yPosition="below">
+                <button
+                  class="p-0"
+                  mat-menu-item
+                  (click)="changeAdminUser(activeUser.userData)"
+                >
+                  <span>Set As Admin</span>
+                </button>
+              </mat-menu>
+            </div>
+          </div>
+        </mat-menu>
+        <p class="ml-6 font-mono flex flex-col items-center">
+          <span class="font-semibold text-xl text-main-text">{{
+            user.displayName | titlecase
+          }}</span>
+          <span class="text-sm font-medium font-inner-text text-main-text">{{
+            user.jobRole | titlecase
+          }}</span>
+        </p>
+          <span class="text-sm font-medium font-inner-text text-main-text mt-1.5 ml-2">
+            <ng-container [ngSwitch]="user.jobRole">
+              <span *ngSwitchCase="emojiData[0].role" class="text-3xl">{{
+                emojiData[0].img
+              }}</span>
+              <span *ngSwitchCase="emojiData[1].role" class="text-3xl">{{
+                emojiData[1].img
+              }}</span>
+              <span *ngSwitchCase="emojiData[2].role" class="text-3xl">{{
+                emojiData[2].img
+              }}</span>
+              <span *ngSwitchCase="emojiData[3].role" class="text-3xl">{{
+                emojiData[3].img
+              }}</span>
+              <span *ngSwitchCase="emojiData[4].role" class="text-3xl">{{
+                emojiData[4].img
+              }}</span>
+              <span *ngSwitchCase="emojiData[5].role" class="text-3xl">{{
+                emojiData[5].img
+              }}</span>
+              <span *ngSwitchCase="emojiData[6].role" class="text-3xl">{{
+                emojiData[6].img
+              }}</span>
+              <span *ngSwitchCase="emojiData[7].role" class="text-3xl">{{
+                emojiData[7].img
+              }}</span>
+              <span *ngSwitchCase="emojiData[8].role" class="text-3xl">{{
+                emojiData[8].img
+              }}</span>
+            </ng-container>
+          </span>
+        
       </div>
     </div>
-  </ng-template>
+    <div
+      class="w-screen flex justify-around h-screen flex-col xxs:h-auto overflow-hidden"
+    >
+      <div
+        class="w-full h-3/4 xxs:h-[550px] xs:h-[700px] overflow-hidden flex flex-col justify-center items-center gap-7 xxs:gap-3 xs:gap-4"
+      >
+        <div
+          class="w-1/2 h-3/5 xxs:w-[250px] xxs:p-0 xxs:h-[330px] xs:w-[380px] xs:h-[450px] sm:w-[600px] md:w-9/12 lg:w-8/12 xxs:flex-cols-3 xs:flex-cols-3 xxs:gap-4 xs:gap-6 flex flex-wrap gap-14 justify-center overflow-y-auto overflow-x-hidden p-5 xs:p-1"
+        >
+          <div
+            *ngFor="let user of usersArray"
+            class="text-primary-color font-bold w-[120px] xxs:w-[70px] xs:w-[90px] font-sans text-sm flex flex-col justify-center items-center gap-2 animate-popin-animation"
+          >
+            <ng-container [ngSwitch]="user.actionType">
+              <img
+                *ngSwitchCase="'STORY_POINT_SELECTION'"
+                src="../../assets/selected-state.svg"
+                alt="Selected State"
+              />
+              <img
+                *ngSwitchCase="'STORY_POINT_HIDDEN'"
+                src="../../assets/hidden-state.svg"
+                alt="Hidden State"
+              />
+              <p
+                *ngSwitchCase="'STORY_POINT_REVEAL'"
+                class="text-scrum-button-inner-text"
+              >
+                {{ user.userData.data?.storyPoints }}
+              </p>
+              <img
+                *ngSwitchDefault
+                src="../../assets/pending-state.svg"
+                alt="Pending State"
+              />
+            </ng-container>
+            <p class="text-main-text">
+              {{
+                user.userData.displayName.length < 14
+                  ? user.userData.displayName
+                  : user.userData.displayName.slice(0, 12)
+              }}<span
+                class="text-main-text"
+                *ngIf="user.userData.displayName.length > 14"
+                >...</span
+              >
+            </p>
+          </div>
+        </div>
+
+        <button
+          *ngIf="!isStoryPointsRevealed && this.user.isAdmin"
+          [disabled]="isRevealBtnDisabled"
+          class="mt-12 xxs:mt-10 sm:mt-14 md:mt-10 bg-scrum-button-inner-background hover:bg-hover-color active:bg-active-color font-medium text-scrum-button-inner-text px-6 py-2 rounded-lg"
+          (click)="revealStoryPoints()"
+        >
+          REVEAL
+        </button>
+        <button
+          *ngIf="isStoryPointsRevealed && this.user.isAdmin"
+          class="mt-12 xxs:mt-10 sm:mt-14 md:mt-10 bg-scrum-button-inner-background hover:bg-hover-color active:bg-active-color font-medium text-scrum-button-inner-text px-6 py-2 rounded-lg"
+          (click)="resetStoryPoints()"
+        >
+          RESET
+        </button>
+      </div>
+
+      <div
+        class="flex flex-row flex-wrap justify-center items-center md:h-28 gap-3 mx-3 my-2 text-justify xxs:w-[260px] sm: w-[334px] md:w-auto animate-popin-animation"
+      >
+        <ng-container *ngIf="!isStoryPointsRevealed; else storyPointsAverage">
+          <button
+            *ngFor="let points of cardCounts; let index = index"
+            (click)="updateStoryPoints(points, index)"
+            id="card_button"
+            [class.active-button]="activeIndex === index"
+            class="card hover:bg-card-light active:bg-primary-shade-color w-[56px] h-[84px] rounded-md bg-white text-scrum-button-inner-text mt-3 font-semibold py-2 px-4 transition"
+          >
+            {{ points }}
+          </button>
+        </ng-container>
+      </div>
+
+      <ng-template #storyPointsAverage>
+        <ng-container *ngFor="let data of storyPointsData">
+          <div
+            class="flex flex-row justify-center items-center gap-2 xxs:hidden xs:hidden"
+          >
+            <button
+              class="w-[56px] h-[84px] rounded-md bg-white text-scrum-button-inner-text font-semibold py-2 px-4 box shadow-md transition"
+            >
+              {{ data.points }}
+            </button>
+            <p
+              class="flex justify-center text-scrum-button-inner-text text-center font-card-points text-lg"
+            >
+              &#215;{{ data.repetition }}
+            </p>
+          </div>
+        </ng-container>
+
+        <div class="flex items-center gap-2">
+          <img
+            src="../../assets/approximate-symbol.svg"
+            alt="Approximate Symbol"
+          />
+          <div
+            class="py-3 px-6 outline-none bg-scrum-button-inner-background text-lg leading-6 rounded-[28px] shadow text-scrum-button-inner-text"
+          >
+            {{ averageStoryPointsValue | number : "1.1-2" }}
+          </div>
+        </div>
+      </ng-template>
+    </div>
+
+    <ng-template #restart>
+      <button class="mt-12 xxs:mt-10 sm:mt-14 md:mt-0" mat-raised-button>
+        Restart
+      </button>
+    </ng-template>
+
+    <ng-template #pointsSelectedState>
+      <img src="../../assets/selected-state.svg" alt="Selected State" />
+    </ng-template>
+
+    <ng-template #pointsHiddenState>
+      <img
+        src="../../assets/hidden-state.svg"
+        alt="Hidden State"
+        class="opacity-50"
+      />
+    </ng-template>
+  </div>
 </div>

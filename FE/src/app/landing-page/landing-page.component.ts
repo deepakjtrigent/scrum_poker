@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { RoomService } from '../shared/services/room.service';
 import { CreateRoomResponse } from '../shared/model/roomId';
 import { toastState } from '../shared/services/toast.service';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef,MatDialogContainer } from '@angular/material/dialog';
 import { UserFormComponent } from '../user-form/user-form.component';
 import { v4 as uuidv4 } from 'uuid';
 import { User, defaultsUser } from '../shared/model/user';
@@ -54,7 +54,8 @@ export class LandingPageComponent {
       const userDialogRef: MatDialogRef<UserFormComponent> =
         this.userDialog.open(UserFormComponent, {
           data: { role: 'Scrum Master', img: '👩‍🏫', disable: true,displayName:this.isDataStored ? JSON.parse(userInCookies).displayName: "" },
-          width: '400px',
+          width: '300px',
+          height:'410px',
         });
 
       userDialogRef.afterClosed().subscribe((response: any): void => {

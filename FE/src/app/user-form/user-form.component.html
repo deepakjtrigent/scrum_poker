@@ -1,58 +1,73 @@
-<h1 class="block p-4 text-2xl font-bold font-sans">Enter Details</h1>
-<div id="job-role-icon">
-  <span id="icon">{{ data.img }}</span>
-  <p class="job-role" id="selectedjobRole">{{ data.role }}</p>
-</div>
-<mat-dialog-content>
-  <form [formGroup]="userFormGroup">
-    <mat-form-field>
-      <mat-label>Display</mat-label>
-      <input
-        matInput
-        formControlName="displayName"
-        placeholder="Display Name"
-        type="text"
-        required
-       
-      />
-      <mat-error *ngIf="displayName.invalid && displayName.touched">
-        {{ getErrorMessage() }}
-      </mat-error>
-    </mat-form-field>
+<div class="user-form-container">
 
-    <mat-form-field>
-      <mat-label>Job Role</mat-label>
-      <mat-select
-        formControlName="selectedJobRole"
-        (selectionChange)="onRoleSelected()"
-        placeholder="Choose a Role"
-        required
-      >
-        <mat-option value="Select Here" disabled>Choose a Role</mat-option>
-        <mat-option
-          [value]="role.role"
-          *ngFor="let role of emojiData; let index = index"
+  <div class="block p-2 text-base font-normal font-inner-text ml-4">
+    Scrum-A-Lot
+  </div>
+  <hr>
+  <div id="job-role-icon">
+    <span id="icon">{{ data.img }}</span>
+    <p class="job-role" id="selectedjobRole">{{ data.role }}</p>
+  </div>
+  <mat-dialog-content>
+    <form [formGroup]="userFormGroup" class="w-full" >
+      <div class="w-full px-1">
+        <input
+          type="text"
+          id="displayName"
+          class="w-full"
+          formControlName="displayName"
+          placeholder="A Story needs a name...."
+          type="text"
+          required
+        />
+        <div
+          class="min-h-[30px] h-[30px] leading-4 invisible py-1 px-2 flex justify-center"
+          [class.error]="displayName.invalid && displayName.touched"
         >
-          {{ role.role }}
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="selectedJobRole.invalid && selectedJobRole.touched">
-        {{ getSelectedJobRoleErrorMessage() }}
-      </mat-error>
-    </mat-form-field>
-  </form>
-</mat-dialog-content>
+          <p
+            *ngIf="displayName.invalid && displayName.touched"
+            class="animate-error-animation"
+          >
+            {{ getErrorMessage() }}
+          </p>
+        </div>
+      </div>
 
-<mat-dialog-actions align="end">
-  <button
-    mat-raised-button
-    color="primary"
-    [mat-dialog-close]="{
-      displayName: displayName.value,
-      selectedJobRole: selectedJobRole.value
-    }"
-    [disabled]="userFormGroup.invalid"
-  >
-    Enter Room
-  </button>
-</mat-dialog-actions>
+      <mat-form-field>
+        <mat-label>Job Role</mat-label>
+        <mat-select
+          formControlName="selectedJobRole"
+          (selectionChange)="onRoleSelected()"
+          placeholder="Choose a Role"
+          required
+        >
+          <mat-option value="Select Here" disabled>Choose a Role</mat-option>
+          <mat-option
+            [value]="role.role"
+            *ngFor="let role of emojiData; let index = index"
+      
+            class="text-main-text"
+          >
+            {{ role.role }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="selectedJobRole.invalid && selectedJobRole.touched">
+          {{ getSelectedJobRoleErrorMessage() }}
+        </mat-error>
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="center">
+    <button
+      [mat-dialog-close]="{
+        displayName: displayName.value,
+        selectedJobRole: selectedJobRole.value
+      }"
+      [disabled]="userFormGroup.invalid"
+      class="bg-scrum-button-inner-background hover:bg-hover-color active:bg-active-color font-medium text-scrum-button-inner-text py-3 mx-5 rounded-lg w-full"
+    >
+      Enter Room
+    </button>
+  </mat-dialog-actions>
+</div>
