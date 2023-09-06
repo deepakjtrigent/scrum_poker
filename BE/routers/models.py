@@ -1,4 +1,5 @@
-from typing import Dict, Optional, Union
+from ctypes import Union
+from typing import Optional
 from pydantic import BaseModel
 
 
@@ -13,7 +14,7 @@ class seriesData(BaseModel):
 
 
 class User_data(BaseModel):
-    storyPoints: float
+    storyPoints: Union[str, float]
 
 
 class User_details (User):
