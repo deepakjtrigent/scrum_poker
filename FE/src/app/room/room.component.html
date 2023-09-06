@@ -11,59 +11,59 @@
         alt="Scrum Poker Logo"
       />
       <div class="flex mr-24 items-center justify-center">
-        <button [matMenuTriggerFor]="menu" class="grouping_button flex flex-row">
-      
+        <button
+          [matMenuTriggerFor]="menu"
+          class="grouping_button flex flex-row"
+        >
           <mat-icon class="group_icon items-center ml-2">groups</mat-icon>
-          <div class="font-inner-text text-base ml-2 text-main-text mr-2">Collaborators</div>
-          
+          <div class="font-inner-text text-base ml-2 text-main-text mr-2">
+            Collaborators
+          </div>
         </button>
         <mat-menu #menu="matMenu" xPosition="after">
-          
           <div
             id="spacer"
             class="scrollable-menu flex flex-col items-center justify-between"
           >
             <div
-              mat-menu-item 
+              mat-menu-item
               *ngFor="let activeUser of usersArray"
               (click)="$event.stopPropagation()"
             >
-<div class="flex flex-row items-center namefield">
-              <ng-container
-                [ngSwitch]="activeUser.userData.jobRole"
-              >
-                <span *ngSwitchCase="jobRole[0]">{{
-                 getSampleValue(activeUser.userData.jobRole)
-                }}</span>
-                <span *ngSwitchCase="jobRole[1]">{{
-                  getSampleValue(activeUser.userData.jobRole)
-                }}</span>
-                <span *ngSwitchCase="jobRole[2]">{{
-                  getSampleValue(activeUser.userData.jobRole)
-                }}</span>
-                <span *ngSwitchCase="jobRole[3]">{{
-                  getSampleValue(activeUser.userData.jobRole)
-                }}</span>
-                <span *ngSwitchCase="jobRole[4]">{{
-                  getSampleValue(activeUser.userData.jobRole)
-                }}</span>
-                <span *ngSwitchCase="jobRole[5]">{{
-                  getSampleValue(activeUser.userData.jobRole)
-                }}</span>
-                <span *ngSwitchCase="jobRole[6]">{{
-                  getSampleValue(activeUser.userData.jobRole)
-                }}</span>
-                <span *ngSwitchCase="jobRole[7]">{{
-                  getSampleValue(activeUser.userData.jobRole)
-                }}</span>
-                <span *ngSwitchCase="jobRole[8]">{{
-                  getSampleValue(activeUser.userData.jobRole)
-                }}</span>
-              </ng-container>
+              <div class="flex flex-row items-center namefield">
+                <ng-container [ngSwitch]="activeUser.userData.jobRole">
+                  <span *ngSwitchCase="jobRole[0]">{{
+                    getSampleValue(activeUser.userData.jobRole)
+                  }}</span>
+                  <span *ngSwitchCase="jobRole[1]">{{
+                    getSampleValue(activeUser.userData.jobRole)
+                  }}</span>
+                  <span *ngSwitchCase="jobRole[2]">{{
+                    getSampleValue(activeUser.userData.jobRole)
+                  }}</span>
+                  <span *ngSwitchCase="jobRole[3]">{{
+                    getSampleValue(activeUser.userData.jobRole)
+                  }}</span>
+                  <span *ngSwitchCase="jobRole[4]">{{
+                    getSampleValue(activeUser.userData.jobRole)
+                  }}</span>
+                  <span *ngSwitchCase="jobRole[5]">{{
+                    getSampleValue(activeUser.userData.jobRole)
+                  }}</span>
+                  <span *ngSwitchCase="jobRole[6]">{{
+                    getSampleValue(activeUser.userData.jobRole)
+                  }}</span>
+                  <span *ngSwitchCase="jobRole[7]">{{
+                    getSampleValue(activeUser.userData.jobRole)
+                  }}</span>
+                  <span *ngSwitchCase="jobRole[8]">{{
+                    getSampleValue(activeUser.userData.jobRole)
+                  }}</span>
+                </ng-container>
 
                 <div
                   id=""
-                  class=" text-main-text flex flex-row items-center font-inner-text justify-start ml-2 mt-1 text-base"
+                  class="text-main-text flex flex-row items-center font-inner-text justify-start ml-2 mt-1 text-base"
                 >
                   {{
                     activeUser.userData.displayName.length < 14
@@ -78,9 +78,12 @@
                     ...
                   </div>
                   <div class="text-main-text admin_button font-inner-text">
-                    <div *ngIf="activeUser.userData.isAdmin"><div class="material-symbols-outlined ml-1">
-                      admin_panel_settings
-                    </div><p class="admin_title">Admin</p></div>
+                    <div *ngIf="activeUser.userData.isAdmin">
+                      <div class="material-symbols-outlined ml-1 mt-1 ">
+                        admin_panel_settings
+                      </div>
+                      <p class="admin_title">Admin</p>
+                    </div>
                   </div>
                 </div>
                 <div class="change_admin_icon">
@@ -100,7 +103,9 @@
                   mat-menu-item
                   (click)="changeAdminUser(activeUser.userData)"
                 >
-                  <span class="font-inner-text text-main-text text-base">Set As Admin</span>
+                  <span class="font-inner-text text-main-text text-base"
+                    >Set As Admin</span
+                  >
                 </button>
               </mat-menu>
             </div>
@@ -108,44 +113,44 @@
         </mat-menu>
         <p class="ml-6 font-mono flex flex-col items-center">
           <span class="font-inner-text text-lg text-main-text">{{
-            user.displayName.length < 10 ? user.displayName: (user.displayName.slice(0,10)|titlecase)
+            user.displayName
           }}</span>
-          <span class="font-inner-text text-main-text text-base">{{
-            user.jobRole
+
+          <span class="font-inner-text text-main-text text-sm">{{
+            user.jobRole | replace:'_':' '
           }}</span>
         </p>
-          <span class="font-inner-text text-main-text mt-1 ml-2 emoji_data">
-            <ng-container [ngSwitch]="user.jobRole">
-              <span *ngSwitchCase="jobRole[0]" class="text-3xl">{{
-                getSampleValue(user.jobRole)
-              }}</span>
-              <span *ngSwitchCase="jobRole[1]" class="text-3xl">{{
-                getSampleValue(user.jobRole)
-              }}</span>
-              <span *ngSwitchCase="jobRole[2]" class="text-3xl">{{
-                getSampleValue(user.jobRole)
-              }}</span>
-              <span *ngSwitchCase="jobRole[3]" class="text-3xl">{{
-                getSampleValue(user.jobRole)
-              }}</span>
-              <span *ngSwitchCase="jobRole[4]" class="text-3xl">{{
-                getSampleValue(user.jobRole)
-              }}</span>
-              <span *ngSwitchCase="jobRole[5]" class="text-3xl">{{
-                getSampleValue(user.jobRole)
-              }}</span>
-              <span *ngSwitchCase="jobRole[6]" class="text-3xl">{{
-                getSampleValue(user.jobRole)
-              }}</span>
-              <span *ngSwitchCase="jobRole[7]" class="text-3xl">{{
-                getSampleValue(user.jobRole)
-              }}</span>
-              <span *ngSwitchCase="jobRole[8]" class="text-3xl">{{
-                getSampleValue(user.jobRole)
-              }}</span>
-            </ng-container>
-          </span>
-        
+        <span class="font-inner-text text-main-text mt-1 ml-2 emoji_data">
+          <ng-container [ngSwitch]="user.jobRole">
+            <span *ngSwitchCase="jobRole[0]" class="text-3xl">{{
+              getSampleValue(user.jobRole)
+            }}</span>
+            <span *ngSwitchCase="jobRole[1]" class="text-3xl">{{
+              getSampleValue(user.jobRole)
+            }}</span>
+            <span *ngSwitchCase="jobRole[2]" class="text-3xl">{{
+              getSampleValue(user.jobRole)
+            }}</span>
+            <span *ngSwitchCase="jobRole[3]" class="text-3xl">{{
+              getSampleValue(user.jobRole)
+            }}</span>
+            <span *ngSwitchCase="jobRole[4]" class="text-3xl">{{
+              getSampleValue(user.jobRole)
+            }}</span>
+            <span *ngSwitchCase="jobRole[5]" class="text-3xl">{{
+              getSampleValue(user.jobRole)
+            }}</span>
+            <span *ngSwitchCase="jobRole[6]" class="text-3xl">{{
+              getSampleValue(user.jobRole)
+            }}</span>
+            <span *ngSwitchCase="jobRole[7]" class="text-3xl">{{
+              getSampleValue(user.jobRole)
+            }}</span>
+            <span *ngSwitchCase="jobRole[8]" class="text-3xl">{{
+              getSampleValue(user.jobRole)
+            }}</span>
+          </ng-container>
+        </span>
       </div>
     </div>
     <div
@@ -188,9 +193,9 @@
               {{
                 user.userData.displayName.length < 14
                   ? user.userData.displayName
-                  : user.userData.displayName.slice(0, 12)
+                  : user.userData.displayName.slice(0, 8)
               }}<span
-                class="text-main-text "
+                class="text-main-text"
                 *ngIf="user.userData.displayName.length > 14"
                 >...</span
               >
@@ -222,7 +227,6 @@
           <button
             *ngFor="let points of series; let index = index"
             (click)="updateStoryPoints(points, index)"
-            
             [class.active-button]="activeIndex === index"
             class="card card_button hover:bg-card-light active:bg-primary-shade-color w-[56px] h-[84px] rounded-md bg-white text-scrum-button-inner-text mt-3 font-semibold py-2 px-4 transition"
           >
@@ -242,7 +246,7 @@
               {{ data.points }}
             </button>
             <p
-              class="flex justify-center card_button text-scrum-button-inner-text text-center font-card-points "
+              class="flex justify-center card_button text-scrum-button-inner-text text-center font-card-points"
             >
               &#215;{{ data.repetition }}
             </p>
@@ -255,7 +259,7 @@
             alt="Approximate Symbol"
           />
           <div
-            class="card_button py-3 px-6 outline-none bg-scrum-button-inner-background  leading-6 rounded-[28px] shadow text-scrum-button-inner-text font-semibold"
+            class="card_button py-3 px-6 outline-none bg-scrum-button-inner-background leading-6 rounded-[28px] shadow text-scrum-button-inner-text font-semibold"
           >
             {{ averageStoryPointsValue | number : "1.1-2" }}
           </div>
@@ -264,7 +268,10 @@
     </div>
 
     <ng-template #restart>
-      <button class="mt-12 xxs:mt-10 sm:mt-14 md:mt-0 font-inner-text text-main-text" mat-raised-button>
+      <button
+        class="mt-12 xxs:mt-10 sm:mt-14 md:mt-0 font-inner-text text-main-text"
+        mat-raised-button
+      >
         Restart
       </button>
     </ng-template>
