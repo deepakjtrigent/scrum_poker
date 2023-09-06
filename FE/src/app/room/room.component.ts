@@ -82,10 +82,19 @@ export class RoomComponent implements OnInit, OnDestroy {
               break;
             }
             case 'NEW_USER_JOINED': {
-              this.usersArray.push({
-                actionType: 'STORY_POINT_PENDING',
-                userData: userData.userData as UserData,
-              });
+              if (this.usersArray.length) {
+                const isUserPresent = this.usersArray.every(
+                  (userDetails: UserAction) =>
+                    (userDetails.userData as UserData).userId !=
+                    (userData.userData as UserData).userId
+                );
+                if (isUserPresent) {
+                  this.usersArray.push({
+                    actionType: 'STORY_POINT_PENDING',
+                    userData: userData.userData as UserData,
+                  });
+                }
+              }
               break;
             }
 
@@ -402,7 +411,7 @@ export class RoomComponent implements OnInit, OnDestroy {
       });
   }
   private calculateAverage(): void {
-    console.log(this.usersArray)
+    console.log(this.usersArray);
     let storyPointsSum: any;
     this.selectedPoints.sort((a, b) => a - b);
 
@@ -436,14 +445,13 @@ export class RoomComponent implements OnInit, OnDestroy {
         }
         if (typeof this.selectedPoints[i] != 'string') {
           storyPointsSum += this.selectedPoints[i];
-          
         } else {
           storyPointsSum += this.getKeyName(this.selectedPoints[i]);
         }
       }
     }
 
-    this.averageStoryPointsValue = (storyPointsSum / this.selectedPoints.length);
+    this.averageStoryPointsValue = storyPointsSum / this.selectedPoints.length;
   }
 
   private reset(): void {
