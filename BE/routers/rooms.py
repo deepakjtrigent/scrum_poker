@@ -1,23 +1,21 @@
-import asyncio
 import json
-from fastapi import APIRouter, HTTPException, Header, Request
+from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import JSONResponse
 from typing import Dict
 import uuid
 from routers.data_manager import save_data_in_db, update_data_in_db
 from routers.websocket_manager import room_websockets
 from tinydb import TinyDB, Query, where
-from routers.models import User_action, User_details
+from routers.models import User_action, User_details,seriesData
 from fastapi.encoders import jsonable_encoder
 
 
 router = APIRouter()
 
-
 @router.post("/create_room", response_model=Dict[str, str])
-async def create_room():
+async def create_room(requestBody: seriesData):
     room_id = str(uuid.uuid4())
-    room_data = {"roomId": room_id, "users": []}
+    room_data = {"roomId": room_id,'seriesName': requestBody.seriesName, "users": []}
     save_data_in_db(room_data, 'rooms')
     return {"room_id": room_id}
 
@@ -28,6 +26,8 @@ async def join_room(room_id: str, user_details: User_details):
     rooms = db.table('rooms')
     Room = Query()
     Users = Query()
+    seriesName=rooms.search(where('roomId')==room_id)[0]['seriesName']
+
     if rooms.contains(Room.roomId == room_id):
         if not rooms.contains((Room.users.any(Users.userId == user_details.userId)) & (Room.roomId == room_id)):
             users_in_room = rooms.search(
@@ -43,7 +43,7 @@ async def join_room(room_id: str, user_details: User_details):
                 }
             }
             update_data_in_db(user_to_be_stored, room_id)
-            return user_to_be_stored
+            return {"usersData":user_to_be_stored,"seriesName":seriesName}
         else:
             return JSONResponse(status_code=403, content={"error": "User is already in the room"})
     else:

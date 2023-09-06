@@ -10,16 +10,20 @@ import { v4 as uuidv4 } from 'uuid';
 import { User, defaultsUser } from '../shared/model/user';
 import { StorageService } from '../shared/services/storage.service';
 import { CookieService } from 'ngx-cookie-service';
+import { seriesNameList } from '../shared/app-data/scrum-points-series';
 
 @Component({
   selector: 'app-landing-page',
   templateUrl: './landing-page.component.html',
   styleUrls: ['./landing-page.component.css'],
 })
-
 export class LandingPageComponent {
   public user: User = defaultsUser;
   public isDataStored!: boolean;
+  public seriesSelected!: string;
+  public cardCount: any = seriesNameList;
+  private seriesName!: {};
+  public getSeriesName!: string;
 
   constructor(
     private toast: ToastService,
@@ -30,46 +34,64 @@ export class LandingPageComponent {
     private storageService: StorageService
   ) {}
 
-  public createRoom(): void {
-    this.roomService.createRoom().subscribe(
-      (response: CreateRoomResponse): void => {
-        const roomId: string = response.room_id;
-        this.router.navigate([`/room/${roomId}`]);
-      },
-      (error) => {
-        this.toast.showToast('Something went Bad', toastState.danger);
+  public accessKey(): any {
+    for (let key of Object.keys(seriesNameList)) {
+      if (seriesNameList[key as keyof typeof seriesNameList]  === this.seriesName) {
+        return key;
       }
-    );
+    }
+  }
+
+  public createRoom(): void {
+    if (this.seriesName) {
+      const getSeriesName:string = this.accessKey();
+      this.roomService.createRoom(getSeriesName).subscribe(
+        (response: CreateRoomResponse): void => {
+          const roomId: string = response.room_id;
+          this.router.navigate([`/room/${roomId}`]);
+        },
+        (error) => {
+          this.toast.showToast('Something went Bad', toastState.danger);
+        }
+      );
+    }
   }
 
   public openUserDialog(): void {
     const userInCookies = atob(this.cookieService.get('userDetails'));
-    const jobRole=atob(this.cookieService.get('JobRole'));
 
     if (userInCookies) {
-      this.isDataStored=true
-   }
-   
-    if (!jobRole || !userInCookies) {
-      const userDialogRef: MatDialogRef<UserFormComponent> =
-        this.userDialog.open(UserFormComponent, {
-          data: { role: 'Scrum Master', img: '👩‍🏫', disable: true,displayName:this.isDataStored ? JSON.parse(userInCookies).displayName: "" },
-          width: '300px',
-          height:'415px',
-        });
+      this.isDataStored = true;
+    }
 
-      userDialogRef.afterClosed().subscribe((response: any): void => {
-        if (response && response.displayName) {
-          if(!userInCookies){
+    const userDialogRef: MatDialogRef<UserFormComponent> = this.userDialog.open(
+      UserFormComponent,
+      {
+        data: {
+          role: 'SCRUM_MASTER',
+          img: '👩‍🏫',
+          disable: true,
+          displayName: this.isDataStored
+            ? JSON.parse(userInCookies).displayName
+            : '',
+        },
+        width: '350px',
+        height:'500px'
+      }
+    );
+
+    userDialogRef.afterClosed().subscribe((response: any): void => {
+      if (response) {
+        if (!userInCookies) {
           this.user.userId = uuidv4();
           this.user.displayName = response.displayName;
           this.storageService.storeUserInCookies(this.user);
-          }
-          this.storageService.storeJobRole(response.selectedJobRole)
-          this.storageService.userDetails = this.user;
-          this.createRoom();
         }
-      });
-    } else this.createRoom();
+        this.storageService.storeJobRole(response.selectedJobRole);
+        this.seriesName = response.seriesFormControl;
+        this.storageService.userDetails = this.user;
+        this.createRoom();
+      }
+    });
   }
 }
