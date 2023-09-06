@@ -402,6 +402,7 @@ export class RoomComponent implements OnInit, OnDestroy {
       });
   }
   private calculateAverage(): void {
+    console.log(this.usersArray)
     let storyPointsSum: any;
     this.selectedPoints.sort((a, b) => a - b);
 

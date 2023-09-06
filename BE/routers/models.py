@@ -13,7 +13,7 @@ class seriesData(BaseModel):
 
 
 class User_data(BaseModel):
-    storyPoints: Union[float, str]
+    storyPoints: float
 
 
 class User_details (User):
