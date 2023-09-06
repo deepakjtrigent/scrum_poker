@@ -14,7 +14,7 @@
 }
 
 #job-role-icon {
-  box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 10px;
+  /* box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 10px; */
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -41,6 +41,9 @@
   border: 2px solid rgb(208, 207, 207);
   border-radius: 8px;
   padding-top: none;
+}
+::ng-deep .mat-mdc-form-field-infix{
+  padding-top: 10px !important  ;
 }
 
 ::ng-deep .mdc-text-field--filled {
@@ -94,4 +97,11 @@ input:focus {
 }
 mat-form-field{
   min-height: 0px!important;
+}
+.enter_button{
+  margin-bottom: 8px;
+  margin-top: 20px;
+}
+::ng-deep .mdc-dialog .mdc-dialog__content{
+  padding:0px 24px 0px 20px !important;
 }

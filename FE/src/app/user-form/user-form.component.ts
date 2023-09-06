@@ -17,7 +17,7 @@ export class UserFormComponent implements OnInit {
     displayName: new FormControl({ value: '', disabled: this.data.displayName != '' }, [
       Validators.required,
       Validators.minLength(3),
-      Validators.maxLength(30),
+      Validators.maxLength(18),
     ]),
     selectedJobRole: new FormControl(
       '',
@@ -62,7 +62,7 @@ export class UserFormComponent implements OnInit {
       return 'Name should have atleast 2 characters';
 
     if (this.displayName.hasError('maxlength'))
-      return 'Your name should not be greater than 15 characters';
+      return 'Name must be under 18 characters only';
   }
 
   public getSelectedJobRoleErrorMessage(): string | void {

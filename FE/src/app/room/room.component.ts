@@ -257,7 +257,7 @@ export class RoomComponent implements OnInit, OnDestroy {
               : '',
           },
           width: '300px',
-          height:'410px',
+          height:'415px',
         });
 
       userDialogRef.afterClosed().subscribe((response: any): void => {

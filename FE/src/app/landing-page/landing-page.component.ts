@@ -55,7 +55,7 @@ export class LandingPageComponent {
         this.userDialog.open(UserFormComponent, {
           data: { role: 'Scrum Master', img: '👩‍🏫', disable: true,displayName:this.isDataStored ? JSON.parse(userInCookies).displayName: "" },
           width: '300px',
-          height:'410px',
+          height:'415px',
         });
 
       userDialogRef.afterClosed().subscribe((response: any): void => {
