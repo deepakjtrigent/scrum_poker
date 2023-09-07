@@ -255,7 +255,7 @@ export class RoomComponent implements OnInit, OnDestroy {
         this.heartBeat.startwithHeartBeat(this.roomId);
       },
       (error) => {
-        this.router.navigate(['Oops']);
+        this.router.navigate(['oops']);
         this.toast.showToast(error.error.error, toastState.danger);
       }
     );
@@ -412,12 +412,30 @@ export class RoomComponent implements OnInit, OnDestroy {
         }
       });
   }
-  private calculateAverage(): void {
-    let storyPointsSum: any;
-    this.selectedPoints.sort((a, b) => a - b);
 
+public customTShirtSizeSort(a: any, b: any) {
+  const sizeOrder = ["S", "M", "L", "XL", "XXL"];
+
+  const indexA = sizeOrder.indexOf(a);
+  const indexB = sizeOrder.indexOf(b);
+
+  if (indexA < indexB) {
+    return -1; 
+  } else if (indexA > indexB) {
+    return 1; 
+  } else {
+    return 0; 
+  }
+}
+
+    private calculateAverage(): void {
+    let storyPointsSum: any;
+    this.selectedPoints.sort(this.customTShirtSizeSort);
+    this.selectedPoints.sort((a, b) => a - b);
     if (typeof this.selectedPoints[0] == 'string') {
       storyPointsSum = this.getKeyName(this.selectedPoints[0]);
+    
+      
     } else {
       storyPointsSum = this.selectedPoints[0];
     }
@@ -451,7 +469,7 @@ export class RoomComponent implements OnInit, OnDestroy {
         }
       }
     }
-    this.averageStoryPointsValue = storyPointsSum / this.selectedPoints.length;
+    this.averageStoryPointsValue = Math.round(storyPointsSum / this.selectedPoints.length);
   }
 
   private reset(): void {
