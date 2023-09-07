@@ -8,7 +8,7 @@ const routes: Routes = [
   {path:'', component:LandingPageComponent},
   {path:'room/:roomId',component:RoomComponent},
   {path:'**',pathMatch:'full',component:PageNotFoundComponent},
-  {path:"Oops",pathMatch:'full',component:PageNotFoundComponent}
+  {path:"oops",pathMatch:'full',component:PageNotFoundComponent}
 ];
 
 @NgModule({

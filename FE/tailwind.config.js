@@ -69,7 +69,7 @@ module.exports = {
         "card-font": ["Space Mono"],
         "main-text": ["Montserrat"],
         "inner-text": ["Roboto"],
-        poppins: ["Poppins"],
+        "poppins": ["Poppins"],
         "main-textt": ["Noto Sans Chorasmian"],
       },
     },
