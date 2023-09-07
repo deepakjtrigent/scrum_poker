@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, HostListener, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { jobRole } from '../shared/app-data/emoji-data';
@@ -15,6 +15,12 @@ export class UserFormComponent implements OnInit {
   public seriesCount = Object.values(seriesNameList);
 
   public userFormGroup: FormGroup;
+  @HostListener('window:keypress', ['$event'])
+  onKeyPress(event : KeyboardEvent): void {
+      if (event.key == "Enter" &&this.userFormGroup.valid ) {
+      this.submitUserDetails(this.userFormGroup.value);
+    }
+  }
 
   constructor(
     public dialogRef: MatDialogRef<UserFormComponent>,
@@ -96,5 +102,9 @@ export class UserFormComponent implements OnInit {
         this.data.img = this.getSampleValue(roles);
       }
     }
+  }
+
+  public submitUserDetails(userData: any): void {
+    this.dialogRef.close(userData);
   }
 }
