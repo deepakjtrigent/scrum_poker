@@ -422,10 +422,6 @@ public customTShirtSizeSort(a: any, b: any) {
     let storyPointsSum: any;
     this.selectedPoints.sort(this.customTShirtSizeSort);
     this.selectedPoints.sort((a, b) => a - b);
-    console.log(this.selectedPoints.sort((a, b) => a - b))
-    console.log(this.selectedPoints)
-    console.log((a: number, b: number) => a - b)
-
     if (typeof this.selectedPoints[0] == 'string') {
       storyPointsSum = this.getKeyName(this.selectedPoints[0]);
     
