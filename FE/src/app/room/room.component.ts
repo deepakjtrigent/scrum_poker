@@ -246,7 +246,7 @@ export class RoomComponent implements OnInit, OnDestroy {
         this.heartBeat.startwithHeartBeat(this.roomId);
       },
       (error) => {
-        this.router.navigate(['Oops']);
+        this.router.navigate(['oops']);
         this.toast.showToast(error.error.error, toastState.danger);
       }
     );
