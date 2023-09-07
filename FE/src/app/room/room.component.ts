@@ -289,16 +289,17 @@ export class RoomComponent implements OnInit, OnDestroy {
             hideSeries: true,
           },
           width: '310px',
-          height:'400px',
-          },
-        );
+          height: '400px',
+        });
 
       userDialogRef.afterClosed().subscribe((response: any): void => {
         if (response) {
-          if (!userInCookies) {
+          const userDetailsObject = userInCookies
+            ? JSON.parse(userInCookies)
+            : '';
+          if (userDetailsObject?.displayName != response.displayName) {
             this.user.userId = uuidv4();
             this.user.displayName = response.displayName;
-            // this.userJobRole = response.selectedJobRole;
             this.storageService.storeUserInCookies(this.user);
           }
           this.userJobRole = response.selectedJobRole;
@@ -412,7 +413,6 @@ export class RoomComponent implements OnInit, OnDestroy {
       });
   }
   private calculateAverage(): void {
-    console.log(this.usersArray);
     let storyPointsSum: any;
     this.selectedPoints.sort((a, b) => a - b);
 
@@ -451,7 +451,6 @@ export class RoomComponent implements OnInit, OnDestroy {
         }
       }
     }
-
     this.averageStoryPointsValue = storyPointsSum / this.selectedPoints.length;
   }
 

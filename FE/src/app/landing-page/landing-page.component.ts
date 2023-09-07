@@ -4,7 +4,11 @@ import { Router } from '@angular/router';
 import { RoomService } from '../shared/services/room.service';
 import { CreateRoomResponse } from '../shared/model/roomId';
 import { toastState } from '../shared/services/toast.service';
-import { MatDialog, MatDialogRef,MatDialogContainer } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MatDialogContainer,
+} from '@angular/material/dialog';
 import { UserFormComponent } from '../user-form/user-form.component';
 import { v4 as uuidv4 } from 'uuid';
 import { User, defaultsUser } from '../shared/model/user';
@@ -36,7 +40,9 @@ export class LandingPageComponent {
 
   public accessKey(): any {
     for (let key of Object.keys(seriesNameList)) {
-      if (seriesNameList[key as keyof typeof seriesNameList]  === this.seriesName) {
+      if (
+        seriesNameList[key as keyof typeof seriesNameList] === this.seriesName
+      ) {
         return key;
       }
     }
@@ -44,7 +50,7 @@ export class LandingPageComponent {
 
   public createRoom(): void {
     if (this.seriesName) {
-      const getSeriesName:string = this.accessKey();
+      const getSeriesName: string = this.accessKey();
       this.roomService.createRoom(getSeriesName).subscribe(
         (response: CreateRoomResponse): void => {
           const roomId: string = response.room_id;
@@ -76,17 +82,21 @@ export class LandingPageComponent {
             : '',
         },
         width: '340px',
-        height:'485px'
+        height: '485px',
       }
     );
 
     userDialogRef.afterClosed().subscribe((response: any): void => {
       if (response) {
-        if (!userInCookies) {
+        const userDetailsObject = userInCookies
+          ? JSON.parse(userInCookies)
+          : '';
+        if (userDetailsObject?.displayName != response.displayName) {
           this.user.userId = uuidv4();
           this.user.displayName = response.displayName;
           this.storageService.storeUserInCookies(this.user);
         }
+
         this.storageService.storeJobRole(response.selectedJobRole);
         this.seriesName = response.seriesFormControl;
         this.storageService.userDetails = this.user;
