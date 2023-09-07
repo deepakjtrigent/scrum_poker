@@ -122,7 +122,7 @@ export class RoomComponent implements OnInit, OnDestroy {
                   this.selectedPoints.push(
                     (usersData.userData as UserData).data?.storyPoints as number
                   );
-                }
+                } else usersData.actionType = 'STORY_POINT_NOT_SELECTED';
               });
               this.calculateAverage();
               this.isStoryPointsRevealed = true;
@@ -130,13 +130,11 @@ export class RoomComponent implements OnInit, OnDestroy {
             }
             case 'STORY_POINT_RESET': {
               this.usersArray.forEach((usersData: UserAction) => {
-                if ((usersData.userData as UserData).data?.storyPoints) {
-                  usersData.actionType = 'STORY_POINTS_PENDING';
-                  (userData.userData as UserData)['data'] = {
-                    storyPoints: null,
-                  };
-                  this.reset();
-                }
+                usersData.actionType = 'STORY_POINTS_PENDING';
+                (usersData.userData as UserData)['data'] = {
+                  storyPoints: null,
+                };
+                this.reset();
               });
               break;
             }
@@ -177,21 +175,13 @@ export class RoomComponent implements OnInit, OnDestroy {
     );
   }
 
-
   public getSampleValue(key: string | any): string | undefined {
     return (jobRole as { [key: string]: string })[key];
-  }
-
-  public ngOnDestroy(): void {
-    this.websocketService.disconnect();
-    this.messageSubsscription.unsubscribe();
-    this.heartBeat.destroyHeartbeat();
   }
 
   public getKeyName(value: any): string {
     return Tshirts[value];
   }
-
 
   public updateStoryPoints(storyPoints: number | string, index: number): void {
     this.toggleActive(index);
@@ -242,7 +232,8 @@ export class RoomComponent implements OnInit, OnDestroy {
       (response) => {
         for (let series of this.cardCounts) {
           if (series == response.seriesName) {
-            this.series = this.accessSeriesNumber(response.seriesName).split(','
+            this.series = this.accessSeriesNumber(response.seriesName).split(
+              ','
             );
           }
         }
@@ -251,7 +242,7 @@ export class RoomComponent implements OnInit, OnDestroy {
             return isNaN(Number(item));
           });
         }
-        this.websocketService.connect(this.roomId);
+        this.websocketService.connect(this.roomId, userDetails.userId);
         this.heartBeat.startwithHeartBeat(this.roomId);
       },
       (error) => {
@@ -305,8 +296,7 @@ export class RoomComponent implements OnInit, OnDestroy {
           this.storageService.storeJobRole(response.selectedJobRole);
           this.storageService.userDetails = this.user;
           this.joinRoom(this.user);
-        }
-        else this.router.navigate(['/'])
+        } else this.router.navigate(['/']);
       });
     } else {
       this.user = JSON.parse(userInCookies);
@@ -382,7 +372,7 @@ export class RoomComponent implements OnInit, OnDestroy {
                   (userData.userData as UserData).data?.storyPoints as number
                 );
               }
-            }
+            } else userData.actionType = 'STORY_POINT_NOT_SELECTED';
           });
           this.isStoryPointsRevealed = true;
           this.calculateAverage();
@@ -412,12 +402,30 @@ export class RoomComponent implements OnInit, OnDestroy {
         }
       });
   }
-  private calculateAverage(): void {
-    let storyPointsSum: any;
-    this.selectedPoints.sort((a, b) => a - b);
 
+public customTShirtSizeSort(a: any, b: any) {
+  const sizeOrder = ["S", "M", "L", "XL", "XXL"];
+
+  const indexA = sizeOrder.indexOf(a);
+  const indexB = sizeOrder.indexOf(b);
+
+  if (indexA < indexB) {
+    return -1; 
+  } else if (indexA > indexB) {
+    return 1; 
+  } else {
+    return 0; 
+  }
+}
+
+    private calculateAverage(): void {
+    let storyPointsSum: any;
+    this.selectedPoints.sort(this.customTShirtSizeSort);
+    this.selectedPoints.sort((a, b) => a - b);
     if (typeof this.selectedPoints[0] == 'string') {
       storyPointsSum = this.getKeyName(this.selectedPoints[0]);
+    
+      
     } else {
       storyPointsSum = this.selectedPoints[0];
     }
@@ -446,6 +454,7 @@ export class RoomComponent implements OnInit, OnDestroy {
         }
         if (typeof this.selectedPoints[i] != 'string') {
           storyPointsSum += this.selectedPoints[i];
+          
         } else {
           storyPointsSum += this.getKeyName(this.selectedPoints[i]);
         }
@@ -460,5 +469,10 @@ export class RoomComponent implements OnInit, OnDestroy {
     this.toggleActive(-1);
     this.storyPointsData.length = 0;
     this.isRevealBtnDisabled = true;
+  }
+  public ngOnDestroy(): void {
+    this.websocketService.disconnect();
+    this.messageSubsscription.unsubscribe();
+    this.heartBeat.destroyHeartbeat();
   }
 }

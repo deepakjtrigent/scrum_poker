@@ -184,6 +184,11 @@
                 {{ user.userData.data?.storyPoints }}
               </p>
               <img
+                *ngSwitchCase="'STORY_POINT_NOT_SELECTED'"
+                src="../../assets/points_not_selected_state.svg"
+                alt="Story Point not Selected State"
+              />
+              <img
                 *ngSwitchDefault
                 src="../../assets/pending-state.svg"
                 alt="Pending State"

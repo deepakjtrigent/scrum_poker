@@ -7,5 +7,5 @@ export enum jobRole {
   STAKEHOLDER="👩‍💼",
   UX="🎨",
   QA="🔧",
-  PIG="🐷",
+  PIG="🐷"
 }
