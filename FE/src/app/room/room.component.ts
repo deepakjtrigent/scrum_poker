@@ -429,8 +429,7 @@ public customTShirtSizeSort(a: any, b: any) {
 
     if (typeof this.selectedPoints[0] == 'string') {
       storyPointsSum = this.getKeyName(this.selectedPoints[0]);
-      // this.selectedPoints.sort()
-      // this.selectedPoints.sort(this.customTShirtSizeSort);
+    
       
     } else {
       storyPointsSum = this.selectedPoints[0];
