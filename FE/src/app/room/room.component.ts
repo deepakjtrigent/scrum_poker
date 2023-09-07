@@ -290,7 +290,6 @@ export class RoomComponent implements OnInit, OnDestroy {
           if (!userInCookies) {
             this.user.userId = uuidv4();
             this.user.displayName = response.displayName;
-            // this.userJobRole = response.selectedJobRole;
             this.storageService.storeUserInCookies(this.user);
           }
           this.userJobRole = response.selectedJobRole;
@@ -465,10 +464,7 @@ public customTShirtSizeSort(a: any, b: any) {
         }
       }
     }
-    console.log(storyPointsSum,this.selectedPoints)
-
-    this.averageStoryPointsValue = (storyPointsSum / this.selectedPoints.length);
-
+    this.averageStoryPointsValue = Math.round(storyPointsSum / this.selectedPoints.length);
   }
 
   private reset(): void {
