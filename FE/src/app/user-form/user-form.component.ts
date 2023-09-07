@@ -13,37 +13,32 @@ import { seriesNameList } from '../shared/app-data/scrum-points-series';
 export class UserFormComponent implements OnInit {
   public emojiData = Object.keys(jobRole);
   public selectedValue!: string;
-  public seriesCount = Object.values(seriesNameList)
+  public seriesCount = Object.values(seriesNameList);
 
   public userFormGroup = new FormGroup({
-    displayName: new FormControl('' , [
+    displayName: new FormControl('', [
       Validators.required,
       Validators.minLength(3),
-      Validators.maxLength(30),
+      Validators.maxLength(18),
     ]),
-    selectedJobRole: new FormControl(
-      '',
-      [Validators.required]
-    ),
-    seriesFormControl:new FormControl({ value: '', hidden: this.data.hideSeries }, 
-    [Validators.required])
+    selectedJobRole: new FormControl('', [Validators.required]),
+    seriesFormControl: new FormControl(''),
   });
 
   constructor(
     public dialogRef: MatDialogRef<UserFormComponent>,
-    private router : Router,
+    private router: Router,
     @Inject(MAT_DIALOG_DATA)
     public data: {
       role: string;
       img: string | any;
       disable: boolean;
       displayName: string;
-      hideSeries?:boolean
+      hideSeries?: boolean;
     }
   ) {}
 
   ngOnInit() {
-  
     if (this.data && this.data.role == 'SCRUM_MASTER') {
       this.selectedJobRole.setValue(this.data.role);
     }
@@ -71,7 +66,7 @@ export class UserFormComponent implements OnInit {
       return 'Name should have atleast 2 characters';
 
     if (this.displayName.hasError('maxlength'))
-      return 'Your name should not be greater than 15 characters';
+      return 'Name must be under 18 characters only';
   }
 
   public getSelectedJobRoleErrorMessage(): string | void {
@@ -85,18 +80,17 @@ export class UserFormComponent implements OnInit {
       return 'It is Required to Choose your series type';
     }
   }
-  
+
   public getSampleValue(key: string): string | undefined {
     return (jobRole as { [key: string]: string })[key];
   }
-  
 
   public onRoleSelected(): void {
     this.selectedValue = this.selectedJobRole.value;
     for (let roles of this.emojiData) {
       if (roles === this.selectedValue) {
-        this.data.role = roles
-        this.data.img = this.getSampleValue(roles)
+        this.data.role = roles;
+        this.data.img = this.getSampleValue(roles);
       }
     }
   }
