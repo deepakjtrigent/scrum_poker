@@ -5,6 +5,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-bottom: -10px;
 }
 
 #icon {
@@ -14,7 +15,7 @@
 }
 
 #job-role-icon {
-  box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 10px;
+  /* box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 10px; */
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -24,12 +25,13 @@
   height: 100px;
   width: 120px;
   border-radius: 20px;
-  margin-left: 120px;
+  margin-left: 95px;
 }
 
 .user-form-container {
   background-color: #fdfdfd;
 }
+
 
 ::ng-deep .mat-mdc-form-field-infix {
   background-color: #fdfdfd !important;
@@ -42,6 +44,9 @@
   border-radius: 8px;
   padding-top: none;
 }
+::ng-deep .mat-mdc-form-field-infix{
+  padding-top: 10px !important  ;
+}
 
 ::ng-deep .mdc-text-field--filled {
   background-color: white !important;
@@ -50,19 +55,23 @@
 
 
 input{
-  padding: 8px 8px;
+  padding: 10px 8px;
   border: 2px solid rgb(207, 205, 205);
   border-radius: 10px;
 }
 input:hover {
   border: 2px solid rgb(207, 205, 205);
 }
-::ng-deep .mdc-line-ripple::before {
+/* ::ng-deep .mdc-line-ripple::before {
+  border: none;
+}
+::ng-deep .mdc-line-ripple:hover {
   border: none;
 }
 ::ng-deep .mdc-line-ripple::after {
   border: none;
-}
+} */
+
 ::ng-deep
   .mdc-text-field--filled:not(.mdc-text-field--disabled)
   .mdc-line-ripple::before {
@@ -73,9 +82,11 @@ input:hover {
   .mdc-line-ripple::after {
   border-bottom-color: #fff;
 }
-::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple:hover{
-  border-bottom-color: #fff; 
-  
+::ng-deep.mdc-text-field--filled:not(.mdc-text-field--disabled):hover .mdc-line-ripple::before {
+  border-bottom-color: #fff;
+}
+::ng-deep.mdc-text-field--filled:not(.mdc-text-field--disabled):hover .mdc-line-ripple::after {
+  border-bottom-color: #fff;
 }
 .mat-mdc-form-field {
   width: 100%;
@@ -95,3 +106,16 @@ input:focus {
 mat-form-field{
   min-height: 0px!important;
 }
+.enter_button{
+  margin-bottom: 8px;
+  margin-top: 20px;
+}
+::ng-deep .mdc-dialog .mdc-dialog__content{
+  padding:0px 24px 0px 20px !important;
+}
+.job_rule{
+  margin-top: -13px;
+}
+/* ::ng-deep div.mat-mdc-select-trigger{
+  margin-top: 10px;
+} */
