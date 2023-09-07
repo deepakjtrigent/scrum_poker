@@ -75,8 +75,8 @@ export class LandingPageComponent {
             ? JSON.parse(userInCookies).displayName
             : '',
         },
-        width: '350px',
-        height:'500px'
+        width: '340px',
+        height:'485px'
       }
     );
 

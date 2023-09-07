@@ -1,20 +1,21 @@
 <div class="user-form-container">
-
-  <div class="block p-2 text-base font-normal font-inner-text ml-4">
+  <div class="block p-2 text-main-text font-inner-text text-base ml-4">
     Scrum-A-Lot
   </div>
-  <hr>
+  <hr />
   <div id="job-role-icon">
     <span id="icon">{{ data.img }}</span>
-    <p class="job-role" id="selectedjobRole">{{ data.role |  replace : '_' : ' ' | titlecase }}</p>
+    <p class="job-role" id="selectedjobRole">
+      {{ data.role | replace : "_" : " " | titlecase }}
+    </p>
   </div>
   <mat-dialog-content>
-    <form [formGroup]="userFormGroup" class="w-full" >
+    <form [formGroup]="userFormGroup" class="w-full">
       <div class="w-full px-1">
         <input
           type="text"
           id="displayName"
-          class="w-full"
+          class="w-full text-main-text font-inner-text text-base"
           formControlName="displayName"
           placeholder="A Story needs a name...."
           type="text"
@@ -32,9 +33,9 @@
           </p>
         </div>
       </div>
+      <p class="text-sm ml-2 job_rule">Job Role</p>
 
       <mat-form-field>
-        <mat-label>Job Role</mat-label>
         <mat-select
           formControlName="selectedJobRole"
           (selectionChange)="onRoleSelected()"
@@ -42,39 +43,44 @@
           required
         >
           <mat-option value="Select Here" disabled>Choose a Role</mat-option>
-          <mat-option id="seriesName"
-          [value]="role"
-          *ngFor="let role of emojiData; let index = index"
-        >
-          {{ role  | replace : '_' : ' ' | titlecase }}
-        </mat-option>
+          <mat-option
+            id="seriesName"
+            [value]="role"
+            class="text-main-text font-inner-text text-base"
+            *ngFor="let role of emojiData; let index = index"
+          >
+            {{ role | replace : "_" : " " | titlecase }}
+          </mat-option>
         </mat-select>
         <mat-error *ngIf="selectedJobRole.invalid && selectedJobRole.touched">
           {{ getSelectedJobRoleErrorMessage() }}
         </mat-error>
       </mat-form-field>
-
-
-      <mat-form-field *ngIf="!data.hideSeries">
-        <mat-label >Card Series</mat-label>
-        <mat-select
-          formControlName="seriesFormControl"
-          placeholder="Choose a series"
-          required
-        >
-          <mat-option value="Select Here" disabled>Choose a series</mat-option>
-          <mat-option
-            [value]="role "
-            *ngFor="let role of seriesCount; let index = index"
+      <div *ngIf="!data.hideSeries">
+        <p class="text-sm ml-2 job_rule">Card Series</p>
+        <mat-form-field>
+          <mat-select
+            formControlName="seriesFormControl"
+            placeholder="Choose a series"
+            required
           >
-            {{ role }}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="seriesFormControl.invalid && seriesFormControl.touched">
-          {{ getSelectedSeriesError() }}
-        </mat-error>
-      </mat-form-field>
-
+            <mat-option value="Select Here" disabled
+              >Choose a series</mat-option
+            >
+            <mat-option
+              [value]="role"
+              *ngFor="let role of seriesCount; let index = index"
+            >
+              {{ role }}
+            </mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="seriesFormControl.invalid && seriesFormControl.touched"
+          >
+            {{ getSelectedSeriesError() }}
+          </mat-error>
+        </mat-form-field>
+      </div>
     </form>
   </mat-dialog-content>
 
@@ -83,10 +89,10 @@
       [mat-dialog-close]="{
         displayName: displayName.value,
         selectedJobRole: selectedJobRole.value,
-        seriesFormControl:seriesFormControl.value
+        seriesFormControl: seriesFormControl.value
       }"
       [disabled]="userFormGroup.invalid"
-      class="bg-scrum-button-inner-background hover:bg-hover-color active:bg-active-color font-medium text-scrum-button-inner-text py-3 mx-5 rounded-lg w-full"
+      class="bg-scrum-button-inner-background hover:bg-hover-color active:bg-active-color font-medium text-scrum-button-inner-text disabled:opacity-50 py-3 mx-5 rounded-lg w-full enter_button"
     >
       Enter Room
     </button>
