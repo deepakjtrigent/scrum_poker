@@ -255,7 +255,7 @@ export class RoomComponent implements OnInit, OnDestroy {
         this.heartBeat.startwithHeartBeat(this.roomId);
       },
       (error) => {
-        this.router.navigate(['Oops']);
+        this.router.navigate(['oops']);
         this.toast.showToast(error.error.error, toastState.danger);
       }
     );
@@ -299,7 +299,6 @@ export class RoomComponent implements OnInit, OnDestroy {
           if (!userInCookies) {
             this.user.userId = uuidv4();
             this.user.displayName = response.displayName;
-            // this.userJobRole = response.selectedJobRole;
             this.storageService.storeUserInCookies(this.user);
           }
           this.userJobRole = response.selectedJobRole;
@@ -452,7 +451,7 @@ export class RoomComponent implements OnInit, OnDestroy {
         }
       }
     }
-    this.averageStoryPointsValue = storyPointsSum / this.selectedPoints.length;
+    this.averageStoryPointsValue = Math.round(storyPointsSum / this.selectedPoints.length);
   }
 
   private reset(): void {
