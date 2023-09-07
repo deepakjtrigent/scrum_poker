@@ -401,12 +401,35 @@ export class RoomComponent implements OnInit, OnDestroy {
         }
       });
   }
-  private calculateAverage(): void {
+
+public customTShirtSizeSort(a: any, b: any) {
+  const sizeOrder = ["S", "M", "L", "XL", "XXL"];
+
+  const indexA = sizeOrder.indexOf(a);
+  const indexB = sizeOrder.indexOf(b);
+
+  if (indexA < indexB) {
+    return -1; 
+  } else if (indexA > indexB) {
+    return 1; 
+  } else {
+    return 0; 
+  }
+}
+
+    private calculateAverage(): void {
     let storyPointsSum: any;
+    this.selectedPoints.sort(this.customTShirtSizeSort);
     this.selectedPoints.sort((a, b) => a - b);
+    console.log(this.selectedPoints.sort((a, b) => a - b))
+    console.log(this.selectedPoints)
+    console.log((a: number, b: number) => a - b)
 
     if (typeof this.selectedPoints[0] == 'string') {
       storyPointsSum = this.getKeyName(this.selectedPoints[0]);
+      // this.selectedPoints.sort()
+      // this.selectedPoints.sort(this.customTShirtSizeSort);
+      
     } else {
       storyPointsSum = this.selectedPoints[0];
     }
@@ -441,8 +464,10 @@ export class RoomComponent implements OnInit, OnDestroy {
         }
       }
     }
+    console.log(storyPointsSum,this.selectedPoints)
 
     this.averageStoryPointsValue = (storyPointsSum / this.selectedPoints.length);
+
   }
 
   private reset(): void {

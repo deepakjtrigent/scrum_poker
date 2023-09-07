@@ -1,5 +1,5 @@
 export enum Tshirts {
-  XS = 1,
+  XS = 1  ,
   S,
   M,
   L,
