@@ -1,5 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { seriesCount, Tshirts } from '../shared/app-data/scrum-points-series';
+import {
+  seriesCount,
+  seriesNameList,
+  Tshirts,
+} from '../shared/app-data/scrum-points-series';
 import { HeartbeatService } from '../shared/services/heartbeat.service';
 import { WebsocketService } from '../shared/services/websocket.service';
 import { ActivatedRoute } from '@angular/router';
@@ -33,19 +37,25 @@ export class RoomComponent implements OnInit, OnDestroy {
     actionType: UserAction['actionType'];
     userData: UserData;
   }[] = [];
+  public usersSortedArray: {
+    actionType: UserAction['actionType'];
+    userData: UserData;
+  }[] = [];
   public userAction!: UserAction | any;
   public isStoryPointsRevealed: boolean = false;
   public selectedPoints: number[] = [];
   public storyPointsData: { points: number; repetition: number }[] = [];
   public averageStoryPointsValue: number = 0;
-  private messageSubsscription!: Subscription;
-  public isRevealBtnDisabled: boolean = true;
+  private messageSubscription!: Subscription;
   public isDataStored!: boolean;
   public series: any[] = [];
   public Tshirts = Tshirts;
   public jobRole = Object.keys(jobRole);
+  public currentIndex: number = 0;
+ public  itemsPerPage: number = 10;
+ public carouselState = '0';
 
-  constructor(
+constructor(
     private websocketService: WebsocketService,
     private route: ActivatedRoute,
     private heartBeat: HeartbeatService,
@@ -63,7 +73,7 @@ export class RoomComponent implements OnInit, OnDestroy {
     });
 
     this.openUserDialog();
-    this.messageSubsscription = this.websocketService.recievedMessage.subscribe(
+    this.messageSubscription = this.websocketService.recievedMessage.subscribe(
       (message: string): void => {
         if (message) {
           const userData: UserAction = JSON.parse(message);
@@ -71,7 +81,6 @@ export class RoomComponent implements OnInit, OnDestroy {
             case 'ACTIVE_USERS_LIST': {
               (userData.userData as UserData[]).forEach((user: UserData) => {
                 if (user.userId == this.user.userId) this.user = user;
-
                 this.usersArray.push({
                   actionType: user.data?.storyPoints
                     ? 'STORY_POINT_SELECTION'
@@ -79,13 +88,26 @@ export class RoomComponent implements OnInit, OnDestroy {
                   userData: user,
                 });
               });
+              this.usersSortedArray = this.usersArray;
+              this.sortUserArray();
               break;
             }
             case 'NEW_USER_JOINED': {
-              this.usersArray.push({
-                actionType: 'STORY_POINT_PENDING',
-                userData: userData.userData as UserData,
-              });
+              if (this.usersArray.length) {
+                const isUserPresent = this.usersArray.every(
+                  (userDetails: UserAction) =>
+                    (userDetails.userData as UserData).userId !=
+                    (userData.userData as UserData).userId
+                );
+                if (isUserPresent) {
+                  this.usersArray.push({
+                    actionType: 'STORY_POINT_PENDING',
+                    userData: userData.userData as UserData,
+                  });
+                }
+              }
+              this.usersSortedArray = this.usersArray;
+              this.sortUserArray();
               break;
             }
 
@@ -95,6 +117,8 @@ export class RoomComponent implements OnInit, OnDestroy {
                   (user.userData as UserData).userId !=
                   (userData.userData as UserData).userId
               );
+              this.usersSortedArray = this.usersArray;
+              this.sortUserArray();
               break;
             }
             case 'STORY_POINT_SELECTION': {
@@ -112,7 +136,6 @@ export class RoomComponent implements OnInit, OnDestroy {
                   }
                 }
               );
-              if (this.isRevealBtnDisabled) this.isRevealBtnDisabled = false;
               break;
             }
             case 'STORY_POINT_REVEAL': {
@@ -167,6 +190,8 @@ export class RoomComponent implements OnInit, OnDestroy {
                   )[1].isAdmin;
                 }
               });
+              this.usersSortedArray = this.usersArray;
+              this.sortUserArray();
               break;
             }
           }
@@ -175,7 +200,44 @@ export class RoomComponent implements OnInit, OnDestroy {
     );
   }
 
+  
+  public canMoveNext() {
+    if (this.currentIndex + this.itemsPerPage < this.usersArray.length) {
+      this.currentIndex += this.itemsPerPage;
+  
+    }
+  }
+  
+  public canMovePrev() {
+    if (this.currentIndex - this.itemsPerPage >= 0) {
+      this.currentIndex -= this.itemsPerPage;
+    }
+  }
+  
+  public moveToSlide(index: number) {
+    if (index >= 0 && index < this.usersArray.length-2) {
+      this.currentIndex = index;
+      this.carouselState = '0';
+    }
+  }
 
+  public getDotGroups(): any {
+    const dotGroupCount = Math.ceil(this.usersArray.length / 10);
+    return Array(dotGroupCount).fill(0).map((_, index) => index);
+  }
+  
+  public disableButton(): any {
+    if (this.usersArray.length<10 || this.currentIndex==this.usersArray.length) {
+      return true;
+    }
+  }
+  
+  public prevDisable():any{
+    if( this.usersArray.length<=10){
+      return true
+    }
+  }
+ 
   public getSampleValue(key: string | any): string | undefined {
     return (jobRole as { [key: string]: string })[key];
   }
@@ -183,7 +245,6 @@ export class RoomComponent implements OnInit, OnDestroy {
   public getKeyName(value: any): string {
     return Tshirts[value];
   }
-
 
   public updateStoryPoints(storyPoints: number | string, index: number): void {
     this.toggleActive(index);
@@ -211,7 +272,6 @@ export class RoomComponent implements OnInit, OnDestroy {
 
             this.usersArray[index].actionType = response.actionType;
           }
-          if (this.isRevealBtnDisabled) this.isRevealBtnDisabled = false;
         });
       },
       (error) => {
@@ -233,8 +293,10 @@ export class RoomComponent implements OnInit, OnDestroy {
     this.roomService.joinRoom(this.roomId, userDetails).subscribe(
       (response) => {
         for (let series of this.cardCounts) {
+          this.user['seriesName'] = response.seriesName;
           if (series == response.seriesName) {
-            this.series = this.accessSeriesNumber(response.seriesName).split(','
+            this.series = this.accessSeriesNumber(response.seriesName).split(
+              ','
             );
           }
         }
@@ -247,7 +309,7 @@ export class RoomComponent implements OnInit, OnDestroy {
         this.heartBeat.startwithHeartBeat(this.roomId);
       },
       (error) => {
-        this.router.navigate(['Oops']);
+        this.router.navigate(['oops']);
         this.toast.showToast(error.error.error, toastState.danger);
       }
     );
@@ -280,18 +342,18 @@ export class RoomComponent implements OnInit, OnDestroy {
               : '',
             hideSeries: true,
           },
-          width: '340px',
-          height:'450px',
-          },
-         
-        );
+          width: '310px',
+          height: '400px',
+        });
 
       userDialogRef.afterClosed().subscribe((response: any): void => {
         if (response) {
-          if (!userInCookies) {
+          const userDetailsObject = userInCookies
+            ? JSON.parse(userInCookies)
+            : '';
+          if (userDetailsObject?.displayName != response.displayName) {
             this.user.userId = uuidv4();
             this.user.displayName = response.displayName;
-            // this.userJobRole = response.selectedJobRole;
             this.storageService.storeUserInCookies(this.user);
           }
           this.userJobRole = response.selectedJobRole;
@@ -382,6 +444,14 @@ export class RoomComponent implements OnInit, OnDestroy {
       });
   }
 
+  public sortUserArray() {
+    this.usersSortedArray = this.usersSortedArray.sort(
+      (a: UserAction, b: UserAction) =>
+        (a.userData as UserData).displayName.localeCompare(
+          (b.userData as UserData).displayName
+        )
+    );
+  }
   public resetStoryPoints(): void {
     this.userAction = {
       actionType: 'STORY_POINT_RESET',
@@ -404,10 +474,32 @@ export class RoomComponent implements OnInit, OnDestroy {
         }
       });
   }
+
+  public customTShirtSizeSort(a: any, b: any): number {
+    const sizeOrder = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+
+    const indexA = sizeOrder.indexOf(a);
+    const indexB = sizeOrder.indexOf(b);
+
+    if (indexA < indexB) {
+      return -1;
+    } else if (indexA > indexB) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+
   private calculateAverage(): void {
     let storyPointsSum: any;
-    this.selectedPoints.sort((a, b) => a - b);
-
+    let isSeriesTshirtSizes = Object.keys(seriesNameList).includes(
+      this.user.seriesName
+    );
+    if (isSeriesTshirtSizes) {
+      this.selectedPoints.sort(this.customTShirtSizeSort);
+    } else {
+      this.selectedPoints.sort((a, b) => a - b);
+    }
     if (typeof this.selectedPoints[0] == 'string') {
       storyPointsSum = this.getKeyName(this.selectedPoints[0]);
     } else {
@@ -443,8 +535,9 @@ export class RoomComponent implements OnInit, OnDestroy {
         }
       }
     }
-
-    this.averageStoryPointsValue = (storyPointsSum / this.selectedPoints.length);
+    this.averageStoryPointsValue = Math.round(
+      storyPointsSum / this.selectedPoints.length
+    );
   }
 
   private reset(): void {
@@ -452,11 +545,10 @@ export class RoomComponent implements OnInit, OnDestroy {
     this.isStoryPointsRevealed = false;
     this.toggleActive(-1);
     this.storyPointsData.length = 0;
-    this.isRevealBtnDisabled = true;
   }
   public ngOnDestroy(): void {
     this.websocketService.disconnect();
-    this.messageSubsscription.unsubscribe();
+    this.messageSubscription.unsubscribe();
     this.heartBeat.destroyHeartbeat();
   }
 }

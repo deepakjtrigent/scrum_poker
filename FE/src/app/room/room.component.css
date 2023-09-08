@@ -9,42 +9,119 @@
 .card:hover {
   transform: translateY(-10px) scale(1.1);
   color: white;
-  transition: transform 0.4s cubic-bezier(0.86, 0, 0.07, 1),
+  transition: transform 0.3s cubic-bezier(0.86, 0, 0.07, 1),
     background-color 0.4s ease;
 }
 .card {
   box-shadow: 0 1px 2px 1px rgba(167, 183, 194, 0.6);
 }
-.card_button,#card_button {
-  font-family: "Space Mono" !important;
+.card_selected {
+  box-shadow: 0 1px 2px 1px rgba(167, 183, 194, 0.6);
 }
 
 .scrollable-menu {
   cursor: pointer;
-  width: 220px;
+  width: 280px;
   overflow: hidden;
   text-overflow: ellipsis;
   max-height: 180px;
   overflow-y: scroll;
 }
 
-::ng-deep div.scrollable-menu:hover{
+::ng-deep div.scrollable-menu:hover {
   background-color: white !important;
 }
 
 ::ng-deep div#mat-menu-panel-0 {
-  box-shadow: 0 1px 2px 1px rgba(168, 182, 191, 0.6);
   border-radius: 10px;
 }
+
+::ng-deep div .mat-menu-panel {
+  box-shadow: 0 1px 2px 1px rgba(168, 182, 191, 0.6) !important;
+
+}
+::ng-deep .mat-elevation-z8,
+.mat-mdc-elevation-specific.mat-elevation-z8 {
+  box-shadow: 0 1px 2px 1px rgba(168, 182, 191, 0.6) !important;
+}
+
+::ng-deep div .mat-mdc-menu-panel {
+  box-shadow: 0 1px 2px 1px rgba(168, 182, 191, 0.6) !important;
+  border-radius: 10px;
+}
+::ng-deep .mat-mdc-menu-panel {
+  box-shadow: 0 1px 2px 1px rgba(168, 182, 191, 0.6);
+}
+.mat-mdc-menu-item {
+  display: flex;
+  width: 100%;
+  cursor: default;
+  flex-direction: row !important;
+  justify-content: space-between;
+  align-items: center;
+}
+.mat-mdc-menu-item:hover {
+  background-color: white !important;
+}
+
+.change_admin_icon {
+  position: absolute;
+  right: 0;
+}
+.admin_button {
+  position: absolute;
+  right: 4px;
+  height: 20px;
+  margin-bottom: 30px;
+}
+.admin_title {
+  margin-top: -11px;
+  font-size: 11px;
+}
+.grouping_button {
+  border-radius: 10px;
+}
+.grouping_button:hover {
+  box-shadow: 0 1px 2px 1px rgba(249, 250, 250, 0.667);
+  background-color: rgb(243, 239, 239);
+}
+.emoji_data {
+  padding: 5px;
+  box-shadow: 0 1px 2px 1px rgba(230, 232, 232, 0.6);
+  border-radius: 10px;
+  background-color: white;
+}
+
+.collaborators-menu-open {
+  transform: rotate(-180deg);
+}
+
+.collaborators-menu-arrow {
+  margin-right: -3px;
+  scale: 1.35;
+  transition: transform 333ms ease-out, color 333ms;
+}
+
+.collaborators-icon {
+  scale: 1.25;
+  width: 40px;
+}
+
+
+/* 
+.card_button,#card_button {
+  font-family: "Space Mono" !important;
+}
+
+
+
+
 
 ::ng-deep div#cdk-overlay-0 {
   box-shadow: 0 1px 2px 1px rgba(168, 182, 191, 0.6);
   border-radius: 10px;
 }
-::ng-deep div.mat-mdc-menu-panel{
-  box-shadow: 0 1px 2px 1px rgba(168, 182, 191, 0.6);
-  border-radius: 10px;
-}
+
 ::ng-deep div#cdk-overlay-1 {
   box-shadow: 0 1px 2px 1px rgba(168, 182, 191, 0.6);
   padding: 0px !important;
@@ -96,3 +173,104 @@
 font-size: 24px;
 }
 
+
+
+
+
+/* .carousel {
+  position: relative;
+ 
+} */
+.carousel button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.042);
+  color: black;
+ border: none; 
+  cursor: pointer;
+}
+
+.carousel button.prev {
+  left: 20px;
+}
+
+.carousel button.next {
+  right:20px;
+}
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.carousel-dots .dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  background-color: gray;
+  border-radius: 50%;
+  margin: 0 5px;
+  cursor: pointer;
+  margin-bottom: 8px ;
+} 
+
+.carousel-dots .dot.active {
+  background-color: #000e51;  
+  margin-bottom: 10px;
+ } 
+
+.carousel-items{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  
+}
+
+.material-symbols-outlined{
+  font-size: 43px;
+ color: #000e51; 
+}
+
+.arrows-container {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.arrows-container button {
+  color: #000e51;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.arrows-container button.prev {
+  order: 1;
+  margin-left:130px
+}
+
+.arrows-container button.next {
+  order: 2;
+  margin-right: 130px;
+}
+
+
+
+
+/* #prev{
+  /html/body/app-root/app-room/div/div/div[2]/button[2]/span
+  left:0
+} */
+
+
+
+
+/* .content-container {
+  margin-left: 60px; /* Adjust to leave space for the fixed arrows */
+  /* Add any other styles as needed for your content */
