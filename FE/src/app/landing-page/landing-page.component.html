@@ -1,108 +1,100 @@
-<div class="section flex flex-row w-full">
-  <div class="section1 w-1/2">
-    <a routerLink="/" class="flex justify-start pt-6 pl-12">
-      <img
-        src="../../assets/scrum_poker.svg"
-        class="h-12 mr-3"
-        alt="Scrum Poker Logo"
-      />
-
-    </a>
-    <div class="">
-      <section
-        class="flex flex-col items-start justify-start mx-2 md:mx-4 lg:mx-9 h-screen mt-24 "
-        id="initial-section"
-      >
-        <div>
-          <p
-            class="text-xl font-inner-text font-medium text-center text-scrum-landing-page-text mr-36 mt-36"
-          >
-            Team estimations made easy
-          </p>
-        </div>
-        <h1
-          class="font-semibold text-scrum-landing-text text-center font-main-textt text-4xl md:text-4xl mt-4 mb-6"
-        >
-          Simple Planning Poker
-        </h1>
-
-        <button
-          class="bg-scrum-button-inner-background hover:bg-hover-color active:bg-active-color font-medium text-scrum-button-inner-text py-3 px-6 md:px-9 my-2 rounded-lg"
-          (click)="openUserDialog()"
-        >
-          Start a Poker
-        </button>
-      </section>
-    </div>
-  </div>
-  <div class="description_section w-1/2 md:w-1/2">
+<div class="flex flex-row w-full overflow-hidden h-full">
+  <div class=" flex flex-col justify-start w-1/2 h-full pt-6 md:px-4 lg:px-9">
+      <a class="w-fit px-3" routerLink="/">
+        <img
+          src="../../assets/scrum_poker.svg"
+          class="h-12"
+          alt="Scrum Poker Logo"
+        />
+      </a>
     <section
-      id="description"
-      class="text-main-text font-inner-text flex flex-col items-center mt-3"
+      class="flex flex-col items-start justify-start mt-24"
+      id="initial-section"
     >
-      <h3 class="font-inner-text font-medium text-lg md:py-3">
-        How it Works?
-      </h3>
-      <div class="container mx-auto p-2 md:pt-4 md:pr-4 flex flex-col text-justify">
-        <h2 class="text-base font-medium mb-4">
-          Step 1: Create or Join a Session
-        </h2>
-        <p class="mb-6 md:mb-8 font-normal text-sm">
-          To start a new estimation session, click on the
-          <strong>Create Session</strong> button. Alternatively, to join an
-          existing session, ask the session creator for the unique session code
-          and enter it in the <strong>"Join Session"</strong> field on the
-          dashboard.
-        </p>
-
-        <h2 class="text-base font-medium mb-4">Step 2: Cast Your Vote</h2>
-        <p class="mb-6 md:mb-8 font-normal text-sm">
-          Once you have joined a session, you will be presented with the
-          estimation cards (e.g., Fibonacci sequence) on your screen. Carefully
-          review the task or user story being estimated. Choose the estimation
-          card that best represents your assessment of the complexity of the
-          task. Click on the card to cast your vote. Your vote will be anonymous
-          and visible only to the facilitator.
-        </p>
-
-        <h2 class="text-base font-medium mb-4">Step 3: Wait for Votes</h2>
-        <p class="mb-6 md:mb-8 font-normal text-sm">
-          Wait for all team members to cast their votes. You will see a
-          real-time update on the dashboard as team members vote.
-        </p>
-
-        <h2 class="text-base font-medium mb-4">Step 4: Reveal Votes</h2>
-        <p class="mb-6 md:mb-8 font-normal text-sm">
-          When everyone has voted, the session creator or facilitator can click
-          on the
-          <strong> Reveal Votes </strong>
-          button to simultaneously reveal all the votes. The voting results will
-          be displayed on the screen, allowing everyone to see the different
-          estimates provided by team members.
-        </p>
-
-        <h2 class="text-base font-medium mb-4">
-          Step 5: Discuss and Re-Vote (Optional)
-        </h2>
-        <p class="mb-6 md:mb-8 font-normal text-sm">
-          If there are significant discrepancies in the estimates or if the team
-          needs further clarification, use the
-          <strong>"Discussion Board"</strong> to communicate and discuss the
-          reasoning behind your estimates. If necessary, the team can re-vote on
-          the task after the discussion to reach a consensus.
-        </p>
-
-        <h2 class="text-base font-medium mb-4">
-          Step 6: End the Session
-        </h2>
-        <p class="mb-6 md:mb-8 font-normal text-sm">
-          Once the team has reached a consensus or agreed on an estimate, the
-          session creator can click on the
-          <strong>End Session</strong> button to conclude the estimation
-          process. The final estimate will be recorded and saved for future
-          reference.
+      <div>
+        <p
+          class="text-xl font-inner-text font-medium text-center text-scrum-landing-page-text mr-36 mt-36"
+        >
+          Team estimations made easy
         </p>
       </div>
+      <h1
+        class="font-semibold text-scrum-landing-text text-center font-main-textt text-4xl md:text-4xl mt-4 mb-6"
+      >
+        Simple Planning Poker
+      </h1>
+
+      <button
+        class="bg-scrum-button-inner-background hover:bg-hover-color active:bg-active-color font-medium text-scrum-button-inner-text py-3 px-6 md:px-9 my-2 rounded-lg"
+        (click)="openUserDialog()"
+      >
+        Start a Poker
+      </button>
     </section>
   </div>
+  <section
+    id="description"
+    class="text-main-text font-inner-text flex flex-col items-center mt-3 w-1/2 md:w-1/2 overflow-y-scroll"
+  >
+    <h3 class="font-inner-text font-medium text-lg md:py-3">How it Works?</h3>
+    <div
+      class="container mx-auto p-2 md:pt-4 md:pr-4 flex flex-col text-justify"
+    >
+      <h2 class="text-base font-medium mb-4">
+        Step 1: Create or Join a Session
+      </h2>
+      <p class="mb-6 md:mb-8 font-normal text-sm">
+        To start a new estimation session, click on the
+        <strong>Create Session</strong> button. Alternatively, to join an
+        existing session, ask the session creator for the unique session code
+        and enter it in the <strong>"Join Session"</strong> field on the
+        dashboard.
+      </p>
+
+      <h2 class="text-base font-medium mb-4">Step 2: Cast Your Vote</h2>
+      <p class="mb-6 md:mb-8 font-normal text-sm">
+        Once you have joined a session, you will be presented with the
+        estimation cards (e.g., Fibonacci sequence) on your screen. Carefully
+        review the task or user story being estimated. Choose the estimation
+        card that best represents your assessment of the complexity of the task.
+        Click on the card to cast your vote. Your vote will be anonymous and
+        visible only to the facilitator.
+      </p>
+
+      <h2 class="text-base font-medium mb-4">Step 3: Wait for Votes</h2>
+      <p class="mb-6 md:mb-8 font-normal text-sm">
+        Wait for all team members to cast their votes. You will see a real-time
+        update on the dashboard as team members vote.
+      </p>
+
+      <h2 class="text-base font-medium mb-4">Step 4: Reveal Votes</h2>
+      <p class="mb-6 md:mb-8 font-normal text-sm">
+        When everyone has voted, the session creator or facilitator can click on
+        the
+        <strong> Reveal Votes </strong>
+        button to simultaneously reveal all the votes. The voting results will
+        be displayed on the screen, allowing everyone to see the different
+        estimates provided by team members.
+      </p>
+
+      <h2 class="text-base font-medium mb-4">
+        Step 5: Discuss and Re-Vote (Optional)
+      </h2>
+      <p class="mb-6 md:mb-8 font-normal text-sm">
+        If there are significant discrepancies in the estimates or if the team
+        needs further clarification, use the
+        <strong>"Discussion Board"</strong> to communicate and discuss the
+        reasoning behind your estimates. If necessary, the team can re-vote on
+        the task after the discussion to reach a consensus.
+      </p>
+
+      <h2 class="text-base font-medium mb-4">Step 6: End the Session</h2>
+      <p class="mb-6 md:mb-8 font-normal text-sm">
+        Once the team has reached a consensus or agreed on an estimate, the
+        session creator can click on the
+        <strong>End Session</strong> button to conclude the estimation process.
+        The final estimate will be recorded and saved for future reference.
+      </p>
+    </div>
+  </section>
 </div>
