@@ -391,6 +391,7 @@ export class RoomComponent implements OnInit, OnDestroy {
       });
   }
 
+
   public resetStoryPoints(): void {
     this.userAction = {
       actionType: 'STORY_POINT_RESET',

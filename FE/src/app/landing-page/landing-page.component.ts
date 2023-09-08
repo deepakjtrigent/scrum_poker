@@ -56,6 +56,7 @@ export class LandingPageComponent {
       );
     }
   }
+ 
 
   public openUserDialog(): void {
     const userInCookies = atob(this.cookieService.get('userDetails'));

@@ -48,7 +48,10 @@ export class ConfirmDialogComponent implements OnInit {
   }
 
   public cancel(): void {
-    this.router.navigate(['/']);
+   
+
+      this.router.navigate(['/']);
+    
     this.dialogRef.close();
   }
 }
