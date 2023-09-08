@@ -95,10 +95,10 @@
 
 
 
-/* .carousel {
+.carousel {
   position: relative;
  
-} */
+}
 .carousel button {
   position: absolute;
   top: 50%;
@@ -122,8 +122,18 @@
   display: flex;
   justify-content: center;
   text-align: center;
-  margin-top: 10px;
+  /* margin-top: -30px;
+  position: absolute; */
+  margin-top: 35px;
+
 }
+/* 
+carousel-dots[_ngcontent-ng-c4246442404] {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  padding: 0px;
+} */
 
 .carousel-dots .dot {
   display: inline-block;
@@ -194,7 +204,7 @@
   /* Add any other styles as needed for your content */
 .collaborators-menu-open {
   transform: rotate(-180deg);
-}
+}   
 
 .collaborators-menu-arrow {
   margin-right: -3px;
@@ -205,4 +215,9 @@
 .collaborators-icon {
   scale: 1.25;
   width: 40px;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  pointer-events: none !important;
 }

@@ -200,7 +200,6 @@ constructor(
     );
   }
 
-  
   public canMoveNext() {
     if (this.currentIndex + this.itemsPerPage < this.usersArray.length) {
       this.currentIndex += this.itemsPerPage;
@@ -226,15 +225,17 @@ constructor(
     return Array(dotGroupCount).fill(0).map((_, index) => index);
   }
   
-  public disableButton(): any {
-    if (this.usersArray.length<10 || this.currentIndex==this.usersArray.length) {
+  public nextDispable(): any {
+    if (this.usersArray.length<=10 || this.usersArray.length-this.currentIndex<=10 ) {
+      console.log(this.currentIndex)
       return true;
     }
+    console.log(this.currentIndex);
   }
-  
+ 
   public prevDisable():any{
-    if( this.usersArray.length<=10){
-      return true
+    if( this.usersArray.length<=10 || this.currentIndex ==0){
+      return true;
     }
   }
  
