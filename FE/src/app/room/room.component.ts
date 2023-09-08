@@ -72,6 +72,9 @@ constructor(
       this.roomId = params['roomId'];
     });
 
+    if(this.usersArray.length==this.currentIndex ) {
+          this.canMovePrev()
+    }
     this.openUserDialog();
     this.messageSubscription = this.websocketService.recievedMessage.subscribe(
       (message: string): void => {
@@ -226,12 +229,15 @@ constructor(
   }
   
   public nextDispable(): any {
-    if (this.usersArray.length<=10 || this.usersArray.length-this.currentIndex<=10 ) {
-      console.log(this.currentIndex)
+    if (this.usersArray.length<=10 || this.usersArray.length-this.currentIndex<=10){
       return true;
     }
-    console.log(this.currentIndex);
-  }
+  //   if(this.usersArray.length==this.currentIndex ) {
+  //     console.log(this.usersArray.length, "IS GOOD",this.currentIndex);
+  //     this.canMovePrev()
+  //     return true;
+  // }
+}
  
   public prevDisable():any{
     if( this.usersArray.length<=10 || this.currentIndex ==0){

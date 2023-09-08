@@ -175,13 +175,15 @@
         >
           <div class="h-full flex justify-center items-center">
             <button
+            id="prev"
               class="prev disabled:opacity-20 disabled"
               (click)="canMovePrev()"
               [disabled]="prevDisable()"
             >
-              <span class="material-symbols-outlined" id="prev">
-                arrow_left
-              </span>
+            <img
+            src="../../assets/backward_arrow.svg"
+            alt="backward_arrow"
+          />
             </button>
           </div>
           <div class="h-full flex flex-wrap justify-evenly w-[650px] items-center gap-3">
@@ -242,11 +244,15 @@
           </div>
           <div class="h-full flex justify-center items-center">
             <button
-              class="next disabled:opacity-20 disabled"
+              class="next disabled:opacity-20 disabled arrows"
               (click)="canMoveNext()"
               [disabled]="nextDispable()"
             >
-              <span class="material-symbols-outlined"> arrow_right </span>
+            <img
+            src="../../assets/forward_arrow.svg"
+            alt="forward_arrow"
+          />
+             
             </button>
           </div>
 
@@ -268,7 +274,7 @@
         </div>
 
         <!-- </div> -->
-      <div [style.visibility]="this.user.isAdmin ? 'visible' : 'hidden'">
+    
           <button
             *ngIf="!isStoryPointsRevealed && this.user.isAdmin"
             class="mt-6 xxs:mt-10 sm:mt-14 md:mt-10 bg-scrum-button-inner-background hover:bg-hover-color active:bg-active-color font-medium text-scrum-button-inner-text px-6 py-2 rounded-lg font-inner-text text-base w-24"
@@ -283,7 +289,6 @@
           >
             Reset
           </button>
-        </div>
       </div>
 
       <div

@@ -12,6 +12,7 @@
   transition: transform 0.3s cubic-bezier(0.86, 0, 0.07, 1),
     background-color 0.4s ease;
 }
+
 .card {
   box-shadow: 0 1px 2px 1px rgba(167, 183, 194, 0.6);
 }
@@ -90,10 +91,6 @@
   background-color: white;
 }
 
-
-
-
-
 .carousel {
   position: relative;
  
@@ -109,31 +106,13 @@
   cursor: pointer;
 }
 
-.carousel button.prev {
-  left: 20px;
-}
-
-.carousel button.next {
-  right:20px;
-}
-
 .carousel-dots {
   display: flex;
   justify-content: center;
   text-align: center;
-  /* margin-top: -30px;
-  position: absolute; */
   margin-top: 35px;
 
 }
-/* 
-carousel-dots[_ngcontent-ng-c4246442404] {
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  padding: 0px;
-} */
-
 .carousel-dots .dot {
   display: inline-block;
   width: 7px;
@@ -154,13 +133,13 @@ carousel-dots[_ngcontent-ng-c4246442404] {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  
 }
 
-.material-symbols-outlined{
-  font-size: 43px;
- color: #000e51; 
+.arrows{
+  font-size: 60px;
+  color: #000e51;  
 }
+
 
 .arrows-container {
   display: flex;
@@ -177,30 +156,6 @@ carousel-dots[_ngcontent-ng-c4246442404] {
   padding: 10px;
 }
 
-.arrows-container button.prev {
-  order: 1;
-  margin-left:130px
-}
-
-.arrows-container button.next {
-  order: 2;
-  margin-right: 130px;
-}
-
-
-
-
-/* #prev{
-  /html/body/app-root/app-room/div/div/div[2]/button[2]/span
-  left:0
-} */
-
-
-
-
-/* .content-container {
-  margin-left: 60px; /* Adjust to leave space for the fixed arrows */
-  /* Add any other styles as needed for your content */
 .collaborators-menu-open {
   transform: rotate(-180deg);
 }   
