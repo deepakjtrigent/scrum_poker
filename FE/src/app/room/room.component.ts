@@ -1,5 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { seriesCount, Tshirts } from '../shared/app-data/scrum-points-series';
+import {
+  seriesCount,
+  seriesNameList,
+  Tshirts,
+} from '../shared/app-data/scrum-points-series';
 import { HeartbeatService } from '../shared/services/heartbeat.service';
 import { WebsocketService } from '../shared/services/websocket.service';
 import { ActivatedRoute } from '@angular/router';
@@ -33,13 +37,16 @@ export class RoomComponent implements OnInit, OnDestroy {
     actionType: UserAction['actionType'];
     userData: UserData;
   }[] = [];
+  public usersSortedArray: {
+    actionType: UserAction['actionType'];
+    userData: UserData;
+  }[] = [];
   public userAction!: UserAction | any;
   public isStoryPointsRevealed: boolean = false;
   public selectedPoints: number[] = [];
   public storyPointsData: { points: number; repetition: number }[] = [];
   public averageStoryPointsValue: number = 0;
-  private messageSubsscription!: Subscription;
-  public isRevealBtnDisabled: boolean = true;
+  private messageSubscription!: Subscription;
   public isDataStored!: boolean;
   public series: any[] = [];
   public Tshirts = Tshirts;
@@ -63,7 +70,7 @@ export class RoomComponent implements OnInit, OnDestroy {
     });
 
     this.openUserDialog();
-    this.messageSubsscription = this.websocketService.recievedMessage.subscribe(
+    this.messageSubscription = this.websocketService.recievedMessage.subscribe(
       (message: string): void => {
         if (message) {
           const userData: UserAction = JSON.parse(message);
@@ -71,7 +78,6 @@ export class RoomComponent implements OnInit, OnDestroy {
             case 'ACTIVE_USERS_LIST': {
               (userData.userData as UserData[]).forEach((user: UserData) => {
                 if (user.userId == this.user.userId) this.user = user;
-
                 this.usersArray.push({
                   actionType: user.data?.storyPoints
                     ? 'STORY_POINT_SELECTION'
@@ -79,13 +85,26 @@ export class RoomComponent implements OnInit, OnDestroy {
                   userData: user,
                 });
               });
+              this.usersSortedArray = this.usersArray;
+              this.sortUserArray();
               break;
             }
             case 'NEW_USER_JOINED': {
-              this.usersArray.push({
-                actionType: 'STORY_POINT_PENDING',
-                userData: userData.userData as UserData,
-              });
+              if (this.usersArray.length) {
+                const isUserPresent = this.usersArray.every(
+                  (userDetails: UserAction) =>
+                    (userDetails.userData as UserData).userId !=
+                    (userData.userData as UserData).userId
+                );
+                if (isUserPresent) {
+                  this.usersArray.push({
+                    actionType: 'STORY_POINT_PENDING',
+                    userData: userData.userData as UserData,
+                  });
+                }
+              }
+              this.usersSortedArray = this.usersArray;
+              this.sortUserArray();
               break;
             }
 
@@ -95,6 +114,8 @@ export class RoomComponent implements OnInit, OnDestroy {
                   (user.userData as UserData).userId !=
                   (userData.userData as UserData).userId
               );
+              this.usersSortedArray = this.usersArray;
+              this.sortUserArray();
               break;
             }
             case 'STORY_POINT_SELECTION': {
@@ -112,7 +133,6 @@ export class RoomComponent implements OnInit, OnDestroy {
                   }
                 }
               );
-              if (this.isRevealBtnDisabled) this.isRevealBtnDisabled = false;
               break;
             }
             case 'STORY_POINT_REVEAL': {
@@ -167,6 +187,8 @@ export class RoomComponent implements OnInit, OnDestroy {
                   )[1].isAdmin;
                 }
               });
+              this.usersSortedArray = this.usersArray;
+              this.sortUserArray();
               break;
             }
           }
@@ -209,7 +231,6 @@ export class RoomComponent implements OnInit, OnDestroy {
 
             this.usersArray[index].actionType = response.actionType;
           }
-          if (this.isRevealBtnDisabled) this.isRevealBtnDisabled = false;
         });
       },
       (error) => {
@@ -231,6 +252,7 @@ export class RoomComponent implements OnInit, OnDestroy {
     this.roomService.joinRoom(this.roomId, userDetails).subscribe(
       (response) => {
         for (let series of this.cardCounts) {
+          this.user['seriesName'] = response.seriesName;
           if (series == response.seriesName) {
             this.series = this.accessSeriesNumber(response.seriesName).split(
               ','
@@ -280,14 +302,15 @@ export class RoomComponent implements OnInit, OnDestroy {
             hideSeries: true,
           },
           width: '310px',
-          height:'400px',
-          },
-         
-        );
+          height: '400px',
+        });
 
       userDialogRef.afterClosed().subscribe((response: any): void => {
         if (response) {
-          if (!userInCookies) {
+          const userDetailsObject = userInCookies
+            ? JSON.parse(userInCookies)
+            : '';
+          if (userDetailsObject?.displayName != response.displayName) {
             this.user.userId = uuidv4();
             this.user.displayName = response.displayName;
             this.storageService.storeUserInCookies(this.user);
@@ -380,6 +403,14 @@ export class RoomComponent implements OnInit, OnDestroy {
       });
   }
 
+  public sortUserArray() {
+    this.usersSortedArray = this.usersSortedArray.sort(
+      (a: UserAction, b: UserAction) =>
+        (a.userData as UserData).displayName.localeCompare(
+          (b.userData as UserData).displayName
+        )
+    );
+  }
   public resetStoryPoints(): void {
     this.userAction = {
       actionType: 'STORY_POINT_RESET',
@@ -403,29 +434,33 @@ export class RoomComponent implements OnInit, OnDestroy {
       });
   }
 
-public customTShirtSizeSort(a: any, b: any) {
-  const sizeOrder = ["S", "M", "L", "XL", "XXL"];
+  public customTShirtSizeSort(a: any, b: any): number {
+    const sizeOrder = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 
-  const indexA = sizeOrder.indexOf(a);
-  const indexB = sizeOrder.indexOf(b);
+    const indexA = sizeOrder.indexOf(a);
+    const indexB = sizeOrder.indexOf(b);
 
-  if (indexA < indexB) {
-    return -1; 
-  } else if (indexA > indexB) {
-    return 1; 
-  } else {
-    return 0; 
+    if (indexA < indexB) {
+      return -1;
+    } else if (indexA > indexB) {
+      return 1;
+    } else {
+      return 0;
+    }
   }
-}
 
-    private calculateAverage(): void {
+  private calculateAverage(): void {
     let storyPointsSum: any;
-    this.selectedPoints.sort(this.customTShirtSizeSort);
-    this.selectedPoints.sort((a, b) => a - b);
+    let isSeriesTshirtSizes = Object.keys(seriesNameList).includes(
+      this.user.seriesName
+    );
+    if (isSeriesTshirtSizes) {
+      this.selectedPoints.sort(this.customTShirtSizeSort);
+    } else {
+      this.selectedPoints.sort((a, b) => a - b);
+    }
     if (typeof this.selectedPoints[0] == 'string') {
       storyPointsSum = this.getKeyName(this.selectedPoints[0]);
-    
-      
     } else {
       storyPointsSum = this.selectedPoints[0];
     }
@@ -454,13 +489,14 @@ public customTShirtSizeSort(a: any, b: any) {
         }
         if (typeof this.selectedPoints[i] != 'string') {
           storyPointsSum += this.selectedPoints[i];
-          
         } else {
           storyPointsSum += this.getKeyName(this.selectedPoints[i]);
         }
       }
     }
-    this.averageStoryPointsValue = Math.round(storyPointsSum / this.selectedPoints.length);
+    this.averageStoryPointsValue = Math.round(
+      storyPointsSum / this.selectedPoints.length
+    );
   }
 
   private reset(): void {
@@ -468,11 +504,10 @@ public customTShirtSizeSort(a: any, b: any) {
     this.isStoryPointsRevealed = false;
     this.toggleActive(-1);
     this.storyPointsData.length = 0;
-    this.isRevealBtnDisabled = true;
   }
   public ngOnDestroy(): void {
     this.websocketService.disconnect();
-    this.messageSubsscription.unsubscribe();
+    this.messageSubscription.unsubscribe();
     this.heartBeat.destroyHeartbeat();
   }
 }

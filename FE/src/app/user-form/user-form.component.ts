@@ -1,8 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, HostListener, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { jobRole } from '../shared/app-data/emoji-data';
-import { Router } from '@angular/router';
 import { seriesNameList } from '../shared/app-data/scrum-points-series';
 
 @Component({
@@ -15,19 +14,16 @@ export class UserFormComponent implements OnInit {
   public selectedValue!: string;
   public seriesCount = Object.values(seriesNameList);
 
-  public userFormGroup = new FormGroup({
-    displayName: new FormControl('', [
-      Validators.required,
-      Validators.minLength(3),
-      Validators.maxLength(18),
-    ]),
-    selectedJobRole: new FormControl('', [Validators.required]),
-    seriesFormControl: new FormControl(''),
-  });
+  public userFormGroup: FormGroup;
+  @HostListener('window:keypress', ['$event'])
+  onKeyPress(event : KeyboardEvent): void {
+      if (event.key == "Enter" &&this.userFormGroup.valid ) {
+      this.submitUserDetails(this.userFormGroup.value);
+    }
+  }
 
   constructor(
     public dialogRef: MatDialogRef<UserFormComponent>,
-    private router: Router,
     @Inject(MAT_DIALOG_DATA)
     public data: {
       role: string;
@@ -36,7 +32,20 @@ export class UserFormComponent implements OnInit {
       displayName: string;
       hideSeries?: boolean;
     }
-  ) {}
+  ) {
+    this.userFormGroup = new FormGroup({
+      displayName: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(15),
+      ]),
+      selectedJobRole: new FormControl('', [Validators.required]),
+      seriesFormControl: new FormControl(
+        '',
+        !data.hideSeries ? [Validators.required] : []
+      ),
+    });
+  }
 
   ngOnInit() {
     if (this.data && this.data.role == 'SCRUM_MASTER') {
@@ -66,7 +75,7 @@ export class UserFormComponent implements OnInit {
       return 'Name should have atleast 2 characters';
 
     if (this.displayName.hasError('maxlength'))
-      return 'Name must be under 18 characters only';
+      return 'Name must be under 15 characters only';
   }
 
   public getSelectedJobRoleErrorMessage(): string | void {
@@ -93,5 +102,9 @@ export class UserFormComponent implements OnInit {
         this.data.img = this.getSampleValue(roles);
       }
     }
+  }
+
+  public submitUserDetails(userData: any): void {
+    this.dialogRef.close(userData);
   }
 }

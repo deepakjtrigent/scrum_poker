@@ -44,20 +44,21 @@ async def change_admin(room_id: str, user_id: str):
 async def send_message(room_id: str, websocket, user_id, actionType: str):
     db = TinyDB('rooms_data_db.json')
     rooms = db.table('rooms')
-    Room = Query()
+    Room = Query() 
     Users = Query()
-    users = rooms.search(Room.users.any(Users.userId == user_id) & (Room.roomId == room_id))[
-        0]['users']
-    user_index = next((index for (index, user) in enumerate(
-        users) if user['userId'] == user_id), None)
-    for web in room_websockets.get(room_id, []):
-        if actionType == "NEW_USER_JOINED":
-            if web["websocket"] == websocket:
-                await web['websocket'].send_text(json.dumps({"actionType": "ACTIVE_USERS_LIST", "userData": users}))
-            else:
+    if rooms.contains(Room.users.any(Users.userId == user_id) & (Room.roomId == room_id)):
+        users = rooms.search(Room.users.any(Users.userId == user_id) & (Room.roomId == room_id))[
+            0]['users']
+        user_index = next((index for (index, user) in enumerate(
+            users) if user['userId'] == user_id), None)
+        for web in room_websockets.get(room_id, []):
+            if actionType == "NEW_USER_JOINED":
+                if web["websocket"] == websocket:
+                    await web['websocket'].send_text(json.dumps({"actionType": "ACTIVE_USERS_LIST", "userData": users}))
+                else:
+                    await web['websocket'].send_text(json.dumps({"actionType": actionType, "userData": users[user_index]}))
+            elif actionType == "USER_LEFT" and web['websocket'] != websocket:
                 await web['websocket'].send_text(json.dumps({"actionType": actionType, "userData": users[user_index]}))
-        elif actionType == "USER_LEFT" and web['websocket'] != websocket:
-            await web['websocket'].send_text(json.dumps({"actionType": actionType, "userData": users[user_index]}))
 
 
 async def delete_user(websocket, room_id, user_id):
