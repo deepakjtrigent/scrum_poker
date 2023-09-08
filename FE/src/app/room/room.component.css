@@ -38,7 +38,6 @@
 
 ::ng-deep div .mat-menu-panel {
   box-shadow: 0 1px 2px 1px rgba(168, 182, 191, 0.6) !important;
-
 }
 ::ng-deep .mat-elevation-z8,
 .mat-mdc-elevation-specific.mat-elevation-z8 {
@@ -90,87 +89,6 @@
   box-shadow: 0 1px 2px 1px rgba(230, 232, 232, 0.6);
   border-radius: 10px;
   background-color: white;
-}
-
-.collaborators-menu-open {
-  transform: rotate(-180deg);
-}
-
-.collaborators-menu-arrow {
-  margin-right: -3px;
-  scale: 1.35;
-  transition: transform 333ms ease-out, color 333ms;
-}
-
-.collaborators-icon {
-  scale: 1.25;
-  width: 40px;
-}
-
-
-/* 
-.card_button,#card_button {
-  font-family: "Space Mono" !important;
-}
-
-
-
-
-
-::ng-deep div#cdk-overlay-0 {
-  box-shadow: 0 1px 2px 1px rgba(168, 182, 191, 0.6);
-  border-radius: 10px;
-}
-
-::ng-deep div#cdk-overlay-1 {
-  box-shadow: 0 1px 2px 1px rgba(168, 182, 191, 0.6);
-  padding: 0px !important;
-  border-radius: 10px;
-
-}
-
-::ng-deep div#mat-menu-panel-1 {
-  box-shadow: 0 1px 2px 1px rgba(168, 182, 191, 0.6);
-}
-::ng-deep div#mat-menu-panel-2 {
-  box-shadow: 0 1px 2px 1px rgba(168, 182, 191, 0.6);
-}
-::ng-deep div#mat-menu-panel-3 {
-  box-shadow: 0 1px 2px 1px rgba(168, 182, 191, 0.6);
-}
-::ng-deep div.cdk-overlay-pane {
-  box-shadow: 0 1px 2px 1px rgba(168, 182, 191, 0.6);
-}
-::ng-deep div#cdk-overlay-7 {
-  box-shadow: 0 1px 2px 1px rgba(168, 182, 191, 0.6);
-}
-::ng-deep div#cdk-overlay-4 {
-  box-shadow: 0 1px 2px 1px rgba(168, 182, 191, 0.6);
-}
-
-.mat-mdc-menu-item {
-  display: flex;
-  width: 100%;
-  cursor:default;
-  flex-direction: row !important;
-  justify-content: space-between;
-  align-items: center;
-}
-.mat-mdc-menu-item:hover{
-  background-color: white !important;
-}
-
-
-.change_admin_icon{
-  position: absolute;
-  right: 0;
-}
-.admin_button{
-  position: absolute;
-  right: 12px;
-}
-.group_icon{
-font-size: 24px;
 }
 
 
@@ -274,3 +192,17 @@ font-size: 24px;
 /* .content-container {
   margin-left: 60px; /* Adjust to leave space for the fixed arrows */
   /* Add any other styles as needed for your content */
+.collaborators-menu-open {
+  transform: rotate(-180deg);
+}
+
+.collaborators-menu-arrow {
+  margin-right: -3px;
+  scale: 1.35;
+  transition: transform 333ms ease-out, color 333ms;
+}
+
+.collaborators-icon {
+  scale: 1.25;
+  width: 40px;
+}
