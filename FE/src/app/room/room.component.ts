@@ -235,11 +235,7 @@ constructor(
     if (this.usersArray.length<=10 || this.usersArray.length-this.currentIndex<=10){
       return true;
     }
-  //   if(this.usersArray.length==this.currentIndex ) {
-  //     console.log(this.usersArray.length, "IS GOOD",this.currentIndex);
-  //     this.canMovePrev()
-  //     return true;
-  // }
+
 }
  
   public prevDisable():any{
