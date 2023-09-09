@@ -1,3 +1,4 @@
+import { StoryPointsRevealData } from './storyPointsReveal';
 import { User } from './user';
 
 export interface UserData extends User {
@@ -11,4 +12,7 @@ export interface UserData extends User {
 export interface UserAction {
   actionType: string;
   userData: UserData | UserData[];
+  storyPointsRevealData?:StoryPointsRevealData
 }
+
+
