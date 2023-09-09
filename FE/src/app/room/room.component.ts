@@ -55,6 +55,7 @@ export class RoomComponent implements OnInit, OnDestroy {
   public currentIndex: number = 0;
  public  itemsPerPage: number = 10;
  public carouselState = '0';
+ public carouselUpdate:any;
 
 constructor(
     private websocketService: WebsocketService,
@@ -73,9 +74,12 @@ constructor(
       this.roomId = params['roomId'];
     });
 
-    if(this.usersArray.length==this.currentIndex ) {
-          this.canMovePrev()
-    }
+    this.carouselUpdate= setInterval(() => {
+      if (this.currentIndex === this.usersArray.length) {
+        this.canMovePrev();
+      }
+    }, 1000);
+    
     this.openUserDialog();
     this.messageSubscription = this.websocketService.recievedMessage.subscribe(
       (message: string): void => {
@@ -224,6 +228,7 @@ constructor(
       this.currentIndex = index;
       this.carouselState = '0';
     }
+   
   }
 
   public getDotGroups(): any {
@@ -568,6 +573,7 @@ constructor(
     this.websocketService.disconnect();
     this.messageSubscription.unsubscribe();
     this.heartBeat.destroyHeartbeat();
+      clearInterval(this.carouselUpdate);
   }
 
   public navigateToLandingPage():void{
