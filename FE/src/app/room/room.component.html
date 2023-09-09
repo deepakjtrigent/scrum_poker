@@ -3,13 +3,15 @@
     class="w-screen flex justify-around h-screen flex-col items-center xxs:h-auto overflow-hidden"
   >
     <div
-      class="w-full flex justify-between items-center align-middle mt-6 ml-24"
+      class="w-full flex justify-between items-center align-middle mt-[18.5px] ml-24"
     >
+    <button (click)="navigateToLandingPage()">
       <img
         src="../../assets/scrum_poker.svg"
         class="h-12 mr-3"
         alt="Scrum Poker Logo"
       />
+    </button>
       <div class="flex mr-24 items-center justify-center align-middle">
         <button
           [matMenuTriggerFor]="menu"
