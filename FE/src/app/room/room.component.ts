@@ -20,6 +20,7 @@ import { ToastService, toastState } from '../shared/services/toast.service';
 import { Subscription } from 'rxjs';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { jobRole } from '../shared/app-data/emoji-data';
+import { StoryPointsData } from '../shared/model/storyPointsReveal';
 
 @Component({
   selector: 'app-room',
@@ -44,7 +45,7 @@ export class RoomComponent implements OnInit, OnDestroy {
   public userAction!: UserAction | any;
   public isStoryPointsRevealed: boolean = false;
   public selectedPoints: number[] = [];
-  public storyPointsData: { points: number; repetition: number }[] = [];
+  public storyPointsData: StoryPointsData[] = [];
   public averageStoryPointsValue: number = 0;
   private messageSubscription!: Subscription;
   public isDataStored!: boolean;
@@ -139,12 +140,14 @@ export class RoomComponent implements OnInit, OnDestroy {
               this.usersArray.forEach((usersData: UserAction) => {
                 if ((usersData.userData as UserData).data?.storyPoints) {
                   usersData.actionType = userData.actionType;
-                  this.selectedPoints.push(
-                    (usersData.userData as UserData).data?.storyPoints as number
-                  );
                 } else usersData.actionType = 'STORY_POINT_NOT_SELECTED';
               });
-              this.calculateAverage();
+              this.storyPointsData = userData.storyPointsRevealData
+                ? userData.storyPointsRevealData.storyPointsData
+                : [];
+              this.averageStoryPointsValue = userData.storyPointsRevealData
+                ? userData.storyPointsRevealData.averageValue
+                : 0;
               this.isStoryPointsRevealed = true;
               break;
             }
@@ -206,6 +209,11 @@ export class RoomComponent implements OnInit, OnDestroy {
   }
 
   public updateStoryPoints(storyPoints: number | string, index: number): void {
+    for (let userDetails of this.usersArray) {
+      if ((userDetails.userData as UserData).data?.storyPoints == storyPoints) {
+        return;
+      }
+    }
     this.toggleActive(index);
     this.userAction = {
       actionType: 'STORY_POINT_SELECTION',
@@ -228,13 +236,12 @@ export class RoomComponent implements OnInit, OnDestroy {
             this.usersArray[index].userData['data'] = (
               response.userData as UserData
             ).data;
-
             this.usersArray[index].actionType = response.actionType;
           }
         });
       },
       (error) => {
-        this.toast.showToast('something went wrong', error);
+        this.toast.showToast('Something went wrong', error);
       }
     );
   }
@@ -275,7 +282,7 @@ export class RoomComponent implements OnInit, OnDestroy {
   }
 
   public toggleActive(index: number): void {
-    this.activeIndex = this.activeIndex === index ? -1 : index;
+    this.activeIndex = index;
     this.heartBeat.resetHeartbeatTime(this.roomId);
   }
 
@@ -383,22 +390,30 @@ export class RoomComponent implements OnInit, OnDestroy {
         displayName: this.user.displayName,
       },
     };
+    this.usersArray.forEach((userData: UserAction) => {
+      if ((userData.userData as UserData).data?.storyPoints) {
+        this.selectedPoints.push(
+          (userData.userData as UserData).data?.storyPoints as number
+        );
+      }
+    });
+    this.calculateAverage();
     this.roomService
-      .revealStoryPoints(this.roomId, this.userAction)
+      .revealStoryPoints(this.roomId, {
+        ...this.userAction,
+        storyPointsRevealData: {
+          storyPointsData: this.storyPointsData,
+          averageValue: this.averageStoryPointsValue,
+        },
+      })
       .subscribe((response: UserAction) => {
         if (response.actionType == 'STORY_POINT_REVEAL') {
           this.usersArray.forEach((userData: UserAction) => {
             if ((userData.userData as UserData).data?.storyPoints) {
               userData.actionType = response.actionType;
-              if ((userData.userData as UserData).data?.storyPoints) {
-                this.selectedPoints.push(
-                  (userData.userData as UserData).data?.storyPoints as number
-                );
-              }
             } else userData.actionType = 'STORY_POINT_NOT_SELECTED';
           });
           this.isStoryPointsRevealed = true;
-          this.calculateAverage();
         }
       });
   }
