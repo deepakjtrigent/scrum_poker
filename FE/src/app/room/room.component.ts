@@ -52,8 +52,12 @@ export class RoomComponent implements OnInit, OnDestroy {
   public series: any[] = [];
   public Tshirts = Tshirts;
   public jobRole = Object.keys(jobRole);
+  public currentIndex: number = 0;
+ public  itemsPerPage: number = 10;
+ public carouselState = '0';
+ public carouselUpdate:any;
 
-  constructor(
+constructor(
     private websocketService: WebsocketService,
     private route: ActivatedRoute,
     private heartBeat: HeartbeatService,
@@ -70,6 +74,12 @@ export class RoomComponent implements OnInit, OnDestroy {
       this.roomId = params['roomId'];
     });
 
+    this.carouselUpdate= setInterval(() => {
+      if (this.currentIndex === this.usersArray.length) {
+        this.canMovePrev();
+      }
+    }, 1000);
+    
     this.openUserDialog();
     this.messageSubscription = this.websocketService.recievedMessage.subscribe(
       (message: string): void => {
@@ -206,6 +216,45 @@ export class RoomComponent implements OnInit, OnDestroy {
     );
   }
 
+  public canMoveNext() {
+    if (this.currentIndex + this.itemsPerPage < this.usersArray.length) {
+      this.currentIndex += this.itemsPerPage;
+  
+    }
+  }
+  
+  public canMovePrev() {
+    if (this.currentIndex - this.itemsPerPage >= 0) {
+      this.currentIndex -= this.itemsPerPage;
+    }
+  }
+  
+  public moveToSlide(index: number) {
+    if (index >= 0 && index < this.usersArray.length-2) {
+      this.currentIndex = index;
+      this.carouselState = '0';
+    }
+   
+  }
+
+  public getDotGroups(): any {
+    const dotGroupCount = Math.ceil(this.usersArray.length / 10);
+    return Array(dotGroupCount).fill(0).map((_, index) => index);
+  }
+  
+  public nextDispable(): any {
+    if (this.usersArray.length<=10 || this.usersArray.length-this.currentIndex<=10){
+      return true;
+    }
+
+}
+ 
+  public prevDisable():any{
+    if( this.usersArray.length<=10 || this.currentIndex ==0){
+      return true;
+    }
+  }
+ 
   public getSampleValue(key: string | any): string | undefined {
     return (jobRole as { [key: string]: string })[key];
   }
@@ -530,6 +579,7 @@ export class RoomComponent implements OnInit, OnDestroy {
     this.websocketService.disconnect();
     this.messageSubscription.unsubscribe();
     this.heartBeat.destroyHeartbeat();
+      clearInterval(this.carouselUpdate);
   }
 
   public navigateToLandingPage(): void {
