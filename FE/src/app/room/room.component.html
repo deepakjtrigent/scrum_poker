@@ -190,9 +190,11 @@
                 );
                 let i = index
               "
-              class="text-primary-color w-[120px] xxs:w-[70px] xs:w-[90px] flex flex-col justify-center items-center gap-2 animate-popin-animation"
+              class="text-primary-color w-[120px] h-[80px] xxs:w-[70px] xs:w-[90px] flex flex-col justify-center items-center gap-2 animate-popin-animation"
             >
-              <ng-container [ngSwitch]="user.actionType">
+              <div
+              class="h-3/5 flex justify-center items-center" 
+              [ngSwitch]="user.actionType">
                 <img
                   *ngSwitchCase="'STORY_POINT_SELECTION'"
                   class="animate-popin-animation"
@@ -223,7 +225,7 @@
                   src="../../assets/pending-state.svg"
                   alt="Pending State"
                 />
-              </ng-container>
+              </div>
               <div class="font-inner-text text-main-text text-base">
                 {{
                   user.userData.displayName.length < 14

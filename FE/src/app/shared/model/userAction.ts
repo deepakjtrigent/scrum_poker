@@ -5,7 +5,7 @@ export interface UserData extends User {
   isAdmin?: boolean;
   isActive?: boolean;
   data?: {
-    storyPoints?: number | string;
+    storyPoints: number | null | string;
   };
 }
 
