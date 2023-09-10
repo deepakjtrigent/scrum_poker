@@ -5,33 +5,28 @@
     <div
       class="w-full flex justify-between items-center align-middle mt-[18.5px] ml-24"
     >
-    <button (click)="navigateToLandingPage()">
-      <img
-        src="../../assets/scrum_poker.svg"
-        class="h-12 mr-3"
-        alt="Scrum Poker Logo"
-      />
-    </button>
+      <button (click)="navigateToLandingPage()">
+        <img
+          src="../../assets/scrum_poker.svg"
+          class="h-12 mr-3"
+          alt="Scrum Poker Logo"
+        />
+      </button>
       <div class="flex mr-24 items-center justify-center align-middle">
         <button
           [matMenuTriggerFor]="menu"
           #matMenuTrigger="matMenuTrigger"
-          class="grouping_button flex flex-row gap-1 justify-evenly items-center p-3"
+          class="grouping_button flex flex-row gap-1 justify-evenly items-center px-3 py-1"
         >
-          <mat-icon class="material-symbols collaborators-icon"
-            >groups</mat-icon
-          >
+          <img src="../../assets/groups.svg" class="collaborators-icon" />
           <div class="font-inner-text text-base text-main-text align-middle">
             Collaborators
           </div>
-          <mat-icon
-            class="material-symbols-outlined collaborators-menu-arrow"
-            [ngClass]="
-              matMenuTrigger.menuOpen ? 'collaborators-menu-open' : ''
-            "
-          >
-            arrow_drop_down
-          </mat-icon>
+          <img
+            src="../../assets/drop_down_arrow.svg"
+            class="collaborators-menu-arrow"
+            [ngClass]="matMenuTrigger.menuOpen ? 'collaborators-menu-open' : ''"
+          />
         </button>
         <mat-menu #menu="matMenu" xPosition="after" class="mt-2">
           <div
@@ -93,9 +88,7 @@
                     class="text-main-text admin_button font-inner-text mr-[2px]"
                     *ngIf="activeUser.userData.isAdmin"
                   >
-                    <div class="material-symbols-outlined ml-1 mt-1">
-                      admin_panel_settings
-                    </div>
+                    <img src="../../assets/admin.svg" class="ml-1 my-1"/>
                     <p class="admin_title">Admin</p>
                   </div>
                 </div>
@@ -105,7 +98,7 @@
                     mat-icon-button
                     [matMenuTriggerFor]="menu"
                   >
-                    <mat-icon>more_horiz</mat-icon>
+                    <img src="../../assets/more_horizontal.svg" />
                   </button>
                 </div>
               </div>
@@ -136,33 +129,33 @@
         </div>
         <div class="font-inner-text text-main-text emoji_data">
           <ng-container [ngSwitch]="user.jobRole">
-            <p *ngSwitchCase="jobRole[0]" class="text-3xl">{{
-              getSampleValue(user.jobRole)
-            }}</p>
-            <p *ngSwitchCase="jobRole[1]" class="text-3xl">{{
-              getSampleValue(user.jobRole)
-            }}</p>
-            <p *ngSwitchCase="jobRole[2]" class="text-3xl">{{
-              getSampleValue(user.jobRole)
-            }}</p>
-            <p *ngSwitchCase="jobRole[3]" class="text-3xl">{{
-              getSampleValue(user.jobRole)
-            }}</p>
-            <p *ngSwitchCase="jobRole[4]" class="text-3xl">{{
-              getSampleValue(user.jobRole)
-            }}</p>
-            <p *ngSwitchCase="jobRole[5]" class="text-3xl">{{
-              getSampleValue(user.jobRole)
-            }}</p>
-            <p *ngSwitchCase="jobRole[6]" class="text-3xl">{{
-              getSampleValue(user.jobRole)
-            }}</p>
-            <p *ngSwitchCase="jobRole[7]" class="text-3xl">{{
-              getSampleValue(user.jobRole)
-            }}</p>
-            <p *ngSwitchCase="jobRole[8]" class="text-3xl">{{
-              getSampleValue(user.jobRole)
-            }}</p>
+            <p *ngSwitchCase="jobRole[0]" class="text-3xl">
+              {{ getSampleValue(user.jobRole) }}
+            </p>
+            <p *ngSwitchCase="jobRole[1]" class="text-3xl">
+              {{ getSampleValue(user.jobRole) }}
+            </p>
+            <p *ngSwitchCase="jobRole[2]" class="text-3xl">
+              {{ getSampleValue(user.jobRole) }}
+            </p>
+            <p *ngSwitchCase="jobRole[3]" class="text-3xl">
+              {{ getSampleValue(user.jobRole) }}
+            </p>
+            <p *ngSwitchCase="jobRole[4]" class="text-3xl">
+              {{ getSampleValue(user.jobRole) }}
+            </p>
+            <p *ngSwitchCase="jobRole[5]" class="text-3xl">
+              {{ getSampleValue(user.jobRole) }}
+            </p>
+            <p *ngSwitchCase="jobRole[6]" class="text-3xl">
+              {{ getSampleValue(user.jobRole) }}
+            </p>
+            <p *ngSwitchCase="jobRole[7]" class="text-3xl">
+              {{ getSampleValue(user.jobRole) }}
+            </p>
+            <p *ngSwitchCase="jobRole[8]" class="text-3xl">
+              {{ getSampleValue(user.jobRole) }}
+            </p>
           </ng-container>
         </div>
       </div>
@@ -225,21 +218,22 @@
             </div>
           </div>
         </div>
-
-        <button
-          *ngIf="!isStoryPointsRevealed && this.user.isAdmin"
-          class="mt-12 xxs:mt-10 sm:mt-14 md:mt-10 bg-scrum-button-inner-background hover:bg-hover-color active:bg-active-color font-medium text-scrum-button-inner-text px-6 py-2 rounded-lg font-inner-text text-base w-24"
-          (click)="revealStoryPoints()"
-        >
-          Reveal
-        </button>
-        <button
-          *ngIf="isStoryPointsRevealed && this.user.isAdmin"
-          class="mt-12 xxs:mt-10 sm:mt-14 md:mt-10 bg-scrum-button-inner-background hover:bg-hover-color active:bg-active-color font-medium text-scrum-button-inner-text px-6 py-2 rounded-lg font-inner-text text-base w-24"
-          (click)="resetStoryPoints()"
-        >
-          Reset
-        </button>
+        <div class="w-full flex justify-center h-12 items-center">
+          <button
+            *ngIf="!isStoryPointsRevealed && this.user.isAdmin"
+            class="bg-scrum-button-inner-background hover:bg-hover-color active:bg-active-color font-medium text-scrum-button-inner-text px-6 py-2 rounded-lg font-inner-text text-base w-24"
+            (click)="revealStoryPoints()"
+          >
+            Reveal
+          </button>
+          <button
+            *ngIf="isStoryPointsRevealed && this.user.isAdmin"
+            class="bg-scrum-button-inner-background hover:bg-hover-color active:bg-active-color font-medium text-scrum-button-inner-text px-6 py-2 rounded-lg font-inner-text text-base w-24"
+            (click)="resetStoryPoints()"
+          >
+            Reset
+          </button>
+        </div>
       </div>
 
       <div
@@ -260,7 +254,7 @@
       <ng-template #storyPointsAverage>
         <ng-container *ngFor="let data of storyPointsData">
           <div
-            class="flex flex-row justify-center items-center gap-2 xxs:hidden xs:hidden text-base font-card-font animate-popin-animation "
+            class="flex flex-row justify-center items-center gap-2 xxs:hidden xs:hidden text-base font-card-font animate-popin-animation"
           >
             <button
               class="card_selected w-[56px] h-[84px] rounded-md bg-white text-scrum-button-inner-text font-semibold py-2 px-4 box shadow-md transition cursor-default"

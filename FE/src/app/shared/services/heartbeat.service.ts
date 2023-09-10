@@ -66,7 +66,7 @@ export class HeartbeatService {
   public startwithHeartBeat(roomId: string): void {
     this.heartbeatInterval = setInterval(() => {
       this.startHeartbeat(roomId);
-    }, 10000);
+    }, 60000);
   }
 
   public resetHeartbeatTime(roomId: string): void {
@@ -83,7 +83,7 @@ export class HeartbeatService {
 
       timer=setInterval(()=>{
         closeDialog()
-      },400000)
+      },1800000)
 
     userDialogRef.afterClosed().subscribe(() => {
      clearInterval(timer)
