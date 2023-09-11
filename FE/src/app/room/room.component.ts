@@ -125,6 +125,12 @@ constructor(
                   (user.userData as UserData).userId !=
                   (userData.userData as UserData).userId
               );
+              this.toast.showToast(
+                `${
+                  (userData.userData as UserData).displayName
+                } has Left the room`,
+                toastState.success
+              );
               this.usersSortedArray = this.usersArray;
               this.sortUserArray();
               break;
@@ -576,18 +582,18 @@ constructor(
       clearInterval(this.carouselUpdate);
   }
 
-  public navigateToLandingPage():void{
-    if(this.user.isAdmin){
-      const confrimationDailog = this.userDialog.open(ConfirmDialogComponent,{
-        data:{type:'navigateToLandingPage'}
+  public navigateToLandingPage(): void {
+    if (this.user.isAdmin) {
+      const confrimationDailog = this.userDialog.open(ConfirmDialogComponent, {
+        data: { type: 'navigateToLandingPage' },
       });
-      confrimationDailog.afterClosed().subscribe((data:string)=>{
-        if(data=='navigateToLandingPage'){
-          this.router.navigate(['/'])
+      confrimationDailog.afterClosed().subscribe((data: string) => {
+        if (data == 'navigateToLandingPage') {
+          this.router.navigate(['/']);
         }
-      })
-    }else{
-      this.router.navigate(['/'])
+      });
+    } else {
+      this.router.navigate(['/']);
     }
   }
 }

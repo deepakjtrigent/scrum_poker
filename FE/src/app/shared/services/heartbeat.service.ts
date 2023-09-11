@@ -44,7 +44,7 @@ export class HeartbeatService {
         userId: userInCookies.userId,
         displayName: userInCookies.displayName,
       },
-    };  
+    };
     if (this.isTabActive) {
       sendUserAction.actionType = 'SENT_HEARTBEAT';
     }
@@ -52,21 +52,21 @@ export class HeartbeatService {
   }
 
   public sendHeartbeat = (roomId: string, sendUserAction: UserAction) => {
-   this.roomService.heartBeat(roomId, sendUserAction).subscribe((response) => {
-        if (response && response.actionType == 'USER_INACTIVE') {
-          this.currentTime = Date.now() - this.lastActive;
-          if (this.currentTime > 400000) {
-            clearInterval(this.heartbeatInterval);
-            this.openConfirmDialog(roomId);
-          }
-          }
+    this.roomService.heartBeat(roomId, sendUserAction).subscribe((response) => {
+      if (response && response.actionType == 'USER_INACTIVE') {
+        this.currentTime = Date.now() - this.lastActive;
+        if (this.currentTime > 1800000) {
+          clearInterval(this.heartbeatInterval);
+          this.openConfirmDialog(roomId);
+        }
+      }
     });
   };
 
   public startwithHeartBeat(roomId: string): void {
     this.heartbeatInterval = setInterval(() => {
       this.startHeartbeat(roomId);
-    }, 10000);
+    }, 60000);
   }
 
   public resetHeartbeatTime(roomId: string): void {
@@ -81,12 +81,12 @@ export class HeartbeatService {
         data: { type: 'roomId', value: roomId },
       });
 
-      timer=setInterval(()=>{
-        closeDialog()
-      },400000)
+    timer = setInterval(() => {
+      closeDialog();
+    }, 60000);
 
     userDialogRef.afterClosed().subscribe(() => {
-     clearInterval(timer)
+      clearInterval(timer);
     });
 
     var closeDialog = (): void => {
@@ -98,6 +98,5 @@ export class HeartbeatService {
 
   public destroyHeartbeat(): void {
     clearInterval(this.heartbeatInterval);
-   }
-   
+  }
 }
