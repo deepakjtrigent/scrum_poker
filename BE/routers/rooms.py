@@ -28,10 +28,10 @@ async def join_room(room_id: str, user_details: User_details):
     rooms = db.table('rooms')
     Room = Query()
     Users = Query()
-    seriesName = rooms.search(where('roomId') == room_id)[0]['seriesName']
-
     if rooms.contains(Room.roomId == room_id):
         if not rooms.contains((Room.users.any(Users.userId == user_details.userId)) & (Room.roomId == room_id)):
+            seriesName = rooms.search(where('roomId') == room_id)[
+                0]['seriesName']
             users_in_room = rooms.search(
                 where('roomId') == room_id)[0]['users']
             user_to_be_stored = {
