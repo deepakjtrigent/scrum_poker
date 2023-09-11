@@ -44,7 +44,7 @@ async def change_admin(room_id: str, user_id: str):
 async def send_message(room_id: str, websocket, user_id, actionType: str):
     db = TinyDB('rooms_data_db.json')
     rooms = db.table('rooms')
-    Room = Query() 
+    Room = Query()
     Users = Query()
     if rooms.contains(Room.users.any(Users.userId == user_id) & (Room.roomId == room_id)):
         users = rooms.search(Room.users.any(Users.userId == user_id) & (Room.roomId == room_id))[
