@@ -272,7 +272,7 @@ export class RoomComponent implements OnInit, OnDestroy {
 
   public updateStoryPoints(storyPoints: number | string, index: number): void {
     for (let userDetails of this.usersArray) {
-      if ((userDetails.userData as UserData).data?.storyPoints == storyPoints) {
+      if ((userDetails.userData as UserData).userId == this.user.userId &&  (userDetails.userData as UserData).data?.storyPoints == storyPoints) {
         return;
       }
     }
