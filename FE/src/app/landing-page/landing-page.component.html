@@ -1,40 +1,39 @@
-<div class="flex flex-row w-full overflow-hidden h-full">
-  <div class=" flex flex-col justify-start w-1/2 h-full pt-6 md:px-4 lg:px-9">
-      <a class="w-fit px-3" routerLink="/">
-        <img
-          src="../../assets/scrum_poker.svg"
-          class="h-12"
-          alt="Scrum Poker Logo"
-        />
-      </a>
-    <section
-      class="flex flex-col items-start justify-start mt-24"
-      id="initial-section"
-    >
+<div class="flex flex-col md:flex-row w-full overflow-hidden h-full">
+  <div
+    class="flex flex-col justify-start w-full md:w-1/2 h-full pt-6 md:px-4 lg:px-9"
+  >
+    <a class="w-fit px-3" routerLink="/">
+      <img
+        src="../../assets/scrum_poker.svg"
+        class="h-12"
+        alt="Scrum Poker Logo"
+      />
+    </a>
+    <section class="flex flex-col items-center justify-center mt-24 sm:items-start sm:justify-start sm:mt-0">
       <div>
         <p
-          class="text-xl font-inner-text font-medium text-center text-scrum-landing-page-text mr-36 mt-36"
+          class="text-xl font-inner-text font-medium text-center text-scrum-landing-page-text mr-8 md:mr-36 mt-8 md:mt-36"
         >
           Team estimations made easy
         </p>
       </div>
       <h1
-        class="font-semibold text-scrum-landing-text text-center font-main-textt text-4xl md:text-4xl mt-4 mb-6"
+        class="font-semibold text-scrum-landing-text text-center font-main-text text-4xl md:text-4xl mt-4 mb-6"
       >
         Simple Planning Poker
       </h1>
-
       <button
-        class="bg-scrum-button-inner-background hover:bg-hover-color active:bg-active-color font-medium text-scrum-button-inner-text py-3 px-6 md:px-9 my-2 rounded-lg"
+        class="bg-scrum-button-inner-background hover:bg-hover-color active:bg-active-color font-medium text-scrum-button-inner-text  py-3 px-6 md:px-9 my-2 rounded-lg"
         (click)="openUserDialog()"
       >
         Start a Poker
       </button>
     </section>
+    
   </div>
   <section
     id="description"
-    class="text-main-text font-inner-text flex flex-col items-center mt-3 w-1/2 md:w-1/2 overflow-y-scroll"
+    class="text-main-text font-inner-text flex flex-col items-center mt-3 w-full md:w-1/2 overflow-y-scroll"
   >
     <h3 class="font-inner-text font-medium text-lg md:py-3">How it Works?</h3>
     <div
@@ -50,7 +49,6 @@
         and enter it in the <strong>"Join Session"</strong> field on the
         dashboard.
       </p>
-
       <h2 class="text-base font-medium mb-4">Step 2: Cast Your Vote</h2>
       <p class="mb-6 md:mb-8 font-normal text-sm">
         Once you have joined a session, you will be presented with the
@@ -95,6 +93,8 @@
         <strong>End Session</strong> button to conclude the estimation process.
         The final estimate will be recorded and saved for future reference.
       </p>
+
+
     </div>
   </section>
 </div>
