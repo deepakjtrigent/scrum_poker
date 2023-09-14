@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "scrum-poker-db9f8"
+  },
+  "targets": {
+    "scrum-poker-db9f8": {
+      "hosting": {
+        "scrumPoker": [
+          "scrum-poker-db9f8"
+        ]
+      }
+    }
   }
 }
