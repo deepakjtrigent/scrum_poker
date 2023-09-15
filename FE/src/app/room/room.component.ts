@@ -362,6 +362,7 @@ export class RoomComponent implements OnInit, OnDestroy {
       const userDialogRef: MatDialogRef<UserFormComponent> =
         this.userDialog.open(UserFormComponent, {
           data: {
+            action: "JOIN_ROOM",
             role: 'Job Role',
             img: '🙂',
             disable: false,

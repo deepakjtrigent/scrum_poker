@@ -70,6 +70,7 @@ export class LandingPageComponent {
       UserFormComponent,
       {
         data: {
+          action: "CREATE_ROOM",
           role: 'SCRUM_MASTER',
           img: '👩‍🏫',
           disable: true,

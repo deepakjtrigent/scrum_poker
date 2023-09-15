@@ -93,6 +93,6 @@
     [disabled]="userFormGroup.invalid"
     class="bg-scrum-button-inner-background hover:bg-hover-color active:bg-active-color font-medium text-scrum-button-inner-text disabled:opacity-50 py-3 mx-5 rounded-lg w-full enter_button"
   >
-    Enter Room
+    {{(data.action == "CREATE_ROOM") ? "Create Room" : "Enter Room" }}
   </button>
 </mat-dialog-actions>

@@ -26,6 +26,7 @@ export class UserFormComponent implements OnInit {
     public dialogRef: MatDialogRef<UserFormComponent>,
     @Inject(MAT_DIALOG_DATA)
     public data: {
+      action : string
       role: string;
       img: string | any;
       disable: boolean;
