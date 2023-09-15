@@ -66,7 +66,7 @@ export class HeartbeatService {
   public startwithHeartBeat(roomId: string): void {
     this.heartbeatInterval = setInterval(() => {
       this.startHeartbeat(roomId);
-    }, 60000);
+    }, 300000);
   }
 
   public resetHeartbeatTime(roomId: string): void {
