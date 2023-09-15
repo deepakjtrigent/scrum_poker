@@ -465,7 +465,7 @@ export class RoomComponent implements OnInit, OnDestroy {
         ...this.userAction,
         storyPointsRevealData: {
           storyPointsData: this.storyPointsData,
-          averageValue: this.averageStoryPointsValue,
+          averageValue: this.averageStoryPointsValue | 0,
         },
       })
       .subscribe((response: UserAction) => {
