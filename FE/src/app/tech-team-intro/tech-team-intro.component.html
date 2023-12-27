@@ -1,0 +1,32 @@
+<div class="flex flex-col justify-start w-full h-full pt-5 md:px-4 lg:px-10">
+  <a class="w-fit px-2" routerLink="/">
+    <img
+      src="../../assets/scrum_poker.svg"
+      class="h-12"
+      alt="Scrum Poker Logo"
+    />
+  </a>
+  <h1 class="md:text-center text-2xl text-scrum-landing-text">Dev Squad Showcase</h1>
+  <p class="m-5 text-main-text text-justify">
+    The Planning Poker application stands as a testament to the dedication and
+    collaborative efforts of our team of five individuals undergoing intensive
+    training. Through their hard work and coordinated efforts, this development
+    team has successfully crafted an innovative Planning Poker. The
+    synergy among team members, each bringing a unique set of skills to the
+    project, has been instrumental in overcoming challenges and achieving
+    milestones. This project not only reflects their commitment to learning and
+    growth but also showcases their ability to work seamlessly together. Their
+    collective dedication has resulted in a robust Planning Poker application,
+    demonstrating the impact of teamwork, persistence, and a shared vision for
+    excellence.
+  </p>
+  <div class="flex flex-row flex-wrap justify-center items-center h-28 gap-24 mx-3 my-2 text-justify xxs:w-[260px] sm:w-[334px] md:w-auto ">
+    <div class="flex flex-col items-center image-container" *ngFor="let info of devTeamData">
+      <button (click)="openEmployeeDetailsDialog(info.name)">
+      <img class="w-44 h-44 rounded-full mb-3 shadow-lg  object-cover " [src]="info.photo" [alt]="info.name" [title]="info.name"/>
+      <h5 class="mb-1 text-lg font-medium text-gray-900 dark:text-white">{{info.name}}</h5>
+      <span class="text-sm text-gray-500 dark:text-gray-400">{{info.designation}}</span>
+    </button>
+    </div>
+  </div>
+</div>

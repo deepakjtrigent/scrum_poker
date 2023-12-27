@@ -169,7 +169,7 @@
           class="w-1/2 h-3/5 xxs:w-[250px] xxs:p-0 xxs:h-[330px] xs:w-[380px] xs:h-[450px] sm:w-[600px] md:w-9/12 lg:w-8/12 xxs:flex-cols-3 xs:flex-cols-3 xxs:gap-4 xs:gap-6 flex flex-wrap justify-between mt-16 p-5 xs:p-1"
         >
           <div class="h-full flex justify-center items-center">
-            <button
+            <!-- <button
             id="prev"
               class="prev disabled:opacity-20 disabled"
               (click)="canMovePrev()"
@@ -179,7 +179,7 @@
             src="../../assets/backward_arrow.svg"
             alt="backward_arrow"
           />
-            </button>
+            </button> -->
           </div>
           <div class="h-full flex flex-wrap justify-evenly w-[650px] items-center gap-3">
             <div
@@ -240,7 +240,7 @@
             </div>
           </div>
           <div class="h-full flex justify-center items-center">
-            <button
+            <!-- <button
               class="next disabled:opacity-20 disabled arrows"
               (click)="canMoveNext()"
               [disabled]="nextDispable()"
@@ -250,10 +250,10 @@
             alt="forward_arrow"
           />
              
-            </button>
+            </button> -->
           </div>
 
-          <div
+          <!-- <div
             class="w-full"
             [style.visibility]="usersArray.length <= 10 ? 'hidden' : 'visible'"
           >
@@ -267,7 +267,7 @@
                 ></span>
               </ng-container>
             </div>
-          </div>
+          </div> -->
         </div>
         <div class="w-full flex justify-center h-12 items-center">
           <button
@@ -301,6 +301,8 @@
           </button>
         </ng-container>
       </div>
+ 
+      <button class="absolute bottom-0 right-0 mb-2 mr-12"><a routerLink="/scrum-tech-team"  target="_blank">Made by</a></button>
 
       <ng-template #storyPointsAverage>
         <ng-container *ngFor="let data of storyPointsData">

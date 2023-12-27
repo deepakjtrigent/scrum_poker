@@ -1,0 +1,18 @@
+<div *ngFor="let info of ChoosenEmpDetails">
+    <div *ngIf="info.name==ChoosenEmpName" class="bg-white p-4 rounded-lg relative">
+        <div class="absolute top-0 right-0 p-2 cursor-pointer" (click)="closeCard()">
+            <span class="text-black text-xl"> <mat-icon>clear</mat-icon></span>
+        </div>
+        <div class="flex items-center m-2">
+            <div class="w-1/4 relative">
+                <img [src]="info.photo" alt="Employee Photo" class="h-45 w-35 object-cover rounded-lg shadow-lg mt-10">
+            </div>
+            <div class="w-3/4 ml-4">
+                <p class="text-xl">{{info.name}}</p>
+                <p class="text-gray-500">{{info.designation}}</p>
+                <p class="text-gray-700 mt-2">{{info.bio}}</p>
+                <a [href]="info.linkedIn" title="linkedIn"><img src="../../assets/linkedin-icon.svg" class="h-4 mt-2" alt="linkedin-logo"></a>
+            </div>
+        </div>
+    </div>
+</div>
