@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/scrum-poker",
+    "public": "dist/functions/browser",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -9,11 +9,20 @@
     "rewrites": [
       {
         "source": "**",
-        "destination": "/index.html"
+        "destination": "ngssr"
       }
     ]
   },
-  "remoteconfig": {
-    "template": "remoteconfig.template.json"
-  }
+  "functions": [
+    {
+      "source": "dist/functions",
+      "codebase": "default",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log"
+      ]
+    }
+  ]
 }

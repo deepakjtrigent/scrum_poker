@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/scrum-poker",
+            "outputPath": "dist/functions/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -52,7 +52,13 @@
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -93,6 +99,67 @@
             ],
             "scripts": []
           }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/functions/server",
+            "main": "server.ts",
+            "tsConfig": "tsconfig.server.json"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "sourceMap": true,
+              "extractLicenses": false,
+              "vendorChunk": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ]
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "configurations": {
+            "development": {
+              "browserTarget": "scrumPoker:build:development",
+              "serverTarget": "scrumPoker:server:development"
+            },
+            "production": {
+              "browserTarget": "scrumPoker:build:production",
+              "serverTarget": "scrumPoker:server:production"
+            }
+          },
+          "defaultConfiguration": "development"   
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "routes": [
+              "/",
+              "/oops"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "scrumPoker:build:production",
+              "serverTarget": "scrumPoker:server:production"
+            },
+            "development": {
+              "browserTarget": "scrumPoker:build:development",
+              "serverTarget": "scrumPoker:server:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }
