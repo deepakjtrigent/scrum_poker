@@ -1,1 +1,56 @@
+<div class="h-screen flex flex-col justify-between">
 <router-outlet></router-outlet>
+<footer class="mb-1 flex justify-center flex-col items-center text-center w-full mt-auto px-2 pb-1">
+    <div class="my-2 lg:my-1">
+    <a
+    class="mx-3"
+        href="https://www.facebook.com/TrigentSoftware/"
+        target="_blank"
+        rel="noopener noreferrer"
+        ><img
+          class="social-sites-logo h-[20px] w-[20px] inline-block"
+          src="../../assets/social-sites-icon/facebook-logo.svg"
+          alt="facebook"
+      /></a>
+      
+      <a
+      class="mx-3"
+        href="https://www.linkedin.com/company/trigent-software/"
+        target="_blank"
+        rel="noopener noreferrer"
+        ><img
+          class="social-sites-logo h-[20px] w-[20px] inline-block"
+          src="../../assets/social-sites-icon/linkedin-logo.svg"
+          alt="linkedIn"
+      /></a>
+      
+      <a
+      class="mx-3"
+        href="https://www.twitter.com/trigentsoftware/"
+        target="_blank"
+        rel="noopener noreferrer"
+        ><img
+          class="social-sites-logo h-[15px] w-[15px] inline-block"
+          src="../../assets/social-sites-icon/twitter-logo.svg"
+          alt="twitter"
+      /></a>
+      
+      <a
+      class="mx-3"
+        href="https://www.youtube.com/channel/UCNhAbLhnkeVvV6MBFUZ8hOw"
+        target="_blank"
+        rel="noopener noreferrer"
+        ><img
+          class="social-sites-logo h-[25px] w-[25px] inline-block"
+          src="../../assets/social-sites-icon/youtube-logo.svg"
+          alt="youtube"
+      /></a>
+    </div>
+    <p class="inline-block text-scrum-landing-text opacity-70">
+      Copyright © 2023, Trigent Software, Inc. All rights reserved.
+      &nbsp;
+      
+    </p>
+  </footer>
+  <button *ngIf="currentRoute !== '/about'" class="about-page-btn" mat-mini-fab  matTooltip="About" matTooltipPosition="left" (click)="navigateToAbout()" target="_blank"><mat-icon fontIcon="info"></mat-icon></button>
+</div>

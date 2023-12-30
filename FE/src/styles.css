@@ -10,6 +10,8 @@
   --text-pale: #e5effe;
   --background-color: #ffffff;
   --text-color: #848b99;
+  --main-text: #000c45;
+  --card-shadow: 0 1px 2px 1px rgba(167, 183, 194, 0.7);
 }
 
 html,
@@ -19,7 +21,7 @@ body {
   scroll-snap-type: y mandatory;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   background-image: radial-gradient(
-    rgba(215, 214, 214, 0.5) 0.8px,
+    rgba(215, 214, 214, 0.5) 0.9px,
     transparent 0
   );
   background-size: 15px 15px;
@@ -49,7 +51,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background-color: transparent
+  background-color: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -63,11 +65,8 @@ body {
   background-color: #868585;
 }
 
-
 /* Target all mat-menu panels */
 mat-menu-panel {
   /* box-shadow: 0 1px 2px 1px rgba(168, 182, 191, 0.6); */
   border-radius: 10px;
 }
-
-

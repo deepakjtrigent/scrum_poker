@@ -1,25 +1,27 @@
-<div class="flex flex-row w-full overflow-hidden h-full">
-  <div class=" flex flex-col justify-start w-1/2 h-full pt-6 md:px-4 lg:px-9">
-      <a class="w-fit px-3" routerLink="/">
-        <img
-          src="../../assets/scrum_poker.svg"
-          class="h-12"
-          alt="Scrum Poker Logo"
-        />
-      </a>
+<div
+  class="flex flex-col md:flex-row w-full overflow-hidden md:h-[88dvh] lg:[92vh] h-auto mb-2"
+>
+  <div
+    class="flex flex-col justify-start w-dvh md:w-1/2 md:h-full h-screen md:pt-6 pt-2 md:ps-4 lg:ps-9 md:items-start items-center"
+  >
+    <a class="w-full md:px-3 px-9 flex justify-start" routerLink="/">
+      <img
+        src="../../assets/scrum_poker.svg"
+        class="md:h-12 h-16"
+        alt="Scrum Poker Logo"
+      />
+    </a>
     <section
-      class="flex flex-col items-start justify-start mt-24"
+      class="flex flex-col md:items-start justify-center items-center h-full"
       id="initial-section"
     >
-      <div>
-        <p
-          class="text-xl font-inner-text font-medium text-center text-scrum-landing-page-text mr-36 mt-36"
-        >
-          Team estimations made easy
-        </p>
-      </div>
+      <p
+        class="text-xl font-inner-text w-fit font-medium text-center text-scrum-landing-page-text"
+      >
+        Team estimations made easy
+      </p>
       <h1
-        class="font-semibold text-scrum-landing-text text-center font-main-textt text-4xl md:text-4xl mt-4 mb-6"
+        class="font-semibold text-scrum-landing-text text-center font-main-text text-4xl md:text-3xl lg:text-4xl mt-5 mb-7 mx-2 md:mx-0"
       >
         Simple Planning Poker
       </h1>
@@ -34,11 +36,11 @@
   </div>
   <section
     id="description"
-    class="text-main-text font-inner-text flex flex-col items-center mt-3 w-1/2 md:w-1/2 overflow-y-scroll"
+    class="text-main-text font-inner-text flex flex-col items-center md:mt-3 px-4 w-full md:w-1/2 overflow-y-auto"
   >
-    <h3 class="font-inner-text font-medium text-lg md:py-3">How it Works?</h3>
+    <h3 class="font-inner-text font-medium text-xl md:py-3">How it Works?</h3>
     <div
-      class="container mx-auto p-2 md:pt-4 md:pr-4 flex flex-col text-justify"
+      class="container mx-auto py-2 md:pt-4 md:pr-4 flex flex-col text-justify"
     >
       <h2 class="text-base font-medium mb-4">
         Step 1: Create or Join a Session

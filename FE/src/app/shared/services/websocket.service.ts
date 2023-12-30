@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 export class WebsocketService {
   private socket!: WebSocket;
   private readonly socketUrl: string =
-    'wss://scrum-poker-testing-xl2c.onrender.com/room';
+    'ws://134.209.147.133:8000/room';
   public connected: boolean = false;
   public recievedMessage: BehaviorSubject<any> = new BehaviorSubject('');
   constructor(private toast: ToastService) {}

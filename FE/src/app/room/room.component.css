@@ -14,8 +14,15 @@
 }
 
 .card {
-  box-shadow: 0 1px 2px 1px rgba(167, 183, 194, 0.6);
+  box-shadow: var(--card-shadow);
 }
+
+.display-card {
+  box-shadow: var(--card-shadow);
+  transition: transform 0.5s;
+  perspective: 1000px;
+}
+
 .card_selected {
   box-shadow: 0 1px 2px 1px rgba(167, 183, 194, 0.6);
 }
@@ -91,74 +98,9 @@
   background-color: white;
 }
 
-.carousel {
-  position: relative;
- 
-}
-.carousel button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  padding: 10px;
-  background-color: rgba(0, 0, 0, 0.042);
-  color: black;
- border: none; 
-  cursor: pointer;
-}
-
-.carousel-dots {
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  margin-top: 35px;
-
-}
-.carousel-dots .dot {
-  display: inline-block;
-  width: 7px;
-  height: 7px;
-  background-color: gray;
-  border-radius: 50%;
-  margin: 0 5px;
-  cursor: pointer;
-  margin-bottom: 8px ;
-} 
-
-.carousel-dots .dot.active {
-  background-color: #000e51;  
-  margin-bottom: 10px;
- } 
-
-.carousel-items{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-}
-
-.arrows{
-  font-size: 60px;
-  color: #000e51;  
-}
-
-
-.arrows-container {
-  display: flex;
-  justify-content: space-between;
-  position: absolute;
-  width: 100%;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.arrows-container button {
-  color: #000e51;
-  cursor: pointer;
-  padding: 10px;
-}
-
 .collaborators-menu-open {
   transform: rotate(-180deg);
-}   
+}
 
 .collaborators-menu-arrow {
   margin-right: -3px;
@@ -167,11 +109,10 @@
 }
 
 .collaborators-icon {
-  scale: .70;
+  scale: 0.7;
   width: 40px;
 }
 
-button:disabled {
-  cursor: not-allowed;
-  pointer-events: none !important;
+.display-card-flipped{
+  transform:rotateY(-180deg);
 }

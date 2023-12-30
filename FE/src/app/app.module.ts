@@ -15,6 +15,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSelectModule} from '@angular/material/select';
+import {MatTooltipModule} from '@angular/material/tooltip';
+
 
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { RoomComponent } from './room/room.component';
@@ -23,6 +25,7 @@ import { UserIdInterceptor } from './user-id.interceptor';
 import { UserFormComponent } from './user-form/user-form.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { ReplacePipe } from './shared/replace.pipe';
+import { CreditsComponent } from './credits/credits.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +36,7 @@ import { ReplacePipe } from './shared/replace.pipe';
     UserFormComponent,
     ConfirmDialogComponent,
     ReplacePipe,
+    CreditsComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,7 +53,8 @@ import { ReplacePipe } from './shared/replace.pipe';
     MatIconModule,
     ReactiveFormsModule,
     MatSelectModule,
-    MatIconModule
+    MatIconModule,
+    MatTooltipModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
