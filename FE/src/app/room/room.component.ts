@@ -226,7 +226,10 @@ export class RoomComponent implements OnInit, OnDestroy {
 
   public updateStoryPoints(storyPoints: number | string, index: number): void {
     for (let userDetails of this.usersArray) {
-      if ((userDetails.userData as UserData).userId == this.user.userId &&  (userDetails.userData as UserData).data?.storyPoints == storyPoints) {
+      if (
+        (userDetails.userData as UserData).userId == this.user.userId &&
+        (userDetails.userData as UserData).data?.storyPoints == storyPoints
+      ) {
         return;
       }
     }
@@ -290,10 +293,11 @@ export class RoomComponent implements OnInit, OnDestroy {
         this.websocketService.connect(this.roomId, userDetails.userId);
         this.heartBeat.startwithHeartBeat(this.roomId);
       },
-      (error:HttpErrorResponse) => {
-        if (error.status != 403)
-        {
-        this.router.navigate(['oops']);
+      (error: HttpErrorResponse) => {
+        if (error.status != 403) {
+          this.router.navigate(['oops']);
+        } else {
+          this.openUserDialog(true);
         }
         this.toast.showToast(error.error.error, toastState.danger);
       }
@@ -305,7 +309,7 @@ export class RoomComponent implements OnInit, OnDestroy {
     this.heartBeat.resetHeartbeatTime(this.roomId);
   }
 
-  public openUserDialog(): void {
+  public openUserDialog(ifErrorWhileJoining = false): void {
     const userInCookies: string = atob(this.cookieService.get('userDetails'));
     const jobRole = atob(this.cookieService.get('JobRole'));
     this.userJobRole = jobRole;
@@ -315,11 +319,11 @@ export class RoomComponent implements OnInit, OnDestroy {
       this.user = JSON.parse(userInCookies);
     }
 
-    if (!jobRole || !userInCookies) {
+    if ((!jobRole || !userInCookies) || ifErrorWhileJoining) {
       const userDialogRef: MatDialogRef<UserFormComponent> =
         this.userDialog.open(UserFormComponent, {
           data: {
-            action: "JOIN_ROOM",
+            action: 'JOIN_ROOM',
             role: 'Job Role',
             img: '🙂',
             disable: false,
@@ -486,7 +490,7 @@ export class RoomComponent implements OnInit, OnDestroy {
 
   private calculateAverage(): void {
     let storyPointsSum: any;
-    if (this.user.seriesName == 'TSHIRTS' ) {
+    if (this.user.seriesName == 'TSHIRTS') {
       this.selectedPoints.sort(this.customTShirtSizeSort);
     } else {
       this.selectedPoints = this.selectedPoints.map((points: any): number => {

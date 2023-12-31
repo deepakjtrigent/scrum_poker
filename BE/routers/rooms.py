@@ -30,7 +30,7 @@ async def join_room(room_id: str, user_details: User_details):
     Users = Query()
     if rooms.contains(Room.roomId == room_id):
         if rooms.contains(Room.users.any(Users.jobRole == 'SCRUM_MASTER') & (Room.roomId == room_id)) and user_details.jobRole == 'SCRUM_MASTER':
-            return JSONResponse(status_code=403,content={"error": "Scrum Master Already present in the Room"})
+            return JSONResponse(status_code=403,content={"error": "There can't be more than one Scrum Master in a room"})
         if not rooms.contains((Room.users.any(Users.userId == user_details.userId)) & (Room.roomId == room_id)):
             seriesName = rooms.search(where('roomId') == room_id)[
                 0]['seriesName']
