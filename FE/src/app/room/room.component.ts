@@ -21,6 +21,7 @@ import { Subscription } from 'rxjs';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { jobRole } from '../shared/app-data/emoji-data';
 import { StoryPointsData } from '../shared/model/storyPointsReveal';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-room',
@@ -289,8 +290,11 @@ export class RoomComponent implements OnInit, OnDestroy {
         this.websocketService.connect(this.roomId, userDetails.userId);
         this.heartBeat.startwithHeartBeat(this.roomId);
       },
-      (error) => {
+      (error:HttpErrorResponse) => {
+        if (error.status != 403)
+        {
         this.router.navigate(['oops']);
+        }
         this.toast.showToast(error.error.error, toastState.danger);
       }
     );

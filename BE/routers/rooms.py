@@ -29,6 +29,8 @@ async def join_room(room_id: str, user_details: User_details):
     Room = Query()
     Users = Query()
     if rooms.contains(Room.roomId == room_id):
+        if rooms.contains(Room.users.any(Users.jobRole == 'SCRUM_MASTER') & (Room.roomId == room_id)) and user_details.jobRole == 'SCRUM_MASTER':
+            return JSONResponse(status_code=403,content={"error": "Scrum Master Already present in the Room"})
         if not rooms.contains((Room.users.any(Users.userId == user_details.userId)) & (Room.roomId == room_id)):
             seriesName = rooms.search(where('roomId') == room_id)[
                 0]['seriesName']
@@ -47,7 +49,7 @@ async def join_room(room_id: str, user_details: User_details):
             update_data_in_db(user_to_be_stored, room_id)
             return {"usersData": user_to_be_stored, "seriesName": seriesName}
         else:
-            return JSONResponse(status_code=403, content={"error": "User is already in the room"})
+            return JSONResponse(status_code=409, content={"error": "User is already in the room"})
     else:
         return JSONResponse(status_code=404, content={"error": "Room not found"})
 
