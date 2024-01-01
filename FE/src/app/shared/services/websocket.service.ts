@@ -1,19 +1,18 @@
 import { Injectable } from '@angular/core';
 import { ToastService, toastState } from './toast.service';
 import { BehaviorSubject } from 'rxjs';
+import { scrumPokerUrls }  from '../url';
 @Injectable({
   providedIn: 'root',
 })
 export class WebsocketService {
   private socket!: WebSocket;
-  private readonly socketUrl: string =
-    'ws://localhost:8000/room';
   public connected: boolean = false;
   public recievedMessage: BehaviorSubject<any> = new BehaviorSubject('');
   constructor(private toast: ToastService) {}
 
   public connect(roomId: string, userId: string): void {
-    this.socket = new WebSocket(`${this.socketUrl}/${roomId}`);
+    this.socket = new WebSocket(`${scrumPokerUrls.websocketUrl}/${roomId}`);
     this.socket.onopen = (): void => {
       this.connected = true;
       this.socket.send(JSON.stringify({ userId: userId }));
