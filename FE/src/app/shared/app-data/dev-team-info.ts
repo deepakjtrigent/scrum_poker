@@ -32,20 +32,20 @@ export const devTeam = [
     linkedIn: 'https://www.linkedin.com/in/himanshu-salhotra-8385ba93/',
   },
   {
-    name: 'Prathijna',
-    designation: 'Software Engineer',
-    photoUrl:
-      'https://media.licdn.com/dms/image/D5603AQEz9AmsJt1JXQ/profile-displayphoto-shrink_800_800/0/1703697589296?e=1709164800&v=beta&t=-b4YOfWQ9oXcZQGkiS8TkvVmp_l5Cv47sQLMkcHMLrY',
-    bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    linkedIn: 'https://www.linkedin.com/in/prathijna-gowda-7aa1a3254/',
-  },
-  {
     name: 'Dakshayini',
     designation: 'Software Engineer',
     photoUrl:
       'https://media.licdn.com/dms/image/D5603AQFvucReckY_rw/profile-displayphoto-shrink_800_800/0/1698068429530?e=1709164800&v=beta&t=eEOBru6ZKgInsbS_GaMlU6_sltuGTtsdpfpXYt0fq-M',
     bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
     linkedIn: 'https://www.linkedin.com/in/dakshayini-v-a532b7215/',
+  },
+  {
+    name: 'Prathijna',
+    designation: 'Software Engineer',
+    photoUrl:
+      'https://media.licdn.com/dms/image/D5603AQEz9AmsJt1JXQ/profile-displayphoto-shrink_800_800/0/1703697589296?e=1709164800&v=beta&t=-b4YOfWQ9oXcZQGkiS8TkvVmp_l5Cv47sQLMkcHMLrY',
+    bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+    linkedIn: 'https://www.linkedin.com/in/prathijna-gowda-7aa1a3254/',
   },
   {
     name: 'Hemanth M Motwani',

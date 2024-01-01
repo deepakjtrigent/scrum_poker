@@ -1,5 +1,5 @@
 <div
-  class="w-screen flex justify-between h-full flex-col items-center overflow-hidden"
+  class="w-screen flex justify-between h-full 2xl:h-[90dvh] flex-col items-center overflow-hidden"
 >
   <div
     class="w-full flex flex-wrap justify-between items-center align-middle xs:mt-2 sm:mt-[18.5px] xxs:mt-1 md:ml-24"
@@ -164,14 +164,14 @@
       class="w-full h-3/4 xxs:h-[400px] xs:h-[480px] flex flex-col justify-center items-center gap-7 xxs:gap-3 xs:gap-4"
     >
       <div
-        class="w-1/2 h-[380px] xxs:w-[250px] xxs:p-0 xxs:h-[310px] xs:w-[380px] xs:h-[360px] sm:w-[600px] md:w-9/12 lg:w-11/12 xxs:flex-cols-3 xs:flex-cols-3 xxs:gap-4 xs:gap-6 flex flex-wrap p-1 xs:p-1 xxs-pt-1 overflow-y-auto"
+        class="w-1/2 h-[407px] xxs:w-[250px] xxs:p-0 xxs:h-[310px] xs:w-[380px] xs:h-[360px] sm:w-[600px] md:w-9/12 lg:w-11/12 xxs:flex-cols-3 xs:flex-cols-3 xxs:gap-4 xs:gap-6 flex flex-wrap p-1 md:mt-2 xs:p-1 xxs-pt-1 overflow-y-auto"
       >
         <div
-          class="h-full flex flex-wrap justify-center w-full items-center gap-5 sm:gap-x-10 md:gap-x-20"
+          class="h-full flex flex-wrap justify-center w-full items-center gap-x-5 md:gap-y-4  sm:gap-x-10 md:gap-x-20"
         >
           <div
             *ngFor="let user of usersArray; let i = index"
-            class="text-primary-color flex flex-col justify-center items-center gap-2 animate-popin-animation"
+            class="text-primary-color flex flex-col justify-center items-center gap-2 animate-popin-animation pt-1"
             
           >
             <div
