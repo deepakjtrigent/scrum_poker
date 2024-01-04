@@ -1,7 +1,9 @@
-.error-container{
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.homepage-button {
+  background-color:#0686ce;
+  width: 17rem;
+  height: 3rem;
+  font-size: 1rem;
+  color: rgb(255, 255, 255) !important;
+  border-radius: 40px;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }

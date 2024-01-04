@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import {
   seriesCount,
   seriesNameList,
@@ -22,12 +22,13 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
 import { jobRole } from '../shared/app-data/emoji-data';
 import { StoryPointsData } from '../shared/model/storyPointsReveal';
 import { HttpErrorResponse } from '@angular/common/http';
+import {Clipboard} from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'app-room',
   templateUrl: './room.component.html',
   styleUrls: ['./room.component.css'],
-  providers: [WebsocketService],
+  providers: [WebsocketService]
 })
 export class RoomComponent implements OnInit, OnDestroy {
   public cardCounts: any = Object.keys(seriesCount);
@@ -67,7 +68,8 @@ export class RoomComponent implements OnInit, OnDestroy {
     private cookieService: CookieService,
     private userDialog: MatDialog,
     private storageService: StorageService,
-    private toast: ToastService
+    private toast: ToastService,
+    private clipboard : Clipboard,
   ) {}
 
   public ngOnInit(): void {
@@ -215,8 +217,12 @@ export class RoomComponent implements OnInit, OnDestroy {
       }
     );
   }
+  public copyRoomUrl(): void {
+    this.clipboard.copy(document.location.href);
+    this.toast.showToast('Room Url Copied', toastState.success);
+  }
 
-  public getSampleValue(key: string | any): string | undefined {
+  public getRoleEmoji(key: string | any): string | undefined {
     return (jobRole as { [key: string]: string })[key];
   }
 

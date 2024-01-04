@@ -1,15 +1,17 @@
-<div class="flex justify-center h-screen bg-gray-100 flex-wrap">
-    <a class="w-full md:px-3 px-9 ml-9 mt-5 flex justify-start" routerLink="/">
-      <img
-        src="../../assets/scrum_poker.svg"
-        class="md:h-12 h-16"
-        alt="Scrum Poker Logo"
-      />
-    </a>
+<div class="w-full h-[85vh] flex flex-col justify-center items-center">
+  <a class="left-9 top-5 absolute z-20" routerLink="/">
+    <img
+      src="../../assets/scrum_poker.svg"
+      class="md:h-12 h-16"
+      alt="Scrum Poker Logo"
+    />
+  </a>
+
   <img
     src="../../assets/404-page-not-found.svg"
     alt="404-page-not-found"
-    class="m-10"
-    class="h-3/4"
+    class="md:h-[80%] xxs:h-[50%] xs:h-[60%] sm:h-[70%] object-fill p-2"
   />
+
+  <button mat-button class="homepage-button" routerLink="/">Go To Homepage</button>
 </div>

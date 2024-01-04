@@ -113,6 +113,29 @@
   width: 40px;
 }
 
-.display-card-flipped{
-  transform:rotateY(-180deg);
+.display-card-flipped {
+  transform: rotateY(-180deg);
+}
+
+.copy-url-btn {
+  background-color: white;
+  z-index: 100;
+  color: var(--main-color);
+  position: absolute;
+  bottom: 30px;
+  left: 25px;
+  padding-right: 2px;
+}
+
+.copy-url-btn:active {
+  transform: scale(1.2);
+  transition: transform 0.2s ease;
+}
+
+@media (max-width:434px){
+  .copy-url-btn{
+      bottom: 60px;
+      left:20px;
+  }
+  
 }

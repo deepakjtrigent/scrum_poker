@@ -40,31 +40,31 @@
             <div class="flex flex-row items-center">
               <ng-container [ngSwitch]="activeUser.userData.jobRole">
                 <span *ngSwitchCase="jobRole[0]">{{
-                  getSampleValue(activeUser.userData.jobRole)
+                  getRoleEmoji(activeUser.userData.jobRole)
                 }}</span>
                 <span *ngSwitchCase="jobRole[1]">{{
-                  getSampleValue(activeUser.userData.jobRole)
+                  getRoleEmoji(activeUser.userData.jobRole)
                 }}</span>
                 <span *ngSwitchCase="jobRole[2]">{{
-                  getSampleValue(activeUser.userData.jobRole)
+                  getRoleEmoji(activeUser.userData.jobRole)
                 }}</span>
                 <span *ngSwitchCase="jobRole[3]">{{
-                  getSampleValue(activeUser.userData.jobRole)
+                  getRoleEmoji(activeUser.userData.jobRole)
                 }}</span>
                 <span *ngSwitchCase="jobRole[4]">{{
-                  getSampleValue(activeUser.userData.jobRole)
+                  getRoleEmoji(activeUser.userData.jobRole)
                 }}</span>
                 <span *ngSwitchCase="jobRole[5]">{{
-                  getSampleValue(activeUser.userData.jobRole)
+                  getRoleEmoji(activeUser.userData.jobRole)
                 }}</span>
                 <span *ngSwitchCase="jobRole[6]">{{
-                  getSampleValue(activeUser.userData.jobRole)
+                  getRoleEmoji(activeUser.userData.jobRole)
                 }}</span>
                 <span *ngSwitchCase="jobRole[7]">{{
-                  getSampleValue(activeUser.userData.jobRole)
+                  getRoleEmoji(activeUser.userData.jobRole)
                 }}</span>
                 <span *ngSwitchCase="jobRole[8]">{{
-                  getSampleValue(activeUser.userData.jobRole)
+                  getRoleEmoji(activeUser.userData.jobRole)
                 }}</span>
               </ng-container>
 
@@ -128,31 +128,31 @@
       <div class="font-inner-text text-main-text emoji_data">
         <ng-container [ngSwitch]="user.jobRole">
           <p *ngSwitchCase="jobRole[0]" class="text-3xl">
-            {{ getSampleValue(user.jobRole) }}
+            {{ getRoleEmoji(user.jobRole) }}
           </p>
           <p *ngSwitchCase="jobRole[1]" class="text-3xl">
-            {{ getSampleValue(user.jobRole) }}
+            {{ getRoleEmoji(user.jobRole) }}
           </p>
           <p *ngSwitchCase="jobRole[2]" class="text-3xl">
-            {{ getSampleValue(user.jobRole) }}
+            {{ getRoleEmoji(user.jobRole) }}
           </p>
           <p *ngSwitchCase="jobRole[3]" class="text-3xl">
-            {{ getSampleValue(user.jobRole) }}
+            {{ getRoleEmoji(user.jobRole) }}
           </p>
           <p *ngSwitchCase="jobRole[4]" class="text-3xl">
-            {{ getSampleValue(user.jobRole) }}
+            {{ getRoleEmoji(user.jobRole) }}
           </p>
           <p *ngSwitchCase="jobRole[5]" class="text-3xl">
-            {{ getSampleValue(user.jobRole) }}
+            {{ getRoleEmoji(user.jobRole) }}
           </p>
           <p *ngSwitchCase="jobRole[6]" class="text-3xl">
-            {{ getSampleValue(user.jobRole) }}
+            {{ getRoleEmoji(user.jobRole) }}
           </p>
           <p *ngSwitchCase="jobRole[7]" class="text-3xl">
-            {{ getSampleValue(user.jobRole) }}
+            {{ getRoleEmoji(user.jobRole) }}
           </p>
           <p *ngSwitchCase="jobRole[8]" class="text-3xl">
-            {{ getSampleValue(user.jobRole) }}
+            {{ getRoleEmoji(user.jobRole) }}
           </p>
         </ng-container>
       </div>
@@ -179,7 +179,7 @@
               [class.display-card-flipped]="isStoryPointsRevealed"
               [ngSwitch]="user.actionType"
             >
-            <div [class.display-card-flipped]="isStoryPointsRevealed">
+            <div [class.display-card-flipped]="isStoryPointsRevealed" *ngIf="user.userData.jobRole !== 'SCRUM_MASTER'; else scrumMaster">
               <img
                 *ngSwitchCase="'STORY_POINT_SELECTION'"
                 class="animate-popin-animation"
@@ -211,6 +211,9 @@
                 alt="Pending State"
               />
             </div>
+            <ng-template #scrumMaster>
+              <span class="text-4xl duration-[400ms]" [class.display-card-flipped]="isStoryPointsRevealed">{{getRoleEmoji(user.userData.jobRole)}}</span>
+            </ng-template>
             </div>
             <div class="font-inner-text font-medium text-main-text text-base">
               {{
@@ -293,4 +296,5 @@
 
     
   </div>
+  <button class="copy-url-btn" matTooltip="Copy Room Url" matTooltipPosition="right" mat-mini-fab (click)="copyRoomUrl()"><mat-icon fontIcon="share"></mat-icon></button>
 </div>

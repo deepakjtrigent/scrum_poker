@@ -73,7 +73,7 @@ export class UserFormComponent implements OnInit {
       this.displayName.hasError('required') ||
       this.displayName.hasError('minlength')
     )
-      return 'Name should have atleast 2 characters';
+      return 'Name should have atleast 3 characters';
 
     if (this.displayName.hasError('maxlength'))
       return 'Name must be under 15 characters only';
@@ -91,7 +91,7 @@ export class UserFormComponent implements OnInit {
     }
   }
 
-  public getSampleValue(key: string): string | undefined {
+  public getRoleEmoji(key: string): string | undefined {
     return (jobRole as { [key: string]: string })[key];
   }
 
@@ -100,7 +100,7 @@ export class UserFormComponent implements OnInit {
     for (let roles of this.emojiData) {
       if (roles === this.selectedValue) {
         this.data.role = roles;
-        this.data.img = this.getSampleValue(roles);
+        this.data.img = this.getRoleEmoji(roles);
       }
     }
   }
