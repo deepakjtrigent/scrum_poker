@@ -250,7 +250,7 @@
     <div
       class="flex flex-row flex-wrap justify-center items-center sm:h-28 gap-3 mt-2 mb-1 xs:px-2 text-justify w-full animate-popin-animation"
     >
-      <ng-container *ngIf="!isStoryPointsRevealed && !this.user.isAdmin">
+      <ng-container *ngIf="!isStoryPointsRevealed && (this.user.jobRole !== 'SCRUM_MASTER')">
         <button
           *ngFor="let points of series; let index = index"
           (click)="updateStoryPoints(points, index)"
