@@ -1,0 +1,43 @@
+<div
+  class="fixed inset-0 flex items-center bg-opacity-75 justify-center z-50 border-2px border-gray-400"
+>
+  <div class="bg-white dark:bg-gray-800 w-96 p-6 rounded-lg shadow-md">
+    <p
+      *ngIf="data.type == 'roomId'"
+      class="text-scrum-button-inner-text dark:text-gray-400 mb-8"
+    >
+      You are inactive for {{ timeLeft }} seconds . please click continue
+    </p>
+
+    <p
+      *ngIf="data.type == 'displayName'"
+      class="text-gray-600 dark:text-gray-400 mb-8"
+    >
+      Are you sure? You want to make {{ data.value | titlecase }} as Admin.
+    </p>
+    <p
+      *ngIf="data.type == 'navigateToLandingPage'"
+      class="text-gray-600 dark:text-gray-400 mb-8"
+    >
+      Are you sure you want to be redirected to the Home Page? You will no
+      longer be Admin.
+    </p>
+
+    <div class="flex mt-12 ml-36">
+      <button
+        class="bg-red-500 hover:bg-red-600 active:bg-red-700 text-white px-4 py-2 rounded-lg border-none"
+        (click)="cancel()"
+      >
+        Cancel
+      </button>
+      <button
+        color="primary"
+        class="ml-2 bg-scrum-button-inner-background hover:bg-hover-color active:bg-active-color font-medium text-scrum-button-inner-text px-4 py-2 rounded-lg"
+        [mat-dialog-close]="data.type"
+        (click)="confirm()"
+      >
+        Continue
+      </button>
+    </div>
+  </div>
+</div>

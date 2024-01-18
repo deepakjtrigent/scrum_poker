@@ -1,0 +1,141 @@
+.active-button {
+  background-color: var(--primary-shade);
+  transform: translateY(-10px) scale(1.1);
+  color: white;
+  transition: transform 0.4s cubic-bezier(0.86, 0, 0.07, 1),
+    background-color 0.4s ease;
+}
+
+.card:hover {
+  transform: translateY(-10px) scale(1.1);
+  color: white;
+  transition: transform 0.3s cubic-bezier(0.86, 0, 0.07, 1),
+    background-color 0.4s ease;
+}
+
+.card {
+  box-shadow: var(--card-shadow);
+}
+
+.display-card {
+  box-shadow: var(--card-shadow);
+  transition: transform 0.5s;
+  perspective: 1000px;
+}
+
+.card_selected {
+  box-shadow: 0 1px 2px 1px rgba(167, 183, 194, 0.6);
+}
+
+.scrollable-menu {
+  cursor: pointer;
+  width: 280px;
+  overflow: hidden;
+  max-height: 200px;
+  overflow-y: scroll;
+}
+
+::ng-deep div.scrollable-menu:hover {
+  background-color: white !important;
+}
+
+::ng-deep div#mat-menu-panel-0 {
+  border-radius: 10px;
+}
+
+::ng-deep div .mat-menu-panel {
+  box-shadow: 0 1px 2px 1px rgba(168, 182, 191, 0.6) !important;
+}
+::ng-deep .mat-elevation-z8,
+.mat-mdc-elevation-specific.mat-elevation-z8 {
+  box-shadow: 0 1px 2px 1px rgba(168, 182, 191, 0.6) !important;
+}
+
+::ng-deep div .mat-mdc-menu-panel {
+  box-shadow: 0 1px 2px 1px rgba(168, 182, 191, 0.6) !important;
+  border-radius: 10px;
+}
+::ng-deep .mat-mdc-menu-panel {
+  box-shadow: 0 1px 2px 1px rgba(168, 182, 191, 0.6);
+}
+.mat-mdc-menu-item {
+  display: flex;
+  width: 100%;
+  cursor: default;
+  flex-direction: row !important;
+  justify-content: space-between;
+  align-items: center;
+}
+.mat-mdc-menu-item:hover {
+  background-color: white !important;
+}
+
+.change_admin_icon {
+  position: absolute;
+  right: 0;
+}
+.admin_button {
+  position: absolute;
+  right: 4px;
+  height: 20px;
+  margin-bottom: 30px;
+}
+.admin_title {
+  margin-top: -11px;
+  font-size: 11px;
+}
+.grouping_button {
+  border-radius: 10px;
+}
+.grouping_button:hover {
+  box-shadow: 0 1px 2px 1px rgba(249, 250, 250, 0.667);
+  background-color: rgb(243, 239, 239);
+}
+.emoji_data {
+  padding: 5px;
+  box-shadow: 0 1px 2px 1px rgba(230, 232, 232, 0.6);
+  border-radius: 10px;
+  background-color: white;
+}
+
+.collaborators-menu-open {
+  transform: rotate(-180deg);
+}
+
+.collaborators-menu-arrow {
+  margin-right: -3px;
+  scale: 1.25;
+  transition: transform 333ms ease-out, color 333ms;
+}
+
+.collaborators-icon {
+  scale: 0.7;
+  width: 40px;
+}
+
+.display-card-flipped {
+  transform: rotateY(-180deg);
+}
+
+.copy-url-btn {
+  background-color: white;
+  z-index: 100;
+  color: var(--main-color);
+  position: absolute;
+  bottom: 30px;
+  left: 25px;
+  padding-right: 2px;
+}
+
+.copy-url-btn:active {
+  transform: scale(1.2);
+  transition: transform 0.2s ease;
+}
+
+@media (max-width:434px){
+  .copy-url-btn{
+      bottom: 60px;
+      left:20px;
+  }
+  
+}

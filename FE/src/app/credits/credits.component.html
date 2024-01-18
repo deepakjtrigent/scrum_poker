@@ -1,0 +1,51 @@
+<div class="flex flex-col justify-start pt-5 pb-3 md:px-4 lg:px-10">
+  <a class="w-fit px-2" routerLink="/">
+    <img
+      src="../../assets/scrum_poker.svg"
+      class="h-12"
+      alt="Scrum Poker Logo"
+    />
+  </a>
+  <h1 class="md:text-center text-2xl text-scrum-landing-text">
+    Dev Squad Showcase
+  </h1>
+  <p class="m-5 text-main-text text-justify">
+    The creation of the Planning Poker application is a testament to the
+    dedication and collaborative spirit of our Eight-member team at Trigent.
+    Engaged in rigorous training, each team member has played a vital role in
+    the development of this innovative Planning Poker tool. The synergy within
+    our team, marked by the diverse skill sets each member brings to the
+    project, has proven invaluable in surmounting challenges and reaching
+    significant milestones. This project not only underscores our team's
+    unwavering commitment to learning and advancement but also exemplifies their
+    ability to seamlessly collaborate. The collective dedication of our team has
+    culminated in a resilient Planning Poker application, showcasing the
+    profound impact of teamwork, perseverance, and a shared commitment to
+    excellence.
+  </p>
+  <div
+    class="flex flex-row flex-wrap justify-center items-center gap-24 mx-3 my-2 text-justify"
+  >
+    <div
+      class="flex flex-col items-center image-container"
+      *ngFor="let info of devTeamData"
+    >
+      <button>
+        <a [href]="info.linkedIn" target="_blank">
+          <img
+            class="w-44 h-44 rounded-full mb-3 shadow-lg object-cover"
+            [src]="info.photoUrl"
+            [alt]="info.name"
+            [title]="info.name"
+          />
+          <h5 class="mb-1 text-lg font-medium text-gray-900">
+            {{ info.name }}
+          </h5>
+          <span class="text-sm text-gray-500 dark:text-gray-400">{{
+            info.designation
+          }}</span>
+        </a>
+      </button>
+    </div>
+  </div>
+</div>

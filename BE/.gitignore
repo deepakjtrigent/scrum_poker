@@ -1,3 +1,6 @@
+#database file
+rooms_data_db.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

@@ -1,0 +1,72 @@
+/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+:root {
+  --primary: #0064fe;
+  --primary-shade: #374388;
+  --primary-pale: #e5effe;
+  --primary-highlight: #5c9bff;
+  --text-pale: #e5effe;
+  --background-color: #ffffff;
+  --text-color: #848b99;
+  --main-text: #000c45;
+  --card-shadow: 0 1px 2px 1px rgba(167, 183, 194, 0.7);
+}
+
+html,
+body {
+  height: 100%;
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-image: radial-gradient(
+    rgba(215, 214, 214, 0.5) 0.9px,
+    transparent 0
+  );
+  background-size: 15px 15px;
+}
+
+.mat-mdc-snack-bar-container.success {
+  --mdc-snackbar-container-color: rgb(6, 158, 6);
+  --mdc-snackbar-supporting-text-color: #fff;
+}
+.mat-mdc-snack-bar-container.danger {
+  --mdc-snackbar-container-color: rgb(220, 39, 7);
+  --mdc-snackbar-supporting-text-color: #fff;
+}
+
+.mat-mdc-snack-bar-container .mdc-snackbar__label {
+  padding: 14px;
+  font-family: sans-serif;
+  font-weight: 450 !important;
+}
+.mat-mdc-snack-bar-container {
+  font-size: small;
+  --mdc-snackbar-container-shape: 9px !important;
+}
+
+::-webkit-scrollbar {
+  width: 13px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #aca8a8;
+  border-radius: 10px;
+  border: 3px solid rgba(0, 0, 0, 0);
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #868585;
+}
+
+/* Target all mat-menu panels */
+mat-menu-panel {
+  /* box-shadow: 0 1px 2px 1px rgba(168, 182, 191, 0.6); */
+  border-radius: 10px;
+}

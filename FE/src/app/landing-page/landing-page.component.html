@@ -1,0 +1,99 @@
+<div
+  class="flex flex-col md:flex-row w-full overflow-hidden md:h-[88dvh] lg:[92vh] h-auto mb-2"
+>
+  <div
+    class="flex flex-col justify-start w-screen md:w-1/2 md:h-full h-[100dvh] md:pt-6 pt-2 md:ps-4 lg:ps-9 md:items-start items-center"
+  >
+    <a class="w-full md:px-3 px-9 flex justify-start" routerLink="/">
+      <img
+        src="../../assets/scrum_poker.svg"
+        class="md:h-12 h-16"
+        alt="Scrum Poker Logo"
+      />
+    </a>
+    <section
+      class="flex flex-col md:items-start md:justify-center items-center justify-center md:mb-0 mb-24 h-full"
+      id="initial-section"
+    >
+      <p
+        class="text-xl font-inner-text w-fit font-medium text-center text-scrum-landing-page-text"
+      >
+        Team estimations made easy
+      </p>
+      <h1
+        class="font-semibold text-scrum-landing-text text-center font-main-text text-4xl md:text-3xl lg:text-4xl mt-5 mb-7 mx-2 md:mx-0"
+      >
+        Simple Planning Poker
+      </h1>
+
+      <button
+        class="bg-scrum-button-inner-background hover:bg-hover-color active:bg-active-color font-medium text-scrum-button-inner-text py-3 px-6 md:px-9 my-2 rounded-lg"
+        (click)="openUserDialog()"
+      >
+        Start a Poker
+      </button>
+    </section>
+  </div>
+  <section
+    id="description"
+    class="text-main-text font-inner-text flex flex-col items-center md:mt-3 px-4 w-full md:w-1/2 overflow-y-auto"
+  >
+    <h3 class="font-inner-text font-medium text-xl md:py-3">How it Works?</h3>
+    <div
+      class="container mx-auto py-2 md:pt-4 md:pr-4 flex flex-col text-justify"
+    >
+      <h2 class="text-base font-medium mb-4">
+        Step 1: Create or Join a Session
+      </h2>
+      <p class="mb-6 md:mb-8 font-normal text-sm">
+        To start a new estimation session, click on the
+        <strong>Start a Poker</strong> button. Alternatively, to join an
+        existing session, ask the session creator for the URL
+        and enter it in the <strong>"Enter Room"</strong> field on the
+        dashboard.
+      </p>
+
+      <h2 class="text-base font-medium mb-4">Step 2: Cast Your Vote</h2>
+      <p class="mb-6 md:mb-8 font-normal text-sm">
+        Once you have joined a session, you will be presented with the
+        estimation cards (e.g., Fibonacci sequence) on your screen. Carefully
+        review the task or user story being estimated. Choose the estimation
+        card that best represents your assessment of the complexity of the task.
+        Click on the card to cast your vote. Your vote will remain anonymous until
+         the facilitator clicks on the <strong>Reveal</strong> button, 
+         and after that, it will be visible to everyone.
+      </p>
+
+      <h2 class="text-base font-medium mb-4">Step 3: Wait for Votes</h2>
+      <p class="mb-6 md:mb-8 font-normal text-sm">
+        Wait for all team members to cast their votes. You will see a real-time
+        update on the dashboard as team members vote.
+      </p>
+
+      <h2 class="text-base font-medium mb-4">Step 4: Reveal Votes</h2>
+      <p class="mb-6 md:mb-8 font-normal text-sm">
+        When everyone has voted, the session creator or facilitator can click on
+        the
+        <strong> Reveal Votes </strong>
+        button to simultaneously reveal all the votes. The voting results will
+        be displayed on the screen, allowing everyone to see the different
+        estimates provided by team members.
+      </p>
+
+      <h2 class="text-base font-medium mb-4">
+        Step 5: Reset Votes
+      </h2>
+      <p class="mb-6 md:mb-8 font-normal text-sm">
+        After completing the story point assignment, the <strong>"Reset Votes" </strong> 
+        button allows facilitators to reset the story points, facilitating the process
+        for further story point assignments.
+      </p>
+
+      <h2 class="text-base font-medium mb-4">Step 6: End the Session</h2>
+      <p class="mb-6 md:mb-8 font-normal text-sm">
+      After the team has collectively reached a consensus or unanimously agreed upon 
+      an estimate, participants are free to exit from the Planning Poker
+      </p>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,9 @@
+.homepage-button {
+  background-color:#36A4BD;
+  width: 17rem;
+  height: 3rem;
+  font-size: 1rem;
+  color: rgb(255, 255, 255) !important;
+  border-radius: 40px;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

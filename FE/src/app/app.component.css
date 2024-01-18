@@ -1,0 +1,19 @@
+.about-page-btn {
+    position: fixed;
+    right: 25px;
+    bottom: 30px;
+    background-color: white;
+    color: var(--main-text);
+  }
+  
+  .about-page-btn:active {
+    transform: scale(1.2);
+    transition: transform 0.2s ease;
+  }
+
+  @media (max-width:434px){
+    .about-page-btn{
+        bottom: 60px;
+        right:20px;
+    }
+  }

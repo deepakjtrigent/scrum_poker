@@ -1,0 +1,3 @@
+fastapi[all]
+WebSockets==11.0.3
+tinydb==4.8.0
