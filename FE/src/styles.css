@@ -28,11 +28,11 @@ body {
 }
 
 .mat-mdc-snack-bar-container.success {
-  --mdc-snackbar-container-color: rgb(6, 158, 6);
-  --mdc-snackbar-supporting-text-color: #fff;
+  --mdc-snackbar-container-color: rgb(189, 195, 228);
+  --mdc-snackbar-supporting-text-color: rgb(0 14 81);
 }
 .mat-mdc-snack-bar-container.danger {
-  --mdc-snackbar-container-color: rgb(220, 39, 7);
+  --mdc-snackbar-container-color: rgba(209, 67, 42, 0.96);
   --mdc-snackbar-supporting-text-color: #fff;
 }
 
